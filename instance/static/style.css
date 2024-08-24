@@ -1,0 +1,193 @@
+* {
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+:root {
+  --primary-color: #c6c3c3;
+  --secondary-color: #ffffff;
+  --black-color: #000000;
+}
+/* body{
+  background-color: var(--primary-color);
+} */
+/*------------------------------------------ CSS for the sign in and sign up page ------------------------------------*/
+a {
+  text-decoration: none;
+  color: var(--secondary-color);
+}
+
+a:hover {
+  text-decoration: underline;
+}
+.wrapper {
+  width: 100%;
+  background-color: #00000033;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  min-height: 100vh;
+}
+.login_box,
+.register_box {
+  position: relative;
+  width: 450px;
+  color: var(--secondary-color);
+  backdrop-filter: blur(5px);
+  border: 2px solid var(--primary-color);
+  border-radius: 15px;
+  padding: 5.5em 2.5em 4em 2.5em;
+  box-shadow: 0px 0px 10px 2px #00000033;
+  margin-bottom: 100px;
+  margin-top: 10px;
+  z-index: 1;
+}
+
+.login-header,
+.register-header {
+  width: 140px;
+  height: 70px;
+  background-color: var(--primary-color);
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0 0 20px 20px;
+}
+.login-header span {
+  font-size: 30px;
+  color: var(--black-color);
+}
+.login-header::before {
+  width: 30px;
+  height: 30px;
+  content: "";
+  box-shadow: 15px 0 0 0 var(--primary-color);
+  position: absolute;
+  top: 0;
+  left: -30px;
+  border-top-right-radius: 50%;
+  background: transparent;
+}
+.login-header::after {
+  content: "";
+  width: 30px;
+  height: 30px;
+  box-shadow: -15px 0 0 0 var(--primary-color);
+  position: absolute;
+  top: 0;
+  right: -30px;
+  border-top-left-radius: 50%;
+  background: transparent;
+}
+.input_box {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin: 0px 0;
+}
+
+.form-input {
+  width: 100%;
+  height: 55px;
+  background: transparent;
+  color: var(--secondary-color);
+  font-size: 16px;
+  padding-inline: 20px 50px;
+  border: 2px solid var(--primary-color);
+  border-radius: 30px;
+  outline: none;
+  margin-bottom: 10px;
+}
+#user {
+  margin-bottom: 10px;
+}
+.input_box label {
+  position: absolute;
+  top: 15px;
+  left: 20px;
+  transition: 0.2s;
+}
+
+.form-input:focus ~ .label,
+.form-input:valid ~ .label {
+  background-color: var(--primary-color);
+  color: var(--black-color);
+  position: absolute;
+  top: -10px;
+  left: 20px;
+  font-size: 14px;
+  border-radius: 30px;
+  padding: 0 10px;
+}
+i {
+  position: absolute;
+  top: 18px;
+  right: 25px;
+  font-size: 20px;
+}
+#submit {
+  width: 100%;
+  height: 50px;
+  background: #ececec;
+  font-size: 16px;
+  font-weight: 500;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+/*------------------------ CSS for video background for the login in and sign up page ------------------------------------- */
+.background-clip {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  z-index: -1;
+}
+
+@media (min-aspect-ratio: 16/9) {
+  .background-clip {
+    width: 100%;
+    height: auto;
+  }
+}
+
+@media (max-aspect-ratio: 16/9) {
+  .background-clip {
+    width: auto;
+    height: 100%;
+  }
+}
+/*---------------------------------------------- CSS for the home page ------------------------------------------------------ */
+
+.button-container {
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 20px; /* Space between the buttons */
+}
+
+.btn {
+  display: inline-block;
+  padding: 15px 30px;
+  font-size: 16px;
+  color: white;
+  background-color: #28a745; /* Green background */
+  text-align: center;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #218838; /* Darker green on hover */
+  transform: scale(1.05); /* Slightly increase the size on hover */
+}

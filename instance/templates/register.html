@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Register</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="wrapper">
+      <video autoplay loop muted plays-inline class="background-clip">
+        <source src="{{url_for('static', filename='farm.mp4')}}" type="video/mp4">
+      </video>
+      <div class="register_box">
+        <div class="register-header">
+          <span>Register</span>
+        </div>
+        <form method="POST">
+          {{ form.hidden_tag() }}
+          <div class="input_box">
+            {{ form.first_name }}
+            <label for="form_first_name" class="label">First Name</label>
+            <i class="fa-regular fa-user"></i>
+            {% if form.first_name.errors %}
+            <ul>
+              {% for error in form.first_name.errors %}
+              <li>{{ error }}</li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+          </div>
+          <div class="input_box">
+            {{ form.last_name }}
+            <label for="form_last_name" class="label">Last Name</label>
+            <i class="fa-regular fa-user"></i>
+            {% if form.last_name.errors %}
+            <ul>
+              {% for error in form.last_name.errors %}
+              <li>{{ error }}</li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+          </div>
+          <div class="input_box">
+            {{ form.username }}
+            <label for="form_username" class="label">Username</label>
+            <i class="fa-regular fa-user"></i>
+            {% if form.username.errors %}
+            <ul>
+              {% for error in form.username.errors %}
+              <li>{{ error }}</li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+          </div>
+          <div class="input_box">
+            {{ form.email }}
+            <label for="form_email" class="label">Email</label>
+            <i class="fa-regular fa-envelope"></i>
+            {% if form.email.errors %}
+            <ul>
+              {% for error in form.email.errors %}
+              <li>{{ error }}</li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+          </div>
+          <div class="input_box">
+            {{ form.password }}
+            <label for="form_password" class="label">Password</label>
+            <i class="fa-solid fa-lock"></i>
+            {% if form.password.errors %}
+            <ul>
+              {% for error in form.password.errors %}
+              <li>{{ error }}</li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+          </div>
+          <div class="input_box">
+            {{ form.confirm_password }}
+            <label for="form_confirm_password" class="label">Confirm Password</label>
+            <i class="fa-solid fa-lock"></i>
+            {% if form.confirm_password.errors %}
+            <ul>
+              {% for error in form.confirm_password.errors %}
+              <li>{{ error }}</li>
+              {% endfor %}
+            </ul>
+            {% endif %}
+          </div>
+          <div class="input_box">{{ form.submit }}</div>
+        </form>
+        <a href="{{ url_for('main.login') }}">Already have an account? Login</a>
+      </div>
+      
+    </div>
+    
+  </body>
+</html>

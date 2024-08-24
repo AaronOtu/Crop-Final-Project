@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Home</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        background-image: url("{{url_for('static', filename='home2.jpg')}}");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+      }
+
+      .slideshow {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1; /* Ensure the slideshow is behind the buttons */
+      }
+
+      .slide {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+
+      /* Removed animation definition */
+
+      .slide:nth-child(1) {
+        background-image: url("{{url_for('static', filename='home1.jpg')}}");
+      }
+
+      .slide:nth-child(2) {
+        background-image: url("{{url_for('static', filename='home2.jpg')}}");
+      }
+
+      /* Added new logic for image changes */
+      .slideshow {
+        animation: slideShow 20s infinite;
+      }
+
+      @keyframes slideShow {
+        0% {
+          opacity: 1; /* First image starts with full opacity */
+        }
+        50% {
+          opacity: 1; /* First image stays visible for 10 seconds */
+        }
+        51% {
+          opacity: 0; /* Transition to next image in 1 frame */
+        }
+        100% {
+          opacity: 1; /* Second image becomes fully visible */
+        }
+      }
+
+      header {
+        background-color: none;
+        color: white;
+        text-align: left;
+        padding: 20px;
+      }
+
+      footer {
+        text-align: center;
+        padding: 10px;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        background-color: black;
+        color: white;
+      }
+
+      .recommendationText {
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+      }
+
+      .recommendationText h2 {
+        text-align: center;
+        font-size: 60px;
+        margin: 0;
+        color: black;
+      }
+      
+      span{
+        color: light green;
+      }
+
+      .box {
+        font-size: 35px;
+        font-weight: bold;
+        opacity: 0;
+        position: absolute;
+        width: 100%;
+        text-align: left;
+        font-family: century-serif;
+      }
+      .b1 {
+        animation: ani1 15s infinite;
+      }
+      .b2 {
+        animation: ani2 15s infinite;
+      }
+      .b3 {
+        animation: ani3 15s infinite;
+      }
+
+      @keyframes ani1 {
+        0% {
+          opacity: 0;
+        }
+        10% {
+          opacity: 1;
+        }
+        20% {
+          opacity: 0;
+        }
+      }
+
+      @keyframes ani2 {
+        20% {
+          opacity: 0;
+        }
+        30% {
+          opacity: 1;
+        }
+        40% {
+          opacity: 0;
+        }
+      }
+
+      @keyframes ani3 {
+        40% {
+          opacity: 0;
+        }
+        50% {
+          opacity: 1;
+        }
+        60% {
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="recommendationText">
+        <h2>Welcome to CropAdvisor</h2>
+        <div class="box b1">
+          <span>Discover personalized </span>crop recommendations tailored to
+          <br />region's climate and soil conditions, dynamically updating as
+          you explore.
+        </div>
+        <div class="box b2">
+          <span>Explore our interactive </span>crop recommendation tool that
+          <br />transforms with each click, revealing optimal planting choices
+          based on your location.
+        </div>
+        <div class="box b3">
+          <span>Experience real-time </span>crop advice that evolves with
+          <br />scrolling, ensuring you receive the most relevant agricultural
+          insights instantly.
+        </div>
+      </div>
+    </header>
+
+    <div class="slideshow">
+      <div class="slide"></div>
+      <div class="slide"></div>
+    </div>
+
+    <div class="button-container">
+      <a href="{{url_for('main.login')}}" class="btn">Get started</a>
+      <a href="{{url_for('main.register')}}" class="btn">Sign Up</a>
+    </div>
+
+    <footer>
+      <p>&copy; 2024 CropAdvisor. All rights reserved.</p>
+    </footer>
+
+  </body>
+</html>

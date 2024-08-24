@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='dash.css') }}"
+  />
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
+    crossorigin="anonymous"
+  />
+    <title>Image Cards</title>
+    <style>/* Reset default styles */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        /* Set up grid layout */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 cards per row */
+            gap: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+           
+        }
+        
+        /* Style individual cards */
+        .card {
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgb(2, 160, 5);
+            overflow: hidden;
+        }
+        
+        .card__img {
+            width: 250px;
+            height: auto;
+            object-fit: cover;
+        }
+        
+        .card__content {
+            padding: 20px;
+        }
+        
+        .card__title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .card__description {
+            font-size: 1rem;
+            color: #555;
+        }
+      .card:hover{
+        background-color: rgb(204, 191, 191); 
+        box-shadow: 0 4px 8px  #5c5ebe;
+      }
+      #s1{
+        color: #22c2cd;
+        font-family: cursive;
+        margin-top: 20px;
+      }
+      h2{
+        color: black;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        width: 100%;
+        background-image: url("{{ url_for('static', filename='home2.jpg') }}");
+        background-size: cover;
+        background-attachment: fixed;
+        background-position: center;
+    }
+
+  
+
+        </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+    <div class="container-fluid">
+      <span class="navbar-text"> {{greeting}}, {{ first_name }} </span>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div
+      class="collapse navbar-collapse justify-content-end"
+      id="navbarSupportedContent"
+    >
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('main.crops') }}"
+            >About Crops</a
+          >
+        </li>
+      </ul>
+    </div>
+      <div
+      class="collapse navbar-collapse justify-content-end"
+      id="navbarSupportedContent"
+    >
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('main.about') }}"
+            >About Us</a
+          >
+        </li>
+      </ul>
+    </div>
+      <div
+        class="collapse navbar-collapse justify-content-end"
+        id="navbarSupportedContent"
+      >
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('main.logout') }}"
+              >Logout</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>   
+
+
+
+    <center>
+    <br><h2 id="s1">About crops</h2></center><hr><br>
+
+    <div class="grid">
+        <!-- Card 1 -->
+        <div class="card">
+            <img class="card__img" src="https://cdn.glitch.global/bbb619d3-610c-4355-a0a1-1dffb2a7b752/sandy-ravaloniaina-Y678onxFoJI-unsplash.jpg?v=1714726559568">
+            <div class="card__content">
+                <h2 class="card__title">Rice</h2>
+                <p class="card__description">Rice is a Kharif crop that requires high temperatures (above 25 °C) and high humidity. It requires an annual rainfall above 100 cm. In areas with less rainfall, it grows with the help of irrigation.</p>
+            </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="card">
+            <img class="card__img" src="https://cdn.glitch.global/bbb619d3-610c-4355-a0a1-1dffb2a7b752/sunira-moses-m6kv58OMe6M-unsplash.jpg?v=1714726646647" alt="Image 2">
+            <div class="card__content">
+                <h2 class="card__title">Maize</h2>
+                <p class="card__description">Maize (Zea mays L.) is one of the most versatile emerging crops shaving wider adaptability under varied agro-climatic conditions. Globally, maize is known as the queen of cereals because it has the highest genetic yield potential among the cereals</p>
+            </div>
+        </div>
+
+        <!-- Repeat for Cards 3 to 10 -->
+        <!-- Card 3 -->
+        <div class="card">
+            <img class="card__img" src="https://cdn.glitch.global/bbb619d3-610c-4355-a0a1-1dffb2a7b752/anirudh-jDkcE6vM_e4-unsplash.jpg?v=1714726789239" alt="Image 3">
+            <div class="card__content">
+                <h2 class="card__title">Jute</h2>
+                <p class="card__description">Jute is one of the most important natural fibers after cotton in terms of cultivation and usage. Cultivation is dependent on the climate, season, and soil</p>
+            </div>
+        </div>
+        <!-- Card 4 -->
+<div class="card">
+    <img class="card__img" src="https://cdn.glitch.global/bbb619d3-610c-4355-a0a1-1dffb2a7b752/sze-yin-chan-cE35j-5Y7Ug-unsplash%20(1).jpg?v=1714729092778" alt="Image 4">
+    <div class="card__content">
+        <h2 class="card__title">Cotton</h2>
+        <p class="card__description">Cotton is a seed-hair fiber made mostly of cellulose. The fibers are composed of about 87 to 90 percent cellulose (a carbohydrate plant substance), 5 to 8 percent water, and 4 to 6 percent natural impurities</p>
+    </div>
+</div>
+<!-- Card 5 -->
+<div class="card">
+    <img class="card__img" src="https://cdn.glitch.global/bbb619d3-610c-4355-a0a1-1dffb2a7b752/peal-ami-ONJYuxHg-oM-unsplash.jpg?v=1714727138200" alt="Image 4">
+    <div class="card__content">
+        <h2 class="card__title">Coconut</h2>
+        <p class="card__description">Coconut palm is a tree with a slim and smooth trunk, a crown of leaves, and rounded, green or yellow fruit. Its flowers grow in clusters on a stem; a flowering structure known as an inflorescence. The female flowers are larger than the male flowers, and both are found on the same inflorescence.</p>
+    </div>
+</div>
+<!-- Card 6 -->
+<div class="card">
+    <img class="card__img" src="https://cdn.glitch.global/bbb619d3-610c-4355-a0a1-1dffb2a7b752/happy-surani-2-nA5KasEoE-unsplash.jpg?v=1714727209555" alt="Image 4">
+    <div class="card__content">
+        <h2 class="card__title">Papayya</h2>
+        <p class="card__description">The papaya, papaw, or pawpaw is the plant species Carica papaya, one of the 21 accepted species in the genus Carica of the family Caricaceae. It was first domesticated in Mesoamerica, within modern-day southern Mexico and Central America. It is grown in several countries in regions with a tropical climate.</p>
+    </div>
+</div>
+<!-- Card 7 -->
+<div class="card">
+    <img class="card__img" src="https://cdn.glitch.global/bbb619d3-610c-4355-a0a1-1dffb2a7b752/sheraz-shaikh-Zx3kcU2Kw9E-unsplash.jpg?v=1714727335445" alt="Image 4">
+    <div class="card__content">
+        <h2 class="card__title">Orange</h2>
+        <p class="card__description">An orange, also called sweet orange to distinguish it from the bitter orange, is the fruit of a tree in the family Rutaceae. Botanically, this is the hybrid Citrus × sinensis, between the pomelo and the mandarin orange. The chloroplast genome, and therefore the maternal line, is that of pomelo.</p>
+    </div>
+</div>
+<!-- Card 8 -->
+<div class="card">
+    <img class="card__img" src="https://cdn.glitch.global/bbb619d3-610c-4355-a0a1-1dffb2a7b752/priscilla-du-preez-CoqJGsFVJtM-unsplash.jpg?v=1714727428177" alt="Image 4">
+    <div class="card__content">
+        <h2 class="card__title">Apple</h2>
+        <p class="card__description">Apple cultivation in Ghana presents unique challenges and opportunities due to its tropical climate. Unlike India, where apple growing regions benefit from temperate conditions provided by the Himalayan ranges and high altitudes, Ghana's climate is predominantly tropical.</p>
+    </div>
+</div>
+<!-- Card 9 -->
+<div class="card">
+    <img class="card__img" src="https://cdn.glitch.global/bbb619d3-610c-4355-a0a1-1dffb2a7b752/shuvrodeep-dutta-RkAcBiDksK0-unsplash.jpg?v=1714727592267" alt="Image 4">
+    <div class="card__content">
+        <h2 class="card__title">Muskmelon</h2>
+        <p class="card__description">A well-drained sandy loam soil rich in organic matter is ideal for muskmelon cultivation. pH of the soil may range from 6.5 – 7.5. Muskmelon is slightly tolerant to soil acidity but cannot tolerate soils with high salt concentration. Lighter soils enhance the maturity of fruit, thus early harvest</p>
+    </div>
+</div>
+<!-- Card 10 -->
+<div class="card">
+    <img class="card__img" src="https://cdn.glitch.global/bbb619d3-610c-4355-a0a1-1dffb2a7b752/sahand-babali-eiNdbqWZww4-unsplash.jpg?v=1714727664740" alt="Image 4">
+    <div class="card__content">
+        <h2 class="card__title">Watermelon</h2>
+        <p class="card__description">Watermelon is grown in favorable climates from tropical to temperate regions worldwide for its large edible fruit, which is a berry with a hard rind and no internal divisions, and is botanically called a pepo. The sweet, juicy flesh is usually deep red to pink, with many black seeds, although seedless varieties exist.</p>
+    </div>
+</div>
+<!-- Card 11 -->
+<div class="card">
+    <img class="card__img" src="https://cdn.glitch.global/bbb619d3-610c-4355-a0a1-1dffb2a7b752/maja-petric-vGQ49l9I4EE-unsplash.jpg?v=1714727723944" alt="Image 4">
+    <div class="card__content">
+        <h2 class="card__title">Grape</h2>
+        <p class="card__description">Grapes (Vitis sp.), belonging to the family Vitaceae, are a popular and commercially significant fruit crop grown worldwide. They are valued for their versatility and are used in a variety of products, including fresh fruit, raisins, wine, and grape juice.</p>
+    </div>
+</div>
+<!-- Card 12 -->
+<div class="card">
+    <img class="card__img" src="https://cdn.glitch.global/bbb619d3-610c-4355-a0a1-1dffb2a7b752/hotchicksing-Dyc95dKuGp4-unsplash.jpg?v=1714727788951" alt="Image 4">
+    <div class="card__content">
+        <h2 class="card__title">Mango</h2>
+        <p class="card__description">Mangoes (Mangifera indica), belonging to the family Anacardiaceae, are a significant fruit crop in Ghana. Known for their sweet flavor and nutritional benefits, mangoes are widely consumed and cultivated across the country. Mangoes thrive in tropical and subtropical climates, making Ghana's climate ideal for their cultivation.</p>
+    </div>
+</div>
+<!-- Card 13 -->
+<div class="card">
+    <img class="card__img" src="https://cdn.glitch.global/bbb619d3-610c-4355-a0a1-1dffb2a7b752/mike-dorner-sf_1ZDA1YFw-unsplash.jpg?v=1714727851150" alt="Image 4">
+    <div class="card__content">
+        <h2 class="card__title">Banana</h2>
+        <p class="card__description">Banana is a rich source of carbohydrate and is rich in vitamins particularly vitamin B. It is also a good source of potassium, phosphorus, calcium and magnesium. The fruit is easy to digest, free from fat and cholesterol. Banana powder is used as the first baby food.</p>
+    </div>
+</div>
+<!-- Card 14 -->
+<div class="card">
+    <img class="card__img" src="https://cdn.glitch.global/bbb619d3-610c-4355-a0a1-1dffb2a7b752/tamanna-rumee-FMhKAulD9A4-unsplash.jpg?v=1714727905609" alt="Image 4">
+    <div class="card__content">
+        <h2 class="card__title">Pomegranate</h2>
+        <p class="card__description">Pomegranate (Punica granatum L.) is one of the oldest known edible fruits, which includes 22% seeds. High-quality oil, which is rich in conjugated fatty acids, is produced from pomegranate seeds; these are a waste product of the pomegranate industry, which also produces juice, concentrate, and jam.</p>
+    </div>
+</div>
+<!-- Card 15 -->
+<div class="card">
+    <img class="card__img" src="https://cdn.glitch.global/bbb619d3-610c-4355-a0a1-1dffb2a7b752/mockupo-dzQ-0nouwxM-unsplash.jpg?v=1714728181442" alt="Image 4">
+    <div class="card__content">
+        <h2 class="card__title">Lentil</h2>
+        <p class="card__description">Lentil is a small legume seed belonging to the Lens culinaris species and the Leguminosae (Fabaceae or Papilionaceae) family. It is one of the most ancient food crops that has been grown in the world, and originated from southwestern Asia as early as 7000 BC (Dhuppar, Biyan, Chintapalli, & Rao, 2012).</p>
+    </div>
+</div>
+<!-- Card 16 -->
+<div class="card">
+    <img class="card__img" src="https://media.istockphoto.com/id/997605586/photo/black-mung-bean.jpg?s=1024x1024&w=is&k=20&c=rRn49hs7nTpC-JrjKFoTL7Q3tdeFLQ07cfyRwI6860A=" alt="Image 4">
+    <div class="card__content">
+        <h2 class="card__title">Blackgram</h2>
+        <p class="card__description">Black gram (Vigna Mungo L.), is one of the important pulses crop, grown throughout the country. The crop is resistant to adverse climatic conditions and improve the soil fertility by fixing atmospheric nitrogen in the soil. It has been reported that the crop produces equivalent to 22.10 kg of N/ha., which has been estimated to be supplement of 59 thousand tonnes of urea annually.</p>
+    </div>
+</div>
+<!-- Card 17 -->
+<div class="card">
+    <img class="card__img" src="https://cdn.glitch.global/bbb619d3-610c-4355-a0a1-1dffb2a7b752/david-gabrielyan-ecpymDlXwHE-unsplash.jpg?v=1714728571872" alt="Image 4">
+    <div class="card__content">
+        <h2 class="card__title">Mungbean</h2>
+        <p class="card__description">Mung bean (Vigna radiata) is a legume plant of the pea family (Fabaceae), known for its edible seeds and young sprouts. Originally native to the Indian subcontinent, the mung bean is widely cultivated in Asia and is increasingly recognized in Ghana for its versatility and nutritional value. They require a warm growing season with well-distributed rainfall or supplementary irrigation.</p>
+    </div>
+</div>
+<!-- Card 18 -->
+<div class="card">
+    <img class="card__img" src="https://www.greendna.in/cdn/shop/products/moth2_1024x1024@2x.jpg?v=1591178564" alt="Image 4">
+    <div class="card__content">
+        <h2 class="card__title">Mothbeans</h2>
+        <p class="card__description">The moth bean crop consists of pods, sprouts and protein rich seeds. It acts as a pasture legume. It is rich in iron, calcium, manganese, zinc, potassium, magnesium and vitamin B9. The seeds of this crop contain 22-24% of protein.</p>
+    </div>
+</div>
+<!-- Card 19 -->
+<div class="card">
+    <img class="card_img" src="https://th.bing.com/th/id/OIP.7b-m7ihD5VtUCQ5LXfIR5wHaEK?rs=1&pid=ImgDetMain" alt="Image 4">
+    <div class="card__content">
+        <h2 class="card__title">Pigeonpeas</h2>
+        <p class="card__description">Pigeonpea (Cajanus cajan), commonly known as red gram, tur, or arhar, is an important pulse crop in Ghana. Although not as widely cultivated as some other crops, pigeonpea plays a significant role in Ghanaian agriculture. Pigeonpea is a traditional pulse crop with a long history of cultivation. It is valued for its adaptability and versatility in various cropping systems.</p>
+    </div>
+</div>
+<!-- Card 20 -->
+<div class="card">
+    <img class="card__img" src="https://cdn.glitch.global/bbb619d3-610c-4355-a0a1-1dffb2a7b752/volodymyr-hryshchenko-LzHdxEBw1Xk-unsplash.jpg?v=1714728960664" alt="Image 4">
+    <div class="card__content">
+        <h2 class="card__title">Kidneybeans</h2>
+        <p class="card__description">Kidney bean belongs to the legume family. It contains a wide range of macro-and micronutrients, including starch, protein, dietary fiber, minerals, vitamins, etc. Kidney beans are mostly made up of starchy carbohydrates, which make up about 72% of the overall calorie content and 25%–45% of the dry matter.</p>
+    </div>
+</div>
+<!-- Card 21 -->
+<div class="card">
+    <img class="card__img" src="https://cdn.glitch.global/bbb619d3-610c-4355-a0a1-1dffb2a7b752/engin-akyurt-XySiMsjrdxE-unsplash.jpg?v=1714729045811" alt="Image 4">
+    <div class="card__content">
+        <h2 class="card__title">Chickpea</h2>
+        <p class="card__description">Chickpeas, also known as "gram" or "Bengal gram" (Cicer arietinum), are gaining importance as a pulse crop in Ghana. Although not traditionally as dominant as other staples, chickpeas are valued for their nutritional benefits and versatility.Chickpeas prefer well-drained, loamy soils with good organic content.</p>
+    </div>
+</div>
+    </div>
+</body>
+</html>
