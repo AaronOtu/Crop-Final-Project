@@ -53,6 +53,8 @@
                 background-color: rgba(0,0,0,0.7);
                 background-blend-mode: color;
                 animation: image-appear2 0.4s ease-in;
+                display: flex;
+                flex-direction: column;
             }
             .nav-bar{
                 display: flex;
@@ -92,6 +94,7 @@
             }
             .account-image>div{
                 width: fit-content;
+                background-color: white;
                 border-radius: 50%;
                 contain: paint;
                 border: 1px solid gray;
@@ -99,6 +102,8 @@
             .account-image img{
                 width: 35px;
                 width: 35px;
+                object-fit: cover;
+                object-position: left top;
                 display: block;
                 text-align: center;
             }
@@ -251,6 +256,117 @@
               max-width: 1200px;
               width: 100%;
             }
+            .crop{
+                display: flex;
+                flex-direction: column;
+                background-color: #FFFFFF; 
+                width: 500px;
+                height: 450px;
+                border-radius: 10px;
+                contain: paint;
+                
+            }
+            .crop label{
+                font-size: 1.3rem;
+                font-weight: bold;
+            }
+            .crop .image-container{
+                height: 40%;
+            }
+            .crop img{
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+                object-position: center center;
+            }
+            button:focus, button:focus-visible {
+                outline: 4px auto -webkit-focus-ring-color;
+            }
+            .crop-text-content{
+                display: flex;
+                flex-direction: column;
+                padding: 20px 30px ;
+                height: 60%;
+                place-content: space-between;
+            }
+            .crop button{
+                width: 200px;
+                height: 45px;
+                background-color: #EEB240;
+                border: none;
+                outline: none;
+                color: white;
+                font-size: 1rem;
+                border-radius: 3px;
+            }
+            .cover{
+              position: fixed;
+              height: 100vh;
+              width: 100%;
+              top: 0;
+              bottom: 0;
+              left: 0;
+              right: 0;
+              display: flex;
+              place-content: center;
+              place-items: center;
+              z-index: 2000;
+              background-color: rgb(23, 74, 57,0.6);
+            }
+            .about-us{
+              display: flex;
+              place-content: space-between;
+              color: white;
+              background-color: black;
+              padding: 20px 0;
+            }
+            .about-us ul{
+              list-style: none;
+            }
+            .about-us li{
+              padding: 10px 0;
+            }
+            .about-us a{
+              color: #008457;
+              transition: all 0.3s ease ;
+            }
+            .about-us a:hover{
+              color: white;
+              text-decoration: underline;
+            }
+            .contact{
+              margin-right: 80px;
+              display: grid;
+              gap: 30px;
+              
+            }
+            .contact>div{
+              display: flex;
+              gap: 20px;
+            }
+            .image-profile{
+              width: fit-content;
+              height: fit-content;
+                border-radius: 50%;
+                contain: paint;
+                border: 1px solid gray;
+            }
+            .image-profile img{
+              width: 60px;
+                width: 60px;
+                display: block;
+                text-align: center;
+            }
+            .weather-container-small {
+              width: 300px;
+              background: rgba(0, 0, 0, 0.5);
+              padding: 20px;
+              display: flex;
+              flex-direction: column;
+              justify-content: space-around;
+              flex: 1;
+              place-self: end;
+            }
             @keyframes image-appear2 {
               0% {
                   opacity: 0;
@@ -274,7 +390,7 @@
         </ul>
         <div class="account-image">
           <div>
-            <img src="../static/images/abigail.jpg" alt="profile-image">
+            <img src="../static/images/farmer.svg" alt="profile-image">
           </div>
           <span>{{ first_name }}</span>
         </div>
@@ -286,8 +402,51 @@
           <span>we know your lands best!</span>
         </div>
       </div>
+      <div class="weather-container-small">
+        <div class = "top">
+          <p class ="location"></p>
+          <p class ="date"></p>
+        </div>
+        <div class = "middle">
+          <div class ="img-container">
+            <img src="" alt="" class ="weather-img" width="150px">
+          </div>
+          <div class = info-container>
+            <p class="temp"><sup></sup>
+            </p>
+            <p class="weather-state">Rain shower</p>
+          </div>
+
+        </div>
+        <div class = "bottom">
+          <p >Wind <br> <span class="wind"></span></p>
+          <p>Pressure <br> <span class="pressure"></span></p>
+          <p>Humidity <br> <span class="humidity"></span></p>
+        </div>
+      </div>
     </header>
     <main>
+      {% if result %}
+      <div class="cover" >
+        <svg width="40px" height="40px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+        style="position: absolute; top: 20%; right: 20%; cursor: pointer;" onclick="onClose()">
+          <path d="M8.00386 9.41816C7.61333 9.02763 7.61334 8.39447 8.00386 8.00395C8.39438 7.61342 9.02755 7.61342 9.41807 8.00395L12.0057 10.5916L14.5907 8.00657C14.9813 7.61605 15.6144 7.61605 16.0049 8.00657C16.3955 8.3971 16.3955 9.03026 16.0049 9.42079L13.4199 12.0058L16.0039 14.5897C16.3944 14.9803 16.3944 15.6134 16.0039 16.0039C15.6133 16.3945 14.9802 16.3945 14.5896 16.0039L12.0057 13.42L9.42097 16.0048C9.03045 16.3953 8.39728 16.3953 8.00676 16.0048C7.61624 15.6142 7.61624 14.9811 8.00676 14.5905L10.5915 12.0058L8.00386 9.41816Z" fill="gainsboro"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M23 12C23 18.0751 18.0751 23 12 23C5.92487 23 1 18.0751 1 12C1 5.92487 5.92487 1 12 1C18.0751 1 23 5.92487 23 12ZM3.00683 12C3.00683 16.9668 7.03321 20.9932 12 20.9932C16.9668 20.9932 20.9932 16.9668 20.9932 12C20.9932 7.03321 16.9668 3.00683 12 3.00683C7.03321 3.00683 3.00683 7.03321 3.00683 12Z" fill="gainsboro"/>
+        </svg>
+        <div class="crop">
+          <div class="image-container">
+            <img src="../static/crops/beans.jpg" alt="you">
+          </div>
+          <div class="crop-text-content">
+              <div>
+                  <label id="name">{{ result }}</label>
+                  <p></p>
+              </div>
+              <button onclick="readMore(event)">Read More</button>
+          </div>
+        </div>
+      </div>
+      {% endif %}
       <section class="crop-recommendation" id="crop-recommendation">
         <div class="curve-design"></div>
         <h2 style="color: green; font-family: 'Manrope',sans-serif;">Crop Recommendation</h2>
@@ -314,14 +473,9 @@
             <button type="submit">Get Recommendation</button>
           </form>
           <div class="result">
-            {% if result %}
-            
-            <p onload="loadResult(event)">{{ result }}</p>
-            {% else %}
               <style>svg#freepik_stories-farmer:not(.animated) .animable {opacity: 0;}svg#freepik_stories-farmer.animated #freepik--background-complete--inject-41 {animation: 1s 1 forwards cubic-bezier(.36,-0.01,.5,1.38) fadeIn;animation-delay: 0s;}svg#freepik_stories-farmer.animated #freepik--Shadow--inject-41 {animation: 1s 1 forwards cubic-bezier(.36,-0.01,.5,1.38) lightSpeedLeft;animation-delay: 0s;}svg#freepik_stories-farmer.animated #freepik--Character--inject-41 {animation: 1s 1 forwards cubic-bezier(.36,-0.01,.5,1.38) slideDown;animation-delay: 0s;}svg#freepik_stories-farmer.animated #freepik--Wheelbarrow--inject-41 {animation: 1s 1 forwards cubic-bezier(.36,-0.01,.5,1.38) zoomIn;animation-delay: 0s;}svg#freepik_stories-farmer.animated #freepik--Box--inject-41 {animation: 1s 1 forwards cubic-bezier(.36,-0.01,.5,1.38) slideRight;animation-delay: 0s;}            @keyframes fadeIn {                0% {                    opacity: 0;                }                100% {                    opacity: 1;                }            }                    @keyframes lightSpeedLeft {              from {                transform: translate3d(-50%, 0, 0) skewX(20deg);                opacity: 0;              }              60% {                transform: skewX(-10deg);                opacity: 1;              }              80% {                transform: skewX(2deg);              }              to {                opacity: 1;                transform: translate3d(0, 0, 0);              }            }                    @keyframes slideDown {                0% {                    opacity: 0;                    transform: translateY(-30px);                }                100% {                    opacity: 1;                    transform: translateY(0);                }            }                    @keyframes zoomIn {                0% {                    opacity: 0;                    transform: scale(0.5);                }                100% {                    opacity: 1;                    transform: scale(1);                }            }                    @keyframes slideRight {                0% {                    opacity: 0;                    transform: translateX(30px);                }                100% {                    opacity: 1;                    transform: translateX(0);                }            }        </style>
 <svg style="height: 80%; max-width: 600px;" class="animated" id="freepik_stories-farmer" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs"><g id="freepik--background-complete--inject-41" class="animable" style="transform-origin: 250px 222.525px;"><rect y="376.65" width="500" height="0.25" style="fill: rgb(235, 235, 235); transform-origin: 250px 376.775px;" id="elkqswj17hmz" class="animable"></rect><rect x="416.78" y="392.74" width="33.12" height="0.25" style="fill: rgb(235, 235, 235); transform-origin: 433.34px 392.865px;" id="elrczbfpnigah" class="animable"></rect><rect x="322.53" y="395.46" width="8.69" height="0.25" style="fill: rgb(235, 235, 235); transform-origin: 326.875px 395.585px;" id="eluynv1lvrse9" class="animable"></rect><rect x="396.59" y="383.46" width="19.19" height="0.25" style="fill: rgb(235, 235, 235); transform-origin: 406.185px 383.585px;" id="eljzm6e9ga26e" class="animable"></rect><rect x="52.46" y="385.14" width="43.19" height="0.25" style="fill: rgb(235, 235, 235); transform-origin: 74.055px 385.265px;" id="el4c6dqyexgaa" class="animable"></rect><rect x="104.56" y="385.14" width="6.33" height="0.25" style="fill: rgb(235, 235, 235); transform-origin: 107.725px 385.265px;" id="elkrxn2v60jcm" class="animable"></rect><rect x="131.47" y="389.36" width="93.68" height="0.25" style="fill: rgb(235, 235, 235); transform-origin: 178.31px 389.485px;" id="el87c7g5fumi3" class="animable"></rect><path d="M237,332.05H43.91a5.71,5.71,0,0,1-5.7-5.71V54.91a5.71,5.71,0,0,1,5.7-5.71H237a5.71,5.71,0,0,1,5.71,5.71V326.34A5.71,5.71,0,0,1,237,332.05ZM43.91,49.45a5.46,5.46,0,0,0-5.45,5.46V326.34a5.46,5.46,0,0,0,5.45,5.46H237a5.47,5.47,0,0,0,5.46-5.46V54.91A5.47,5.47,0,0,0,237,49.45Z" style="fill: rgb(235, 235, 235); transform-origin: 140.46px 190.625px;" id="elkcbppeed9se" class="animable"></path><path d="M453.31,332.05H260.21a5.72,5.72,0,0,1-5.71-5.71V54.91a5.72,5.72,0,0,1,5.71-5.71h193.1A5.71,5.71,0,0,1,459,54.91V326.34A5.71,5.71,0,0,1,453.31,332.05ZM260.21,49.45a5.47,5.47,0,0,0-5.46,5.46V326.34a5.47,5.47,0,0,0,5.46,5.46h193.1a5.47,5.47,0,0,0,5.46-5.46V54.91a5.47,5.47,0,0,0-5.46-5.46Z" style="fill: rgb(235, 235, 235); transform-origin: 356.75px 190.625px;" id="elq243a6f8rd" class="animable"></path><path d="M318.16,369a35.5,35.5,0,0,0-8.41,11.41c-3.26-13.92-12.85-23.88-12.85-23.88a69.32,69.32,0,0,1,6.93,25.92c-2-5.94-6.13-7.63-6.13-7.63,3.08,5.91,1.95,13.8,1.95,13.8h14.2A42.19,42.19,0,0,1,318.16,369Z" style="fill: rgb(240, 240, 240); transform-origin: 307.53px 372.575px;" id="elqmlfx7qid3" class="animable"></path><path d="M436.14,391.18a52.51,52.51,0,0,1,5.25-19.62,43.27,43.27,0,0,0-9.73,18.09,27.07,27.07,0,0,0-6.37-8.65,31.87,31.87,0,0,1,3.26,14.85H439.3s-.85-6,1.48-10.45C440.78,385.4,437.63,386.68,436.14,391.18Z" style="fill: rgb(240, 240, 240); transform-origin: 433.34px 383.705px;" id="eloq5si9vvjfb" class="animable"></path><path d="M63.8,387.44a49.65,49.65,0,0,0-5-18.54A40.85,40.85,0,0,1,68,386a25.51,25.51,0,0,1,6-8.18,30.27,30.27,0,0,0-3.09,14H60.81s.81-5.64-1.4-9.88A8.82,8.82,0,0,1,63.8,387.44Z" style="fill: rgb(240, 240, 240); transform-origin: 66.4px 380.36px;" id="el8ad4cxqokfp" class="animable"></path><path d="M294.86,331.51c-7.8-41.37-16.14-103.27-41.77-104.59-38.89-2-33.82,61-55.42,59.76s-23.11-96.6-64.19-96.05C94.94,191.14,78.73,316,76.87,331.51Z" style="fill: rgb(224, 224, 224); transform-origin: 185.865px 261.069px;" id="elzm162bm8djb" class="animable"></path><g id="elpihkgwo3fl"><rect x="347.9" y="191.27" width="17.06" height="187.98" style="fill: rgb(224, 224, 224); mix-blend-mode: multiply; transform-origin: 356.43px 285.26px; transform: rotate(90deg);" class="animable"></rect></g><rect x="278.24" y="266.84" width="17.06" height="85.73" style="fill: rgb(240, 240, 240); transform-origin: 286.77px 309.705px;" id="elsi4e8wo8tmi" class="animable"></rect><rect x="313.53" y="266.84" width="17.06" height="85.73" style="fill: rgb(240, 240, 240); transform-origin: 322.06px 309.705px;" id="ellfa49i3d1l" class="animable"></rect><rect x="348.81" y="266.84" width="17.06" height="85.73" style="fill: rgb(240, 240, 240); transform-origin: 357.34px 309.705px;" id="ellozd52kpwj" class="animable"></rect><rect x="384.09" y="266.84" width="17.06" height="85.73" style="fill: rgb(240, 240, 240); transform-origin: 392.62px 309.705px;" id="eldjifoqhdhzp" class="animable"></rect><rect x="419.37" y="266.84" width="17.06" height="85.73" style="fill: rgb(240, 240, 240); transform-origin: 427.9px 309.705px;" id="elgueawcyslr" class="animable"></rect><path d="M289.07,284.74a2.3,2.3,0,1,0-2.3,2.3A2.3,2.3,0,0,0,289.07,284.74Z" style="fill: rgb(250, 250, 250); transform-origin: 286.77px 284.74px;" id="el0etthp8eh4ht" class="animable"></path><path d="M324.35,284.74a2.3,2.3,0,1,0-2.29,2.3A2.3,2.3,0,0,0,324.35,284.74Z" style="fill: rgb(250, 250, 250); transform-origin: 322.05px 284.74px;" id="el3oldwinqhug" class="animable"></path><path d="M359.64,284.74a2.3,2.3,0,1,0-2.3,2.3A2.3,2.3,0,0,0,359.64,284.74Z" style="fill: rgb(250, 250, 250); transform-origin: 357.34px 284.74px;" id="elga38zl1knfn" class="animable"></path><path d="M394.92,284.74a2.3,2.3,0,1,0-2.3,2.3A2.3,2.3,0,0,0,394.92,284.74Z" style="fill: rgb(250, 250, 250); transform-origin: 392.62px 284.74px;" id="elyasr9e3zsio" class="animable"></path><path d="M430.2,284.74a2.3,2.3,0,1,0-2.3,2.3A2.3,2.3,0,0,0,430.2,284.74Z" style="fill: rgb(250, 250, 250); transform-origin: 427.9px 284.74px;" id="el9bwhr0cjbdb" class="animable"></path><g id="elhvpypg9dzv"><rect x="99.5" y="226.42" width="17.06" height="117.68" style="fill: rgb(224, 224, 224); transform-origin: 108.03px 285.26px; transform: rotate(90deg);" class="animable"></rect></g><g id="elj8zpia5cmd"><rect x="347.9" y="191.27" width="17.06" height="187.98" style="fill: rgb(224, 224, 224); opacity: 0.3; mix-blend-mode: multiply; transform-origin: 356.43px 285.26px; transform: rotate(90deg);" class="animable"></rect></g><g id="elx5d8lnwwuum"><rect x="99.5" y="226.42" width="17.06" height="117.68" style="fill: rgb(224, 224, 224); opacity: 0.3; mix-blend-mode: multiply; transform-origin: 108.03px 285.26px; transform: rotate(90deg);" class="animable"></rect></g><rect x="64.99" y="266.84" width="17.06" height="85.73" style="fill: rgb(240, 240, 240); transform-origin: 73.52px 309.705px;" id="elh34crdx7qoo" class="animable"></rect><rect x="100.27" y="266.84" width="17.06" height="85.73" style="fill: rgb(240, 240, 240); transform-origin: 108.8px 309.705px;" id="el8zwolmzt1c2" class="animable"></rect><rect x="135.56" y="266.84" width="17.06" height="85.73" style="fill: rgb(240, 240, 240); transform-origin: 144.09px 309.705px;" id="elubrszl7wa6" class="animable"></rect><path d="M75.82,284.74a2.3,2.3,0,1,0-2.3,2.3A2.3,2.3,0,0,0,75.82,284.74Z" style="fill: rgb(250, 250, 250); transform-origin: 73.52px 284.74px;" id="elzjap01i8fea" class="animable"></path><path d="M111.1,284.74a2.3,2.3,0,1,0-2.3,2.3A2.3,2.3,0,0,0,111.1,284.74Z" style="fill: rgb(250, 250, 250); transform-origin: 108.8px 284.74px;" id="el3ssbkz2pfhx" class="animable"></path><path d="M146.38,284.74a2.3,2.3,0,1,0-2.3,2.3A2.3,2.3,0,0,0,146.38,284.74Z" style="fill: rgb(250, 250, 250); transform-origin: 144.08px 284.74px;" id="eln3f35tjtxzf" class="animable"></path><path d="M434,152.58a14.4,14.4,0,0,0,.21-2.37,15.07,15.07,0,0,0-17.58-14.92,17.26,17.26,0,0,0-31.42,4.21,11.24,11.24,0,0,0-14.55,10.71,11.63,11.63,0,0,0,.26,2.37Z" style="fill: rgb(240, 240, 240); transform-origin: 402.435px 139.743px;" id="el8cqwiihvmg8" class="animable"></path><g id="eln6ywy1sv0hl"><circle cx="146.97" cy="112.76" r="38.04" style="fill: rgb(240, 240, 240); transform-origin: 146.97px 112.76px; transform: rotate(-79.1deg);" class="animable"></circle></g><path d="M132.32,110.52a16.14,16.14,0,0,0,.21-2.43A15.57,15.57,0,0,0,117,92.52a15,15,0,0,0-2.52.22A17.76,17.76,0,0,0,82.1,97.07a11.54,11.54,0,0,0-14.71,13.45Z" style="fill: rgb(240, 240, 240); transform-origin: 99.8305px 97.2879px;" id="elmi12oyhc6cg" class="animable"></path><path d="M167.76,130.55a8.58,8.58,0,0,1,8.53-10,8.22,8.22,0,0,1,1.41.13,9.86,9.86,0,0,1,18,2.4,6.41,6.41,0,0,1,8.32,6.12,6.75,6.75,0,0,1-.14,1.36Z" style="fill: rgb(240, 240, 240); transform-origin: 185.831px 123.195px;" id="elohb7yzlvv5o" class="animable"></path><path d="M100.27,159.4c-4.92-1.85-14.3-3.83-18.78,5.33,0,0,5.14-4,13.79-3.06a4.63,4.63,0,0,0-.3,4l5.34-2.95.08,0c11.56-3.43,18.66,2.09,18.66,2.09C114.57,155.57,105.19,157.55,100.27,159.4Z" style="fill: rgb(240, 240, 240); transform-origin: 100.275px 161.753px;" id="elzi3zn1rrti" class="animable"></path></g><g id="freepik--Shadow--inject-41" class="animable" style="transform-origin: 250px 416.24px;"><ellipse id="freepik--path--inject-41" cx="250" cy="416.24" rx="193.89" ry="11.32" style="fill: rgb(245, 245, 245); transform-origin: 250px 416.24px;" class="animable"></ellipse></g><g id="freepik--Character--inject-41" class="animable" style="transform-origin: 351.55px 254.95px;"><g id="el7hvjysy1d1o"><ellipse cx="369.38" cy="112.62" rx="25.43" ry="6.56" style="fill: rgb(64, 123, 255); transform-origin: 369.38px 112.62px; transform: rotate(-5.86deg);" class="animable"></ellipse></g><g id="elb6kw62ahih"><path d="M381,107.07c.09,0,2.37.12,2,.77s-2.28.48-2.28.48Z" style="opacity: 0.35; isolation: isolate; transform-origin: 381.88px 107.705px;" class="animable"></path></g><g id="el51ebto8718k"><path d="M356.13,109.59s-1.92.33-1.51,1.49,4.45.6,4.45.6l-1-1.55Z" style="opacity: 0.35; isolation: isolate; transform-origin: 356.816px 110.703px;" class="animable"></path></g><path d="M327,201.28l-14.27-13.65a7.34,7.34,0,0,0-1.77-4.74c-1.86-2-10.17-4.84-10.71-4.19s-1.31,8.69-.38,9.47,9.32,4.2,9.32,4.2L320.32,207Z" style="fill: rgb(228, 137, 123); transform-origin: 313.218px 192.803px;" id="elozu9w9u641r" class="animable"></path><path d="M353.91,145.49l-5.5,3.13c-6.15,10.81-19.84,34.69-24,42a2.14,2.14,0,0,1-3.2.61l-3.42-2.71-7.64,10.58s11.35,11.82,15.23,10.65c7.44-2.27,26.84-35.09,26.84-35.09Z" style="fill: rgb(64, 123, 255); transform-origin: 332.03px 177.661px;" id="ellqh9dns8if" class="animable"></path><g id="eltf7yae35f2d"><path d="M344.18,164s-7,22.89-6.76,33.77c3.92-5.53,7.82-11.68,10.63-16.26Z" style="opacity: 0.4; isolation: isolate; transform-origin: 342.732px 180.885px;" class="animable"></path></g><polygon points="349.06 403.04 340.71 403.92 336.12 361.15 349.06 359.83 349.06 403.04" style="fill: rgb(228, 137, 123); transform-origin: 342.59px 381.875px;" id="el4530dyd2zcn" class="animable"></polygon><g id="el0es0youooolp"><path d="M336.63,365.91c3.18-.12,8.53-.39,12.43-.59v-5.49l-12.94,1.32Z" style="fill: rgb(38, 50, 56); opacity: 0.2; isolation: isolate; transform-origin: 342.59px 362.87px;" class="animable"></path></g><polygon points="390.69 402.43 382.61 402.43 376.42 355.89 389 354.3 390.69 402.43" style="fill: rgb(228, 137, 123); transform-origin: 383.555px 378.365px;" id="elt1nru1w7zjg" class="animable"></polygon><g id="elg2nx75s3zt"><polygon points="376.81 358.81 377.61 364.85 389.33 363.7 389 354.3 377.37 355.77 376.81 358.81" style="fill: rgb(38, 50, 56); opacity: 0.2; isolation: isolate; transform-origin: 383.07px 359.575px;" class="animable"></polygon></g><path d="M394.13,149A180.7,180.7,0,0,0,389,175.58c-.33,2.75-.61,5.46-.84,8.08-.3,3.33-.5,6.54-.67,9.59-.2,3.85-.26,8.41-.25,12.9,0,10.3.43,20.21.43,20.21-8.23,2-32,.69-45-.26a207.2,207.2,0,0,1-1.2-37.45A215.45,215.45,0,0,1,344.18,164a106.38,106.38,0,0,1,2.9-12.88,8.21,8.21,0,0,1,6.83-5.67c1.57-.19,3.39-.39,5.31-.5.74,0,1.48-.07,2.23-.09a160.85,160.85,0,0,1,18.35,1.28c1.15.13,2.32.31,3.46.49A106,106,0,0,1,394.13,149Z" style="fill: rgb(64, 123, 255); transform-origin: 367.623px 186.134px;" id="el8iwh3vov7gk" class="animable"></path><path d="M356.25,109.64s-1.86,9.83,4.05,14.12,5.92-16.46,5.92-16.46Z" style="fill: rgb(245, 245, 245); transform-origin: 361.096px 115.822px;" id="elp6od432ajx" class="animable"></path><path d="M356.25,109.64s-1.86,9.83,4.05,14.12,5.92-16.46,5.92-16.46Z" style="fill: rgb(38, 50, 56); transform-origin: 361.096px 115.822px;" id="elzzk11ezyp9m" class="animable"></path><path d="M379.81,146.13c-3.94,3.58-13.59,2.25-13.59,2.25s-6-1.64-4.76-3.53c3.55-.58,5.27-2.24,6-4.36a10.38,10.38,0,0,0,.36-4.05c-.06-.75-.17-1.51-.3-2.26l11.93-8.84C377.87,131.17,376,141.9,379.81,146.13Z" style="fill: rgb(228, 137, 123); transform-origin: 370.551px 136.981px;" id="elvmgqgl90pr" class="animable"></path><g id="el1xeqgzzc90g"><path d="M376.67,131c-.47,7.16-6.35,9.13-9.23,9.53a10.38,10.38,0,0,0,.36-4.05Z" style="opacity: 0.2; isolation: isolate; transform-origin: 372.055px 135.765px;" class="animable"></path></g><path d="M377.47,132.61a10.09,10.09,0,0,1-11.61,3.92,11.26,11.26,0,0,1-6.43-5.23,11.83,11.83,0,0,1-.53-1.07c-2.91-6.81-3.84-18.72,3.36-23.19A11,11,0,0,1,379,115.3C379.89,123.26,380.79,127.9,377.47,132.61Z" style="fill: rgb(228, 137, 123); transform-origin: 368.278px 121.227px;" id="elpba0ie7vjlh" class="animable"></path><path d="M369,110.13a2.53,2.53,0,0,1,3.74,3c-.77,3.09,1,13.44,4.49,9,0,0-.09-1.29,1-1.12s1.63,6.86-.09,10.29c0,0,2.83-3.26,3.77-10.46s.35-12.94-1.62-14.91-2.49.08-3.95-2.66-13.32-3-19.65,4.18C355.52,108.76,354.88,117.17,369,110.13Z" style="fill: rgb(38, 50, 56); transform-origin: 369.241px 116.395px;" id="elyn7syd6wyy" class="animable"></path><path d="M367.4,119.56c.16.63-.14,1.22-.56,1.29s-.85-.4-1-1,.14-1.22.56-1.29S367.29,118.91,367.4,119.56Z" style="fill: rgb(38, 50, 56); transform-origin: 366.622px 119.705px;" id="elvxem1moyqy" class="animable"></path><path d="M360.13,120.8c.16.63-.14,1.22-.56,1.29s-.85-.4-1-1,.15-1.22.56-1.29S360,120.19,360.13,120.8Z" style="fill: rgb(38, 50, 56); transform-origin: 359.352px 120.945px;" id="elkl9ku2knyzj" class="animable"></path><path d="M362.27,119.75a23.06,23.06,0,0,1-2.14,6c1,.49,2.34,1,3.36.57Z" style="fill: rgb(222, 87, 83); transform-origin: 361.81px 123.116px;" id="el6dsts0ik7fj" class="animable"></path><g id="el7kylwjebomj"><path d="M380.28,105.93c-1.45-1.45-2.11-.73-2.94-1.33l-6.79,2c.07,0,7.51-.24,11.59,4.44C381.84,108.68,381.22,106.87,380.28,105.93Z" style="opacity: 0.35; isolation: isolate; transform-origin: 376.345px 107.82px;" class="animable"></path></g><path d="M383.56,121.19a7.61,7.61,0,0,1-3.66,4.53c-2.35,1.26-4.11-.7-3.95-3.23.16-2.25,1.56-5.68,4.17-5.88S384.23,118.8,383.56,121.19Z" style="fill: rgb(228, 137, 123); transform-origin: 379.83px 121.355px;" id="ely9yopbebjn" class="animable"></path><polygon points="312.6 152.42 303.75 151.44 302.32 144.99 315.4 146.45 312.6 152.42" id="el1zh2fk4s32f" class="animable" style="transform-origin: 308.86px 148.705px;"></polygon><path d="M292.66,290.19h-.1a1.72,1.72,0,0,1-1.52-1.89l16.52-148.41,3.51.39L294.55,288.68A1.72,1.72,0,0,1,292.66,290.19Z" style="fill: rgb(38, 50, 56); transform-origin: 301.05px 215.045px;" id="ell4ghv87bzqk" class="animable"></path><path d="M334.38,114.57a46.79,46.79,0,0,0-6,14.19l-2.28,9.64a3.86,3.86,0,0,1-4.05,3h0l-7.72-.86c-3.67-.41-3.11-3.4-3.11-3.4h0l6.19-25.92-1,1.61a46.76,46.76,0,0,0-6,14.2L308,137.38c-.29.84-1.23,2.35-4.32,2l-4.88-.54-.1,0a2.84,2.84,0,0,1-2.33-3.49l6.22-26-1,1.6a46.76,46.76,0,0,0-6,14.2l-3,12.76,0,.18A9.94,9.94,0,0,0,301.3,149l16.19,1.8a9.91,9.91,0,0,0,10.93-8.65l7-29.19Z" style="fill: rgb(64, 123, 255); transform-origin: 313.978px 130.105px;" id="elj0fwoxet2fs" class="animable"></path><g id="ela6s8t4vtz2m"><path d="M334.38,114.57a46.79,46.79,0,0,0-6,14.19l-2.28,9.64a3.86,3.86,0,0,1-4.05,3h0l-7.72-.86c-3.67-.41-3.11-3.4-3.11-3.4h0l6.19-25.92-1,1.61a46.76,46.76,0,0,0-6,14.2L308,137.38c-.29.84-1.23,2.35-4.32,2l-4.88-.54-.1,0a2.84,2.84,0,0,1-2.33-3.49l6.22-26-1,1.6a46.76,46.76,0,0,0-6,14.2l-3,12.76,0,.18A9.94,9.94,0,0,0,301.3,149l16.19,1.8a9.91,9.91,0,0,0,10.93-8.65l7-29.19Z" style="fill: rgb(255, 255, 255); opacity: 0.5; isolation: isolate; transform-origin: 313.978px 130.105px;" class="animable"></path></g><path d="M373.82,358.3l17.55-2.16c-.86-15.31-1.8-32.24-2.43-43.5-1.53-27.44-2.19-87.59-2.24-93.23H343.78c-3.49,19.08-13.35,79.59-10.37,140.69l17.43-1c.69-30.37,3.12-75.92,11.26-97.81,1.48,18.46,3.23,38.09,4.75,48.54C368.64,322.13,371.42,341.5,373.82,358.3Z" style="fill: rgb(64, 123, 255); transform-origin: 362.113px 289.755px;" id="el5sbx3q4a589" class="animable"></path><g id="eljprzhjfvgv"><path d="M373.82,358.3l17.55-2.16c-.86-15.31-1.8-32.24-2.43-43.5-1.27-22.79-1.94-68.15-2.16-86.09.3-.06.6-.12.87-.19,0,0-.41-9.91-.43-20.21,0-4.49,0-9.05.25-12.9.17-3.05.37-6.26.67-9.59.23-2.62.51-5.33.84-8.08A180.7,180.7,0,0,1,394.13,149a104.31,104.31,0,0,0-10.6-2.25c-6.49,7.28-9.95,26.44-9.95,26.44-6.14.09-23.39-1.8-23.39-1.8,1.49-18.92,5.63-25,6.68-26.19-1.05.1-2.05.21-3,.32a8.21,8.21,0,0,0-6.83,5.67,106.38,106.38,0,0,0-2.9,12.88,215.45,215.45,0,0,0-2.73,24.61,207.16,207.16,0,0,0,1.18,37.29c-4.1,24-11.92,78.86-9.23,134.16l17.44-1c.69-30.37,3.12-75.92,11.26-97.81,1.48,18.46,3.23,38.09,4.75,48.54C368.64,322.13,371.42,341.5,373.82,358.3Z" style="opacity: 0.3; isolation: isolate; transform-origin: 363.47px 252.665px;" class="animable"></path></g><g id="elaff5y89ez1e"><path d="M388.3,298c-.34-9.36-.61-20.07-.84-30.51l-5.9-3.37S382.76,292.83,388.3,298Z" style="opacity: 0.35; isolation: isolate; transform-origin: 384.93px 281.06px;" class="animable"></path></g><polygon points="333.09 363.23 352.58 361.81 352.39 356.43 332.14 357.56 333.09 363.23" style="fill: rgb(64, 123, 255); transform-origin: 342.36px 359.83px;" id="elqrt2pw0479" class="animable"></polygon><polygon points="373.28 361.34 392.42 360.1 392.09 354.3 372.62 355.79 373.28 361.34" style="fill: rgb(64, 123, 255); transform-origin: 382.52px 357.82px;" id="el7mde7jdh05j" class="animable"></polygon><path d="M355.44,408.37l-2.7-8.73-.16-26.21-17.88,1.1,3.38,26.26c-2.29,2.41-7.89,5.21-15.45,7.51-1.68.52-.8,4.62,3.39,4.28s13.33-1.41,16.37-1.66c4.92-.4,7.8-.4,11.73-.65a1.65,1.65,0,0,0,.32-.06A1.48,1.48,0,0,0,355.44,408.37Z" style="fill: rgb(38, 50, 56); transform-origin: 338.664px 393.015px;" id="el7jbhxyu9n3" class="animable"></path><polygon points="332.85 373.43 353.78 371.91 353.78 378.83 333.68 379.74 332.85 373.43" style="fill: rgb(38, 50, 56); transform-origin: 343.315px 375.825px;" id="elw44jiuokn5" class="animable"></polygon><path d="M397.1,409.13l-2.7-8.73-.16-26.21-17.88,1.1,3.38,26.25c-2.28,2.42-7.89,5.21-15.45,7.52-1.68.52-.8,4.62,3.4,4.28s13.32-1.41,16.36-1.66c4.93-.4,7.8-.4,11.73-.65a1.65,1.65,0,0,0,.32-.06A1.48,1.48,0,0,0,397.1,409.13Z" style="fill: rgb(38, 50, 56); transform-origin: 380.325px 393.775px;" id="elqm0xgigc" class="animable"></path><polygon points="374.51 374.19 395.44 372.67 395.44 379.59 375.34 380.5 374.51 374.19" style="fill: rgb(38, 50, 56); transform-origin: 384.975px 376.585px;" id="el26wc71sb1v1" class="animable"></polygon><path d="M349.65,180.92l3.17.84a50.22,50.22,0,0,0,14.9,1.58l4.19-.19-2.82,12.3a5.36,5.36,0,0,1-5.75,4.28l-8.82-.82a5.38,5.38,0,0,1-4.87-5.35Z" style="fill: rgb(64, 123, 255); transform-origin: 360.78px 190.336px;" id="el2w4jxn4q8wn" class="animable"></path><g id="el0ctyrzjo6bsg"><path d="M349.65,180.92l3.17.84a50.22,50.22,0,0,0,14.9,1.58l4.19-.19-2.82,12.3a5.36,5.36,0,0,1-5.75,4.28l-8.82-.82a5.38,5.38,0,0,1-4.87-5.35Z" style="opacity: 0.2; isolation: isolate; transform-origin: 360.78px 190.336px;" class="animable"></path></g><path d="M407.32,272.59l-1.84-.42a27.64,27.64,0,0,0,.69-6.22c0-9.55-4.59-17.31-10.23-17.31S385.72,256.4,385.72,266h-1.89c0-10.58,5.44-19.2,12.11-19.2s12.11,8.62,12.11,19.2A29.57,29.57,0,0,1,407.32,272.59Z" style="fill: rgb(38, 50, 56); transform-origin: 395.94px 259.695px;" id="eltiznk4zooff" class="animable"></path><path d="M381.57,264.09l5.35,28c0,1.2,4.43,2.18,9.9,2.18s9.9-1,9.9-2.18l5.35-28Z" style="fill: rgb(235, 235, 235); transform-origin: 396.82px 279.18px;" id="el18u5b81lkx9" class="animable"></path><g id="elmbd05gryq"><path d="M381.57,264.09l5.35,28c0,1.2,4.43,2.18,9.9,2.18s9.9-1,9.9-2.18l5.35-28Z" style="opacity: 0.3; isolation: isolate; transform-origin: 396.82px 279.18px;" class="animable"></path></g><ellipse cx="396.82" cy="264.09" rx="15.25" ry="3.35" style="fill: rgb(64, 123, 255); transform-origin: 396.82px 264.09px;" id="eln337bzqk8bj" class="animable"></ellipse><g id="el6yy1876zpk4"><ellipse cx="396.82" cy="264.09" rx="15.25" ry="3.35" style="opacity: 0.6; isolation: isolate; transform-origin: 396.82px 264.09px;" class="animable"></ellipse></g><g id="el2dzbs9x56wq"><ellipse cx="396.82" cy="265.95" rx="12.67" ry="1.49" style="opacity: 0.35; isolation: isolate; transform-origin: 396.82px 265.95px;" class="animable"></ellipse></g><circle cx="406.36" cy="271.9" r="2.39" style="fill: rgb(245, 245, 245); transform-origin: 406.36px 271.9px;" id="eljvc35ssj2vb" class="animable"></circle><g id="elxvhugg77cb"><path d="M404.54,267a11.89,11.89,0,0,1,1.13,4.29l1.1-.29.61-4.08,0-.39C406.49,266.69,405.55,266.84,404.54,267Z" style="opacity: 0.4; isolation: isolate; transform-origin: 405.96px 268.91px;" class="animable"></path></g><path d="M396.82,246.82v1.89c5.23.76,9.35,8.2,9.35,17.24a28.23,28.23,0,0,1-.5,5.32.94.94,0,0,0,.71,1.1h0a1,1,0,0,0,1.14-.72,30.52,30.52,0,0,0,.53-5.7C408.05,255.84,403.09,247.54,396.82,246.82Z" style="fill: rgb(38, 50, 56); transform-origin: 402.435px 259.603px;" id="elr9wxn1e6yh" class="animable"></path><path d="M390.49,223.44l1.07,18.46a6.86,6.86,0,0,0-1.82,4.38c0,2.58,3.88,9.81,4.67,9.71s6.45-5.12,6.3-6.24-3.7-8.83-3.7-8.83l1.68-17.1Z" style="fill: rgb(228, 137, 123); transform-origin: 395.226px 239.716px;" id="elcc7isjrn7in" class="animable"></path><g id="elvrz62ruubs"><path d="M362.1,261.26a115.39,115.39,0,0,0-4.8,18.56c-1.2-16.42,3.6-33.83,3.6-33.83Z" style="opacity: 0.2; isolation: isolate; transform-origin: 359.604px 262.905px;" class="animable"></path></g><path d="M366.79,128a3.24,3.24,0,0,0-3.58.62,1.25,1.25,0,0,0-.12-.08,3.23,3.23,0,0,0-3.56,1c-1.88,2-2.49.93-2.49.93s1.27,3.4,4.7,1.24q.42-.27.75-.51a2.62,2.62,0,0,1,2.18-.42,4.69,4.69,0,0,0,1.12.12c3.16,0,4.14-3.2,4.14-3.2S369.38,129,366.79,128Z" style="fill: rgb(38, 50, 56); transform-origin: 363.485px 130.064px;" id="elyeayptgqeu" class="animable"></path><path d="M368.38,107.27a63,63,0,0,1,14.16,0c-1.22-6.78-6.17-10.73-13.31-10.73-8,0-15.47,5.3-15.47,13.31,0,.19,0,.37,0,.55A61.28,61.28,0,0,1,368.38,107.27Z" style="fill: rgb(64, 123, 255); transform-origin: 368.15px 103.47px;" id="el7jwlh6ygd48" class="animable"></path><path d="M374.48,111.79c-.18.14-13.32,4-16.57.68s11-3.65,11-3.65l4.24.31Z" style="fill: rgb(38, 50, 56); transform-origin: 365.954px 111.317px;" id="elp3voimm787" class="animable"></path><path d="M394.13,149s7.38-1,7.11,48.4c-.17,33.09.87,32.92.87,32.92l-15.32.75S376.67,149.08,394.13,149Z" style="fill: rgb(64, 123, 255); transform-origin: 392.992px 190.034px;" id="elohjo7ouoq9" class="animable"></path><polygon points="384.59 226.34 403.54 226.14 403.67 231.04 384.87 231.55 384.59 226.34" style="fill: rgb(64, 123, 255); transform-origin: 394.13px 228.845px;" id="elpnn7ng2qru9" class="animable"></polygon><g id="ely135q7mxebn"><polygon points="384.59 226.34 403.54 226.14 403.67 231.04 384.87 231.55 384.59 226.34" style="fill: rgb(250, 250, 250); opacity: 0.5; isolation: isolate; transform-origin: 394.13px 228.845px;" class="animable"></polygon></g><polygon points="317 185.93 320.23 188.44 310.38 201.35 307.39 198.65 317 185.93" style="fill: rgb(64, 123, 255); transform-origin: 313.81px 193.64px;" id="el4b16323t0fl" class="animable"></polygon><g id="eleio7b7p67g"><polygon points="317 185.93 320.23 188.44 310.38 201.35 307.39 198.65 317 185.93" style="fill: rgb(250, 250, 250); opacity: 0.5; isolation: isolate; transform-origin: 313.81px 193.64px;" class="animable"></polygon></g><path d="M365,116.92H365a.32.32,0,0,1-.22-.4,2,2,0,0,1,1.74-1.3,2.17,2.17,0,0,1,2.22.85.33.33,0,0,1-.1.45.33.33,0,0,1-.45-.11,1.56,1.56,0,0,0-1.58-.55,1.39,1.39,0,0,0-1.21.85A.32.32,0,0,1,365,116.92Z" style="fill: rgb(38, 50, 56); transform-origin: 366.778px 116.052px;" id="elog9av4dzz58" class="animable"></path><path d="M356.53,118h-.09a.33.33,0,0,1-.22-.41,2,2,0,0,1,1.74-1.3,2.19,2.19,0,0,1,2.22.85.32.32,0,0,1-.11.45.31.31,0,0,1-.44-.11,1.57,1.57,0,0,0-1.58-.54,1.37,1.37,0,0,0-1.21.84A.32.32,0,0,1,356.53,118Z" style="fill: rgb(38, 50, 56); transform-origin: 358.218px 117.121px;" id="el5on6b6o0mkq" class="animable"></path></g><g id="freepik--Wheelbarrow--inject-41" class="animable" style="transform-origin: 191.498px 344.846px;"><path d="M121.64,294.18c0,7.68-11.15,21.38-18.83,21.38s-9-13.7-9-21.38a13.91,13.91,0,1,1,27.82,0Z" style="fill: rgb(64, 123, 255); transform-origin: 107.725px 297.915px;" id="elw6tgr56918e" class="animable"></path><g id="elfwdr7r1o9me"><path d="M121.64,294.18c0,7.68-11.15,21.38-18.83,21.38s-9-13.7-9-21.38a13.91,13.91,0,1,1,27.82,0Z" style="fill: rgb(250, 250, 250); opacity: 0.4; isolation: isolate; transform-origin: 107.725px 297.915px;" class="animable"></path></g><path d="M114.73,277.87a7.39,7.39,0,0,0-3.78,5.4,7.34,7.34,0,0,0,10.37-5.59A7.4,7.4,0,0,0,114.73,277.87Z" style="fill: rgb(64, 123, 255); transform-origin: 116.135px 280.479px;" id="eld91z30ni0qj" class="animable"></path><g id="elpywpatinn1e"><path d="M114.73,277.87a7.39,7.39,0,0,0-3.78,5.4,7.34,7.34,0,0,0,10.37-5.59A7.4,7.4,0,0,0,114.73,277.87Z" style="fill: rgb(250, 250, 250); opacity: 0.2; isolation: isolate; transform-origin: 116.135px 280.479px;" class="animable"></path></g><path d="M107.59,281.33a4.38,4.38,0,0,0,3.4,1.93,4.35,4.35,0,0,0-3.87-5.81A4.37,4.37,0,0,0,107.59,281.33Z" style="fill: rgb(64, 123, 255); transform-origin: 109.055px 280.355px;" id="elbfpoygi3mpi" class="animable"></path><g id="elczynz5myerk"><path d="M107.59,281.33a4.38,4.38,0,0,0,3.4,1.93,4.35,4.35,0,0,0-3.87-5.81A4.37,4.37,0,0,0,107.59,281.33Z" style="fill: rgb(250, 250, 250); opacity: 0.2; isolation: isolate; transform-origin: 109.055px 280.355px;" class="animable"></path></g><path d="M175.54,288.92c2.5,7.27-3.58,23.85-10.85,26.35s-13-10-15.46-17.29a13.91,13.91,0,1,1,26.31-9.06Z" style="fill: rgb(64, 123, 255); transform-origin: 162.292px 297.566px;" id="el8dwmy4r84cl" class="animable"></path><g id="els9uay0esyhk"><path d="M175.54,288.92c2.5,7.27-3.58,23.85-10.85,26.35s-13-10-15.46-17.29a13.91,13.91,0,1,1,26.31-9.06Z" style="fill: rgb(250, 250, 250); opacity: 0.4; isolation: isolate; transform-origin: 162.292px 297.566px;" class="animable"></path></g><path d="M163.7,275.75a7.36,7.36,0,0,0-1.82,6.34,7.35,7.35,0,0,0,8-8.66A7.38,7.38,0,0,0,163.7,275.75Z" style="fill: rgb(64, 123, 255); transform-origin: 165.88px 277.76px;" id="el2gjwf1vgihg" class="animable"></path><g id="eloxaf2q2t7yc"><path d="M163.7,275.75a7.36,7.36,0,0,0-1.82,6.34,7.35,7.35,0,0,0,8-8.66A7.38,7.38,0,0,0,163.7,275.75Z" style="fill: rgb(250, 250, 250); opacity: 0.2; isolation: isolate; transform-origin: 165.88px 277.76px;" class="animable"></path></g><path d="M158.07,281.34a4.35,4.35,0,0,0,3.84.72,4.35,4.35,0,0,0-5.55-4.22A4.33,4.33,0,0,0,158.07,281.34Z" style="fill: rgb(64, 123, 255); transform-origin: 159.135px 279.951px;" id="elekgyl99qew6" class="animable"></path><g id="el8nuam0czxir"><path d="M158.07,281.34a4.35,4.35,0,0,0,3.84.72,4.35,4.35,0,0,0-5.55-4.22A4.33,4.33,0,0,0,158.07,281.34Z" style="fill: rgb(250, 250, 250); opacity: 0.2; isolation: isolate; transform-origin: 159.135px 279.951px;" class="animable"></path></g><path d="M121.13,291.17c-.8,9,10.79,26.17,19.78,27s11.94-15.07,12.75-24.05a16.33,16.33,0,0,0-32.53-2.92Z" style="fill: rgb(64, 123, 255); transform-origin: 137.408px 297.27px;" id="el7fm3nyhtpy6" class="animable"></path><g id="elpkwi2254od"><path d="M121.13,291.17c-.8,9,10.79,26.17,19.78,27s11.94-15.07,12.75-24.05a16.33,16.33,0,0,0-32.53-2.92Z" style="fill: rgb(250, 250, 250); opacity: 0.5; isolation: isolate; transform-origin: 137.408px 297.27px;" class="animable"></path></g><path d="M130.92,272.84a8.67,8.67,0,0,1,3.86,6.7,8.62,8.62,0,0,1-11.54-7.61A8.64,8.64,0,0,1,130.92,272.84Z" style="fill: rgb(64, 123, 255); transform-origin: 129.01px 275.736px;" id="el5o56xort6te" class="animable"></path><g id="elhzmxn9n07gg"><path d="M130.92,272.84a8.67,8.67,0,0,1,3.86,6.7,8.62,8.62,0,0,1-11.54-7.61A8.64,8.64,0,0,1,130.92,272.84Z" style="fill: rgb(250, 250, 250); opacity: 0.2; isolation: isolate; transform-origin: 129.01px 275.736px;" class="animable"></path></g><path d="M138.9,277.63a5.16,5.16,0,0,1-4.17,1.9,5.11,5.11,0,0,1,5.14-6.38A5.16,5.16,0,0,1,138.9,277.63Z" style="fill: rgb(64, 123, 255); transform-origin: 137.298px 276.34px;" id="elrtkcj3sxpzr" class="animable"></path><g id="eln8b2h8aetn"><path d="M138.9,277.63a5.16,5.16,0,0,1-4.17,1.9,5.11,5.11,0,0,1,5.14-6.38A5.16,5.16,0,0,1,138.9,277.63Z" style="fill: rgb(250, 250, 250); opacity: 0.2; isolation: isolate; transform-origin: 137.298px 276.34px;" class="animable"></path></g><path d="M175,284.82c-2.84,8.56,4.51,27.94,13.07,30.78s15.08-11.93,17.92-20.49a16.33,16.33,0,0,0-31-10.29Z" style="fill: rgb(64, 123, 255); transform-origin: 190.601px 294.795px;" id="el55g4bslqda4" class="animable"></path><g id="el506e3hzdol"><path d="M175,284.82c-2.84,8.56,4.51,27.94,13.07,30.78s15.08-11.93,17.92-20.49a16.33,16.33,0,0,0-31-10.29Z" style="fill: rgb(250, 250, 250); opacity: 0.5; isolation: isolate; transform-origin: 190.601px 294.795px;" class="animable"></path></g><path d="M188.69,269.22a8.66,8.66,0,0,1,2.22,7.4,8.61,8.61,0,0,1-9.49-10.05A8.66,8.66,0,0,1,188.69,269.22Z" style="fill: rgb(64, 123, 255); transform-origin: 186.162px 271.597px;" id="elitw1ld3g7kg" class="animable"></path><g id="ell2vdi5ntg8"><path d="M188.69,269.22a8.66,8.66,0,0,1,2.22,7.4,8.61,8.61,0,0,1-9.49-10.05A8.66,8.66,0,0,1,188.69,269.22Z" style="fill: rgb(250, 250, 250); opacity: 0.2; isolation: isolate; transform-origin: 186.162px 271.597px;" class="animable"></path></g><path d="M195.36,275.7a5.09,5.09,0,0,1-4.49.9,5.1,5.1,0,0,1,6.46-5A5.11,5.11,0,0,1,195.36,275.7Z" style="fill: rgb(64, 123, 255); transform-origin: 194.1px 274.099px;" id="elrvgjjw89e1h" class="animable"></path><g id="elkx1e3djxcun"><path d="M195.36,275.7a5.09,5.09,0,0,1-4.49.9,5.1,5.1,0,0,1,6.46-5A5.11,5.11,0,0,1,195.36,275.7Z" style="fill: rgb(250, 250, 250); opacity: 0.2; isolation: isolate; transform-origin: 194.1px 274.099px;" class="animable"></path></g><path d="M72.32,297.86H228.23s1.81,35.31-8.56,45c-8.81,8.26-76.63,15.83-103.34,18.92-5,.58-21.21-.88-25.25-4.45C80.9,348.33,73.5,330.39,72.32,297.86Z" style="fill: rgb(64, 123, 255); transform-origin: 150.336px 329.882px;" id="elgh7hc88ku6q" class="animable"></path><g id="elym96pdu9cm"><g style="opacity: 0.35; isolation: isolate; transform-origin: 137.339px 329.887px;" class="animable"><path d="M91.08,357.35c4,3.57,20.26,5,25.25,4.45,5.75-.66,13.41-1.54,22-2.58,25.53-3.9,48.71-8.59,53.94-13.5,9.62-9,10.21-37,10.06-47.86h-130C73.5,330.39,80.9,348.33,91.08,357.35Z" id="elzee0aze8dsj" class="animable" style="transform-origin: 137.339px 329.887px;"></path></g></g><rect x="69.26" y="294.53" width="164.55" height="6.32" style="fill: rgb(64, 123, 255); transform-origin: 151.535px 297.69px;" id="ellot995xsajg" class="animable"></rect><g id="elhrwc6keacm"><g style="opacity: 0.4; isolation: isolate; transform-origin: 151.535px 297.69px;" class="animable"><rect x="69.26" y="294.53" width="164.55" height="6.32" style="fill: rgb(250, 250, 250); transform-origin: 151.535px 297.69px;" id="el7jv2jxyii1v" class="animable"></rect></g></g><g id="elhuveqvgx6f"><circle cx="111.71" cy="392.74" r="26.53" style="fill: rgb(46, 53, 58); transform-origin: 111.71px 392.74px; transform: rotate(-9.22deg);" class="animable"></circle></g><g id="elf3q2eh1yrl"><g style="opacity: 0.35; isolation: isolate; transform-origin: 221.816px 332.215px;" class="animable"><path d="M227.56,319.59,219.41,331a17.83,17.83,0,0,0-3,13.84h0a12.4,12.4,0,0,0,3.24-2C224.37,338.48,226.56,328.83,227.56,319.59Z" id="el022lugzzrvh5" class="animable" style="transform-origin: 221.816px 332.215px;"></path></g></g><path d="M124.11,392.74a12.4,12.4,0,1,0-12.4,12.4A12.4,12.4,0,0,0,124.11,392.74Z" style="fill: rgb(240, 240, 240); transform-origin: 111.71px 392.74px;" id="elq4wk40dm02" class="animable"></path><path d="M117.34,392.74a5.63,5.63,0,1,0-5.63,5.63A5.63,5.63,0,0,0,117.34,392.74Z" style="fill: rgb(38, 50, 56); transform-origin: 111.71px 392.74px;" id="eliw1ga8brvc" class="animable"></path><path d="M225.25,415.38A14.58,14.58,0,0,1,211,404.09L199.81,353l-67.6,10.53-17.34,31a3.62,3.62,0,1,1-6.32-3.54l18.19-32.53a3.65,3.65,0,0,1,2.61-1.81l72.71-11.33a3.62,3.62,0,0,1,4.09,2.8l11.95,54.4a7.33,7.33,0,0,0,9.34,5.3,7.3,7.3,0,0,0,5-8.53L219.93,337.9a3.65,3.65,0,0,1,.27-2.28L235.7,303a3.64,3.64,0,0,1,2.54-2l59.47-12.31a3.63,3.63,0,0,1,1.47,7.1l-57.71,11.94-14.2,29.93,12.23,60.15a14.57,14.57,0,0,1-14.25,17.59Z" style="fill: rgb(64, 123, 255); transform-origin: 204.991px 352.024px;" id="eleax151jxuiu" class="animable"></path><g id="el0owol7dmszv"><g style="opacity: 0.7; isolation: isolate; transform-origin: 204.991px 352.024px;" class="animable"><path d="M225.25,415.38A14.58,14.58,0,0,1,211,404.09L199.81,353l-67.6,10.53-17.34,31a3.62,3.62,0,1,1-6.32-3.54l18.19-32.53a3.65,3.65,0,0,1,2.61-1.81l72.71-11.33a3.62,3.62,0,0,1,4.09,2.8l11.95,54.4a7.33,7.33,0,0,0,9.34,5.3,7.3,7.3,0,0,0,5-8.53L219.93,337.9a3.65,3.65,0,0,1,.27-2.28L235.7,303a3.64,3.64,0,0,1,2.54-2l59.47-12.31a3.63,3.63,0,0,1,1.47,7.1l-57.71,11.94-14.2,29.93,12.23,60.15a14.57,14.57,0,0,1-14.25,17.59Z" style="fill: rgb(255, 255, 255); transform-origin: 204.991px 352.024px;" id="elkhsin1cyysr" class="animable"></path></g></g><path d="M279.17,289.74l27.17-5.53a6.34,6.34,0,0,1,2.52,12.42l-27.16,5.53C281.28,302.24,279.17,289.74,279.17,289.74Z" style="fill: rgb(64, 123, 255); transform-origin: 296.453px 293.141px;" id="el7kuod06ltts" class="animable"></path></g><g id="freepik--Box--inject-41" class="animable" style="transform-origin: 277.44px 385.328px;"><path d="M257.37,372.15c0,4.87-7.06,13.54-11.92,13.54s-5.7-8.67-5.7-13.54a8.81,8.81,0,0,1,17.62,0Z" style="fill: rgb(64, 123, 255); transform-origin: 248.56px 374.515px;" id="elu32y263yea" class="animable"></path><g id="elipdidchz5x"><path d="M257.37,372.15c0,4.87-7.06,13.54-11.92,13.54s-5.7-8.67-5.7-13.54a8.81,8.81,0,0,1,17.62,0Z" style="fill: rgb(250, 250, 250); opacity: 0.5; isolation: isolate; transform-origin: 248.56px 374.515px;" class="animable"></path></g><path d="M253,361.83a4.65,4.65,0,0,0-2.4,3.41,4.66,4.66,0,0,0,6.57-3.53A4.65,4.65,0,0,0,253,361.83Z" style="fill: rgb(64, 123, 255); transform-origin: 253.885px 363.474px;" id="el3tmemj2x74o" class="animable"></path><g id="el4lk6r4w5wzl"><path d="M253,361.83a4.65,4.65,0,0,0-2.4,3.41,4.66,4.66,0,0,0,6.57-3.53A4.65,4.65,0,0,0,253,361.83Z" style="fill: rgb(250, 250, 250); opacity: 0.2; isolation: isolate; transform-origin: 253.885px 363.474px;" class="animable"></path></g><path d="M248.48,364a2.77,2.77,0,0,0,2.14,1.22,2.75,2.75,0,0,0-2.45-3.68A2.78,2.78,0,0,0,248.48,364Z" style="fill: rgb(64, 123, 255); transform-origin: 249.398px 363.38px;" id="elbeaif2n5gbo" class="animable"></path><g id="elgz2lffbn0w"><path d="M248.48,364a2.77,2.77,0,0,0,2.14,1.22,2.75,2.75,0,0,0-2.45-3.68A2.78,2.78,0,0,0,248.48,364Z" style="fill: rgb(250, 250, 250); opacity: 0.2; isolation: isolate; transform-origin: 249.398px 363.38px;" class="animable"></path></g><path d="M291.49,368.83c1.59,4.6-2.27,15.1-6.87,16.68s-8.2-6.35-9.79-10.95a8.81,8.81,0,1,1,16.66-5.73Z" style="fill: rgb(64, 123, 255); transform-origin: 283.08px 374.235px;" id="el4fudov4uygp" class="animable"></path><g id="elmowpnfciw7"><path d="M291.49,368.83c1.59,4.6-2.27,15.1-6.87,16.68s-8.2-6.35-9.79-10.95a8.81,8.81,0,1,1,16.66-5.73Z" style="fill: rgb(250, 250, 250); opacity: 0.4; isolation: isolate; transform-origin: 283.08px 374.235px;" class="animable"></path></g><path d="M284,360.49a4.68,4.68,0,0,0-1.15,4A4.65,4.65,0,0,0,287.9,359,4.66,4.66,0,0,0,284,360.49Z" style="fill: rgb(64, 123, 255); transform-origin: 285.377px 361.746px;" id="eljhwjlgzldwl" class="animable"></path><g id="elrpbfldzxlid"><path d="M284,360.49a4.68,4.68,0,0,0-1.15,4A4.65,4.65,0,0,0,287.9,359,4.66,4.66,0,0,0,284,360.49Z" style="fill: rgb(250, 250, 250); opacity: 0.2; isolation: isolate; transform-origin: 285.377px 361.746px;" class="animable"></path></g><path d="M280.43,364a1.38,1.38,0,1,0-1.08-2.22A2.75,2.75,0,0,0,280.43,364Z" style="fill: rgb(64, 123, 255); transform-origin: 280.587px 362.62px;" id="elgfqllvs5i0l" class="animable"></path><g id="elyfkwl1cweu"><path d="M280.43,364a1.38,1.38,0,1,0-1.08-2.22A2.75,2.75,0,0,0,280.43,364Z" style="fill: rgb(250, 250, 250); opacity: 0.2; isolation: isolate; transform-origin: 280.587px 362.62px;" class="animable"></path></g><path d="M257.05,370.25c-.51,5.69,6.83,16.56,12.52,17.07s7.56-9.54,8.07-15.22a10.34,10.34,0,1,0-20.59-1.85Z" style="fill: rgb(64, 123, 255); transform-origin: 267.367px 373.952px;" id="elhp1kzespbo9" class="animable"></path><g id="elpx2vqxipje9"><path d="M257.05,370.25c-.51,5.69,6.83,16.56,12.52,17.07s7.56-9.54,8.07-15.22a10.34,10.34,0,1,0-20.59-1.85Z" style="fill: rgb(250, 250, 250); opacity: 0.5; isolation: isolate; transform-origin: 267.367px 373.952px;" class="animable"></path></g><path d="M263.24,358.64a5.44,5.44,0,0,1,2.44,4.24,5.45,5.45,0,0,1-7.3-4.81A5.44,5.44,0,0,1,263.24,358.64Z" style="fill: rgb(64, 123, 255); transform-origin: 262.03px 360.474px;" id="el0wwzo0shgr5" class="animable"></path><g id="el6c20o68ibxm"><path d="M263.24,358.64a5.44,5.44,0,0,1,2.44,4.24,5.45,5.45,0,0,1-7.3-4.81A5.44,5.44,0,0,1,263.24,358.64Z" style="fill: rgb(250, 250, 250); opacity: 0.2; isolation: isolate; transform-origin: 262.03px 360.474px;" class="animable"></path></g><path d="M268.3,361.67a3.29,3.29,0,0,1-2.64,1.21,3.23,3.23,0,0,1,3.25-4A3.25,3.25,0,0,1,268.3,361.67Z" style="fill: rgb(64, 123, 255); transform-origin: 267.285px 360.88px;" id="eloy62ssntm6g" class="animable"></path><g id="elzhouwtc3vj"><path d="M268.3,361.67a3.29,3.29,0,0,1-2.64,1.21,3.23,3.23,0,0,1,3.25-4A3.25,3.25,0,0,1,268.3,361.67Z" style="fill: rgb(250, 250, 250); opacity: 0.2; isolation: isolate; transform-origin: 267.285px 360.88px;" class="animable"></path></g><path d="M291.13,366.23c-1.8,5.42,2.86,17.69,8.27,19.49s9.55-7.56,11.35-13a10.34,10.34,0,1,0-19.62-6.51Z" style="fill: rgb(64, 123, 255); transform-origin: 301.054px 372.398px;" id="elhyl1dbzsy45" class="animable"></path><g id="eljw966j1s0n"><path d="M291.13,366.23c-1.8,5.42,2.86,17.69,8.27,19.49s9.55-7.56,11.35-13a10.34,10.34,0,1,0-19.62-6.51Z" style="fill: rgb(250, 250, 250); opacity: 0.5; isolation: isolate; transform-origin: 301.054px 372.398px;" class="animable"></path></g><path d="M299.82,356.35a5.46,5.46,0,0,1,1.4,4.69,5.46,5.46,0,0,1-6-6.37A5.5,5.5,0,0,1,299.82,356.35Z" style="fill: rgb(64, 123, 255); transform-origin: 298.22px 357.856px;" id="el16hr3xl9zo2" class="animable"></path><g id="eluenpysz8ae"><path d="M299.82,356.35a5.46,5.46,0,0,1,1.4,4.69,5.46,5.46,0,0,1-6-6.37A5.5,5.5,0,0,1,299.82,356.35Z" style="fill: rgb(250, 250, 250); opacity: 0.2; isolation: isolate; transform-origin: 298.22px 357.856px;" class="animable"></path></g><path d="M304,360.46a1.62,1.62,0,1,1,1.25-2.62A3.27,3.27,0,0,1,304,360.46Z" style="fill: rgb(64, 123, 255); transform-origin: 303.803px 358.84px;" id="ellom8wqv4n1" class="animable"></path><g id="el5qensm11bp5"><path d="M304,360.46a1.62,1.62,0,1,1,1.25-2.62A3.27,3.27,0,0,1,304,360.46Z" style="fill: rgb(250, 250, 250); opacity: 0.2; isolation: isolate; transform-origin: 303.803px 358.84px;" class="animable"></path></g><polygon points="297.76 391.3 327.97 391.3 319.2 370.84 289 370.84 297.76 391.3" style="fill: rgb(64, 123, 255); transform-origin: 308.485px 381.07px;" id="elhe9tzy0xfk" class="animable"></polygon><rect x="264.54" y="370.84" width="54.63" height="45.18" style="fill: rgb(64, 123, 255); transform-origin: 291.855px 393.43px;" id="elpvb9wli6jn" class="animable"></rect><g id="el1lp5p1ioo83"><rect x="264.54" y="370.84" width="54.63" height="45.18" style="fill: rgb(250, 250, 250); opacity: 0.3; isolation: isolate; transform-origin: 291.855px 393.43px;" class="animable"></rect></g><rect x="235.67" y="370.84" width="42.34" height="45.18" style="fill: rgb(64, 123, 255); transform-origin: 256.84px 393.43px;" id="el4fj043hug25" class="animable"></rect><g id="elbmvc4o916jw"><rect x="235.67" y="370.84" width="42.34" height="45.18" style="fill: rgb(224, 224, 224); opacity: 0.1; isolation: isolate; transform-origin: 256.84px 393.43px;" class="animable"></rect></g><g id="el0ne6uq2usnr9"><polygon points="235.67 393.43 270.68 393.43 278 370.84 235.67 370.84 235.67 393.43" style="opacity: 0.35; isolation: isolate; transform-origin: 256.835px 382.135px;" class="animable"></polygon></g><polygon points="269.24 391.3 226.91 391.3 235.67 370.84 278 370.84 269.24 391.3" style="fill: rgb(64, 123, 255); transform-origin: 252.455px 381.07px;" id="el5pe54la9icj" class="animable"></polygon></g><defs>     <filter id="active" height="200%">         <feMorphology in="SourceAlpha" result="DILATED" operator="dilate" radius="2"></feMorphology>                <feFlood flood-color="#32DFEC" flood-opacity="1" result="PINK"></feFlood>        <feComposite in="PINK" in2="DILATED" operator="in" result="OUTLINE"></feComposite>        <feMerge>            <feMergeNode in="OUTLINE"></feMergeNode>            <feMergeNode in="SourceGraphic"></feMergeNode>        </feMerge>    </filter>    <filter id="hover" height="200%">        <feMorphology in="SourceAlpha" result="DILATED" operator="dilate" radius="2"></feMorphology>                <feFlood flood-color="#ff0000" flood-opacity="0.5" result="PINK"></feFlood>        <feComposite in="PINK" in2="DILATED" operator="in" result="OUTLINE"></feComposite>        <feMerge>            <feMergeNode in="OUTLINE"></feMergeNode>            <feMergeNode in="SourceGraphic"></feMergeNode>        </feMerge>            <feColorMatrix type="matrix" values="0   0   0   0   0                0   1   0   0   0                0   0   0   0   0                0   0   0   1   0 "></feColorMatrix>    </filter></defs></svg>
           
-            {% endif %}
           </div>
         </div>
       </section>
@@ -333,6 +487,45 @@
           <div id="chart"></div>
         </div>
       </section>
+      <section class="about-us" id="about">
+        <div style="width: 40%;margin-left: 50px; ">
+          <div style="display: flex; place-items: center; gap: 15px; font-size: 1.3rem; font-weight: bold; margin-bottom: 20px;">
+            <img style="width: 50px; height: 50px;" src="../static/images/plant-svgrepo-com.svg" alt="logo">
+            Crop Advisor
+          </div>
+          your reliable partner in modern farming. Our web-based application is designed to help farmers make informed decisions on the best crops to cultivate based on their soil conditions. 
+        </div>
+        <ul>
+          <b style="font-size: 1.3rem;">Links</b>
+          <li><a href="#crop-recommendation">Try it</a></li>
+          <li><a href="{{ url_for('main.crops') }}">Crop</a></li>
+          <li><a href="#weather">Weather</a></li>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="/logout">Logout</a></li>
+        </ul>
+        <div class="contact">
+          <div>
+            <div class="image-profile">
+              <img src="../static/images/abigail.jpg" alt="profile-image">
+            </div>
+            <div style="display: grid; gap: 10px;">
+              <span>Abigail Tetty</span>
+              <span>+233 20 193 305</span>
+              <span style="font-size: 0.8rem;">developer</span>
+            </div>
+          </div>
+          <div>
+            <div class="image-profile">
+              <img src="../static/images/abigail.jpg" alt="profile-image">
+            </div>
+            <div style="display: grid; gap: 10px;">
+              <span>Abigail Tetty</span>
+              <span>+233 20 193 305</span>
+              <span style="font-size: 0.8rem;">developer</span>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
@@ -340,11 +533,120 @@
       crossorigin="anonymous"
     ></script>
     <script>
-      function loadResult(e){
-        e.preventDefault()
-        console.log(e.target)
-        e.target.scrollIntoView()
-      }  
+      const crops = [
+            {
+                crop:'Rice',
+                imageURL:'../static/crops/rice-grain.jpg',
+                passage:'Rice is a cereal crop that requires high water availability, fertile clay or loamy soil and warm temperature of 20-30°C. Some common pests/diseases that affect rice are the Brown Planthopper and Rice Blast. These can be controlled by using resistant varieties, insecticides and pesticides, proper field sanitation and monitoring and lastly Integrated Pest Management.'
+            },
+            {
+                crop:'Sorghum',
+                imageURL:'../static/crops/sorghum.jpeg',
+                passage:'Sorghum is a crop that is drought-resistant, requires light to heavy soils and warm temperatures between 20-30°C. It requires low rainfall and well-drained soils. Some pests/diseases that affect sorghum are Sorghum Midge and Anthracnose. Some ways to combat these are using resistant varieties, insecticide sprays, fungicides and practicing crop rotation.'
+            },
+            {
+                crop:'Maize',
+                imageURL:'../static/crops/maize.jpg',
+                passage:'Maize is a cereal crop that requires fertile, well-drained loamy soil and warm temperatures between 20-30°C. Conditions required for growth include moderate to high rainfall and full sun. Some pests or diseases that may attack maize include Fall Armyworm and Maize Streak Virus. These can be controlled by insecticides, biopesticides and using resistant varieties.'
+            },
+            {
+                crop:'Yam',
+                imageURL:'../static/crops/yam.jpeg',
+                passage:'Yam is a crop that requires loamy or sandy soil, organic matter and moderate to high rainfall. Yam best grows in well-drained soils and within temperatures of 25-30°C. Some pests/diseases that affect yam are Yam Beetles and Anthracnose. These can be controlled by applying pesticides, practicing crop rotation and using resistant varieties'
+            },
+            {
+                crop:'Cocoyam',
+                imageURL:'../static/crops/cocoayam.jpg',
+                passage:'Cocoyam thrives in moist, fertile, well-drained soils with high organic content. It is well-suited to tropical climates with temperatures ranging from 25 to 30°C and high rainfall. Taro beetles and root rot are common issues, which can be addressed through improved drainage, crop rotation, and the use of insecticides and disease-free planting material.'
+            },
+            {
+                crop:'Sweet Potato',
+                imageURL:'../static/crops/potato.jpeg',
+                passage:'Sweet potato prefers loose, well-drained sandy loam soils and warm climates with temperatures between 20 and 26°C. It is susceptible to pests such as the sweet potato weevil and diseases like stem rot. Crop rotation, the use of resistant varieties, and the application of appropriate insecticides and fungicides are essential for maintaining healthy crops.'
+            },
+            {
+                crop:'Cassava',
+                imageURL:'../static/crops/cassava.jpg',
+                passage:'Cassava is a drought-resistant crop, grows best in well-drained sandy loam soils under warm temperatures between 25 and 29°C. It is vulnerable to the cassava mosaic disease and cassava mealybug infestations. These can be controlled by using disease-free cuttings, resistant varieties, and biological control methods such as the introduction of natural predators.'
+            },
+            {
+                crop:'Pineapple',
+                imageURL:'../static/crops/pineapple.jpg',
+                passage:'Pineapple requires well-drained, sandy loam soils and a warm climate with temperatures between 24 and 30°C. The crop is often affected by mealybugs and heart rot, which can be managed through the use of insecticides, natural predators, and good field sanitation practices.'
+            },
+            {
+                crop:'Tomatoes',
+                imageURL:'../static/crops/tomato.jpg',
+                passage:'Tomatoes thrive in well-drained sandy loam soils rich in organic matter, with temperatures between 20 and 30°C. The tomato fruitworm and blight are common challenges that can be controlled with the use of insecticides, resistant varieties, and fungicides, as well as through crop rotation and regular monitoring.'
+            },
+            {
+                crop:'Onion',
+                imageURL:'../static/crops/onion.jpeg',
+                passage:'Onion cultivation requires well-drained sandy loam soils with rich organic content. Onions prefer temperatures between 12 and 24°C and moderate rainfall. Onion thrips and downy mildew are prevalent threats, which can be managed through the application of insecticides, reflective mulches, and the use of resistant varieties.'
+            },
+            {
+                crop:'Beans',
+                imageURL:'../static/crops/beans.jpg',
+                passage:'Beans need well-drained loamy soils and moderate temperatures between 15 and 27°C. The crop is susceptible to pests like the bean weevil and diseases such as anthracnose. Effective control methods include using resistant varieties, proper storage practices, and crop rotation.'
+            },
+            {
+                crop:'Okro',
+                imageURL:'../static/crops/okro.jpeg',
+                passage:'Okro grows best in well-drained loamy or sandy soils under warm temperatures between 25 and 35°C. Pests such as aphids and diseases like powdery mildew can be managed through regular monitoring, the use of insecticides, and fungicides, as well as by avoiding overhead irrigation.'
+            },
+            {
+                crop:'Cashew',
+                imageURL:'../static/crops/cashew.jpeg',
+                passage:'Cashew requires well-drained sandy loam soils and thrives in tropical climates with temperatures between 24 and 28°C. The tea mosquito bug and powdery mildew are common problems that can be mitigated with insecticides, resistant varieties, and proper pruning practices.'
+            },
+            {
+                crop:'Banana',
+                imageURL:'../static/crops/banana.jpeg',
+                passage:'Banana prefers well-drained loamy soils rich in organic matter and grows well in tropical climates with temperatures between 26 and 30°C. Banana weevils and Panama disease are significant threats that can be controlled through regular monitoring, the use of resistant varieties, and proper field sanitation.'
+            },
+            {
+                crop:'Pawpaw',
+                imageURL:'../static/crops/pawpaw.jpg',
+                passage:'Pawpaw thrives in well-drained sandy loam soils rich in organic matter, with temperatures between 25 and 30°C. The papaya mealybug and papaya ringspot virus are common issues that can be managed through the use of resistant varieties, insecticides, and proper field sanitation.'
+            },
+            {
+                crop:'Coconut',
+                imageURL:'../static/crops/coconut.jpg',
+                passage:'Coconut requires well-drained sandy loam soils and is best suited for tropical climates with temperatures between 27 and 32°C. The coconut rhinoceros beetle and bud rot are common threats that can be controlled using pheromone traps, insecticides, and improving drainage.'
+            },
+            {
+                crop:'Coffee',
+                imageURL:'../static/crops/coffee.jpeg',
+                passage:'Coffee grows well in well-drained loamy soils at high altitudes with temperatures between 15 and 24°C. The coffee berry borer and coffee leaf rust are significant pests and diseases that can be managed through regular monitoring, the use of traps, and the application of fungicides and resistant varieties.'
+            },
+            {
+                crop:'Groundnut',
+                imageURL:'../static/crops/Groundnut_big_1.jpg',
+                passage:'Groundnut (Peanut) thrives in well-drained sandy loam soils under warm temperatures between 20 and 30°C. It is susceptible to pests like aphids and aflatoxin contamination. Effective management includes the use of insecticides, proper drying techniques, and resistant varieties.'
+            },
+            {
+                crop:'Cocoa',
+                imageURL:'../static/crops/cocoa.jpg',
+                passage:'Cocoa grows best in well-drained loamy soils rich in organic matter, with temperatures between 21 and 32°C in tropical climates. Cocoa mirids and black pod disease are common challenges that can be controlled through regular monitoring, the use of insecticides, fungicides, and proper pruning practices.'
+            },
+            {
+                crop:'Pepper',
+                imageURL:'../static/crops/chilli-pepper.jpg',
+                passage:'Pepper requires well-drained loamy soils rich in organic matter, with temperatures between 20 and 30°C. Regular monitoring, the use of resistant varieties, and proper field sanitation practices are essential for managing pests and diseases in pepper cultivation.'
+            },
+        ]
+      const name = document.querySelector('#name')?.innerHTML
+      console.log(name)
+      const crop = crops.find((crop)=>{
+        return crop.crop.toLowerCase()===name?.toLowerCase()
+      })
+      document.querySelector('.crop img').src = crop.imageURL
+      document.querySelector('.crop p').innerText = crop.passage.length>150?crop.passage.slice(0,150):crop.passage
+      document.querySelector('.crop button').id = crop.crop
+      function readMore(e){
+          sessionStorage.setItem('selectedCrop',e.target.id)
+          window.location.href = '/crop-detail'
+      }
       function check(e,low,high){
           const errorMessage = document.createElement('span')
           errorMessage.className = 'error'
@@ -354,6 +656,9 @@
           }else{
               e.target.parentNode.removeChild(e.target.parentNode.querySelector('.error'))
           }
+      }
+      function onClose(){
+        document.querySelector('.cover').style.display='none'
       }
       
   </script>
@@ -384,7 +689,7 @@
         colors: ['#3C50E0', '#80CAEE'],
         chart: {
           fontFamily: 'Raleway',
-          height: 550,
+          height: 600,
           type: 'area',
           dropShadow: {
             enabled: true,
@@ -489,7 +794,6 @@
    
 
     function getDateInDaysTime(){
-      
       return Array.from({length:14},(v,i)=>i+2).map(value=>{
         const currentDate = new Date(Date.now())
         currentDate.setDate(currentDate.getDate()+value)

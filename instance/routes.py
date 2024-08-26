@@ -40,7 +40,9 @@ def get_greeting():
 @main.route('/')
 def home():
     return render_template('home.html')
-
+@main.route('/crop-detail')
+def cropDetail():
+    return render_template('crop-detail.html')
 
 @main.route('/login', methods=['GET', 'POST'])
 def login():
@@ -92,7 +94,7 @@ def predict():
         #             19: "Pigeonpeas", 20: "Kidneybeans", 21: "Chickpea", 22: "Coffee"}
 
         if prediction[0]:
-            result = "{} is the best crop to be cultivated right there".format(prediction[0])
+            result = prediction[0]
         else:
             result = "Sorry, we could not determine the best crop to be cultivated with the provided data."
             
@@ -111,6 +113,13 @@ def logout():
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
+        # Check if email already exists
+        user = User.query.filter_by(email=form.email.data).first()
+        if user:
+            flash('Email already registered. Please choose a different one or log in.', 'danger')
+            return redirect(url_for('main.register'))
+        
+        # If email doesn't exist, proceed with registration
         hashed_password = bcrypt.generate_password_hash(
             form.password.data).decode('utf-8')
         new_user = User(
@@ -122,8 +131,10 @@ def register():
         )
         db.session.add(new_user)
         db.session.commit()
+        
         flash('Registration successful!', 'success')
         return redirect(url_for('main.login'))
+    
     return render_template('register.html', form=form)
 
 

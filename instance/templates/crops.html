@@ -1,324 +1,451 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link
-    rel="stylesheet"
-    href="{{ url_for('static', filename='dash.css') }}"
-  />
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-    integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
-    crossorigin="anonymous"
-  />
-    <title>Image Cards</title>
-    <style>/* Reset default styles */
-        *,
-        *::before,
-        *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        /* Set up grid layout */
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr); /* 3 cards per row */
-            gap: 20px;
-            max-width: 800px;
-            margin: 0 auto;
-           
-        }
-        
-        /* Style individual cards */
-        .card {
-            background-color: #f9f9f9;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgb(2, 160, 5);
-            overflow: hidden;
-        }
-        
-        .card__img {
-            width: 250px;
-            height: auto;
-            object-fit: cover;
-        }
-        
-        .card__content {
-            padding: 20px;
-        }
-        
-        .card__title {
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-        }
-        
-        .card__description {
-            font-size: 1rem;
-            color: #555;
-        }
-      .card:hover{
-        background-color: rgb(204, 191, 191); 
-        box-shadow: 0 4px 8px  #5c5ebe;
-      }
-      #s1{
-        color: #22c2cd;
-        font-family: cursive;
-        margin-top: 20px;
-      }
-      h2{
-        color: black;
-      }
-
-      body {
-        margin: 0;
-        padding: 0;
-        height: 100%;
-        width: 100%;
-        background-image: url("{{ url_for('static', filename='home2.jpg') }}");
-        background-size: cover;
-        background-attachment: fixed;
-        background-position: center;
-    }
-
-  
-
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1">
+        <link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&family=Manrope:wght@200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+            <link href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&family=Manrope:wght@200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
+        <title>Dashboard</title>
+        <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='dash.css') }}"
+        />
+        <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
+        crossorigin="anonymous"
+        />
+    <script src="{{ url_for('static', filename='weather.js') }}" defer></script>
+        <style>
+            body{
+                margin: 0;
+                padding: 0;
+                background-color: #CED5DF;
+                font-family: "Manrope",sans-serif;
+            }
+            ul{
+                margin-top: 0;
+            }
+            a{
+                color: white;
+                text-decoration: none;
+            }
+            input{
+                padding: 0 20px;
+                font-family: "Manrope",sans-serif;
+            }
+            button{
+                font-family: "Manrope",sans-serif;
+            }
+            header{
+                position: relative;
+                background-color: whitesmoke;
+                animation: image-appear2 0.4s ease-in;
+            }
+            .nav-bar{
+                display: flex;
+                place-content: space-around;
+                place-items: center;
+                background-color: #008457;
+                padding-top: 15px;
+                padding-bottom: 15px;
+                color: white;
+            }
+            .nav-bar ul{
+                display: flex;
+                list-style: none;
+                margin-bottom: 0;
+            }
+            .nav-bar li{
+                padding: 0 20px;
+                font-weight: bold;
+                font-size: 1.1rem;
+                transition: all 0.5s ease;
+                color: whitesmoke;
+            }
+            .nav-bar li:hover{
+                text-decoration: underline;
+                text-underline-offset: 10px;
+                cursor: pointer;
+                color: white;
+            }
+            .nav-bar>img{
+                width: 40px;
+                height: 40px;
+            }
+            .account-image{
+                display: flex;
+                place-items: center;
+                gap: 10px;
+            }
+            .account-image>div{
+                background-color: white;
+                width: fit-content;
+                border-radius: 50%;
+                contain: paint;
+                border: 1px solid gray;
+            }
+            .account-image img{
+                width: 35px;
+                width: 35px;
+                object-fit: cover;
+                object-position: left top;
+                display: block;
+                text-align: center;
+            }
+            .search-container{
+                width: 100%;
+                display: flex;
+                place-content: space-between;
+                background-color: #F8F9FB;
+                place-items: center;
+                padding: 3px 0;
+            }
+            .search-container p{
+                font-size: 1.3rem;
+                font-weight: bold;
+                margin: 0;
+            }
+            .search-container>:first-child{
+                padding-left: 70px;
+            }
+            .search-container>:last-child{
+                padding-right: 70px;
+                display: flex;
+                place-items: center;
+                gap: 15px;
+            }
+            .crop-section{
+                display:grid;
+                grid-template-columns: 1fr 1fr 1fr;
+                padding: 60px;
+                gap: 30px;
+            }
+            
+            .crop{
+                display: flex;
+                flex-direction: column;
+                background-color: #FFFFFF; 
+                width: 100%;
+                height: 450px;
+                border: 2px solid gainsboro;
+                border-radius: 10px;
+                contain: paint;
+                transition: all 0.4s ease;
+            }
+            .crop:hover{
+                transform: scaleY(115%);
+                transform: scaleX(105%);
+                z-index: 1000;
+            }
+            .crop label{
+                font-size: 1.3rem;
+                font-weight: bold;
+            }
+            .crop .image-container{
+                height: 40%;
+            }
+            .crop img{
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+                object-position: center center;
+            }
+            button:focus, button:focus-visible {
+                outline: 4px auto -webkit-focus-ring-color;
+            }
+            .crop-text-content{
+                display: flex;
+                flex-direction: column;
+                padding: 20px 30px ;
+                height: 60%;
+                place-content: space-between;
+            }
+            .crop button{
+                width: 200px;
+                height: 45px;
+                background-color: #EEB240;
+                border: none;
+                outline: none;
+                color: white;
+                font-size: 1rem;
+                border-radius: 3px;
+            }
+            .search{
+                height: 60px;
+                width: 300px;
+                font-size: 1.1rem;
+            }
+            .top-layer{
+                display: unset;
+            }
+            .about-us{
+              display: flex;
+              place-content: space-between;
+              color: white;
+              background-color: black;
+              padding: 20px 0;
+            }
+            .about-us ul{
+              list-style: none;
+            }
+            .about-us li{
+              padding: 10px 0;
+            }
+            .about-us a{
+              color: #008457;
+              transition: all 0.3s ease ;
+            }
+            .about-us a:hover{
+              color: white;
+              text-decoration: underline;
+            }
+            .contact{
+              margin-right: 80px;
+              display: grid;
+              gap: 30px;
+              
+            }
+            .contact>div{
+              display: flex;
+              gap: 20px;
+            }
+            .image-profile{
+              width: fit-content;
+              height: fit-content;
+                border-radius: 50%;
+                contain: paint;
+                border: 1px solid gray;
+            }
+            .image-profile img{
+              width: 60px;
+                width: 60px;
+                display: block;
+                text-align: center;
+            }
+            
         </style>
-</head>
-<body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-    <div class="container-fluid">
-      <span class="navbar-text"> {{greeting}}, {{ first_name }} </span>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div
-      class="collapse navbar-collapse justify-content-end"
-      id="navbarSupportedContent"
-    >
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('main.crops') }}"
-            >About Crops</a
-          >
-        </li>
-      </ul>
-    </div>
-      <div
-      class="collapse navbar-collapse justify-content-end"
-      id="navbarSupportedContent"
-    >
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link" href="{{ url_for('main.about') }}"
-            >About Us</a
-          >
-        </li>
-      </ul>
-    </div>
-      <div
-        class="collapse navbar-collapse justify-content-end"
-        id="navbarSupportedContent"
-      >
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('main.logout') }}"
-              >Logout</a
-            >
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>   
-
-
-
-    <center>
-    <br><h2 id="s1">About crops</h2></center><hr><br>
-
-    <div class="grid">
-        <!-- Card 1 -->
-        <div class="card">
-            <img class="card__img" src="https://cdn.glitch.global/bbb619d3-610c-4355-a0a1-1dffb2a7b752/sandy-ravaloniaina-Y678onxFoJI-unsplash.jpg?v=1714726559568">
-            <div class="card__content">
-                <h2 class="card__title">Rice</h2>
-                <p class="card__description">Rice is a Kharif crop that requires high temperatures (above 25 °C) and high humidity. It requires an annual rainfall above 100 cm. In areas with less rainfall, it grows with the help of irrigation.</p>
+    </head>
+    <body>
+        <header>
+            <div class="top-layer">
+                <nav class="nav-bar">
+                    <img src="../static/images/plant-svgrepo-com.svg" alt="logo">
+                    <ul>
+                      <li><a href="/dashboard#crop-recommendation">Try it</a></li>
+                      <li><a href="{{ url_for('main.crops') }}">Crop</a></li>
+                      <li><a href="/dashboard#weather">Weather</a></li>
+                      <li><a href="#about">About Us</a></li>
+                    </ul>
+                    <div class="account-image">
+                      <div>
+                        <img src="../static/images/farmer.svg" alt="profile-image">
+                      </div>
+                      <span>Mike</span>
+                    </div>
+                  </nav>
+                  <div class="search-container">
+                    <p>Crop Advisor</p>
+                    <div>
+                        <input type="text" class="search" oninput="onSearch(event)">
+                        <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17 17L21 21" stroke="#323232" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z" stroke="#323232" stroke-width="2"/>
+                        </svg>
+                    </div>
+                </div>
             </div>
-        </div>
-
-        <!-- Card 2 -->
-        <div class="card">
-            <img class="card__img" src="https://cdn.glitch.global/bbb619d3-610c-4355-a0a1-1dffb2a7b752/sunira-moses-m6kv58OMe6M-unsplash.jpg?v=1714726646647" alt="Image 2">
-            <div class="card__content">
-                <h2 class="card__title">Maize</h2>
-                <p class="card__description">Maize (Zea mays L.) is one of the most versatile emerging crops shaving wider adaptability under varied agro-climatic conditions. Globally, maize is known as the queen of cereals because it has the highest genetic yield potential among the cereals</p>
-            </div>
-        </div>
-
-        <!-- Repeat for Cards 3 to 10 -->
-        <!-- Card 3 -->
-        <div class="card">
-            <img class="card__img" src="https://cdn.glitch.global/bbb619d3-610c-4355-a0a1-1dffb2a7b752/anirudh-jDkcE6vM_e4-unsplash.jpg?v=1714726789239" alt="Image 3">
-            <div class="card__content">
-                <h2 class="card__title">Jute</h2>
-                <p class="card__description">Jute is one of the most important natural fibers after cotton in terms of cultivation and usage. Cultivation is dependent on the climate, season, and soil</p>
-            </div>
-        </div>
-        <!-- Card 4 -->
-<div class="card">
-    <img class="card__img" src="https://cdn.glitch.global/bbb619d3-610c-4355-a0a1-1dffb2a7b752/sze-yin-chan-cE35j-5Y7Ug-unsplash%20(1).jpg?v=1714729092778" alt="Image 4">
-    <div class="card__content">
-        <h2 class="card__title">Cotton</h2>
-        <p class="card__description">Cotton is a seed-hair fiber made mostly of cellulose. The fibers are composed of about 87 to 90 percent cellulose (a carbohydrate plant substance), 5 to 8 percent water, and 4 to 6 percent natural impurities</p>
-    </div>
-</div>
-<!-- Card 5 -->
-<div class="card">
-    <img class="card__img" src="https://cdn.glitch.global/bbb619d3-610c-4355-a0a1-1dffb2a7b752/peal-ami-ONJYuxHg-oM-unsplash.jpg?v=1714727138200" alt="Image 4">
-    <div class="card__content">
-        <h2 class="card__title">Coconut</h2>
-        <p class="card__description">Coconut palm is a tree with a slim and smooth trunk, a crown of leaves, and rounded, green or yellow fruit. Its flowers grow in clusters on a stem; a flowering structure known as an inflorescence. The female flowers are larger than the male flowers, and both are found on the same inflorescence.</p>
-    </div>
-</div>
-<!-- Card 6 -->
-<div class="card">
-    <img class="card__img" src="https://cdn.glitch.global/bbb619d3-610c-4355-a0a1-1dffb2a7b752/happy-surani-2-nA5KasEoE-unsplash.jpg?v=1714727209555" alt="Image 4">
-    <div class="card__content">
-        <h2 class="card__title">Papayya</h2>
-        <p class="card__description">The papaya, papaw, or pawpaw is the plant species Carica papaya, one of the 21 accepted species in the genus Carica of the family Caricaceae. It was first domesticated in Mesoamerica, within modern-day southern Mexico and Central America. It is grown in several countries in regions with a tropical climate.</p>
-    </div>
-</div>
-<!-- Card 7 -->
-<div class="card">
-    <img class="card__img" src="https://cdn.glitch.global/bbb619d3-610c-4355-a0a1-1dffb2a7b752/sheraz-shaikh-Zx3kcU2Kw9E-unsplash.jpg?v=1714727335445" alt="Image 4">
-    <div class="card__content">
-        <h2 class="card__title">Orange</h2>
-        <p class="card__description">An orange, also called sweet orange to distinguish it from the bitter orange, is the fruit of a tree in the family Rutaceae. Botanically, this is the hybrid Citrus × sinensis, between the pomelo and the mandarin orange. The chloroplast genome, and therefore the maternal line, is that of pomelo.</p>
-    </div>
-</div>
-<!-- Card 8 -->
-<div class="card">
-    <img class="card__img" src="https://cdn.glitch.global/bbb619d3-610c-4355-a0a1-1dffb2a7b752/priscilla-du-preez-CoqJGsFVJtM-unsplash.jpg?v=1714727428177" alt="Image 4">
-    <div class="card__content">
-        <h2 class="card__title">Apple</h2>
-        <p class="card__description">Apple cultivation in Ghana presents unique challenges and opportunities due to its tropical climate. Unlike India, where apple growing regions benefit from temperate conditions provided by the Himalayan ranges and high altitudes, Ghana's climate is predominantly tropical.</p>
-    </div>
-</div>
-<!-- Card 9 -->
-<div class="card">
-    <img class="card__img" src="https://cdn.glitch.global/bbb619d3-610c-4355-a0a1-1dffb2a7b752/shuvrodeep-dutta-RkAcBiDksK0-unsplash.jpg?v=1714727592267" alt="Image 4">
-    <div class="card__content">
-        <h2 class="card__title">Muskmelon</h2>
-        <p class="card__description">A well-drained sandy loam soil rich in organic matter is ideal for muskmelon cultivation. pH of the soil may range from 6.5 – 7.5. Muskmelon is slightly tolerant to soil acidity but cannot tolerate soils with high salt concentration. Lighter soils enhance the maturity of fruit, thus early harvest</p>
-    </div>
-</div>
-<!-- Card 10 -->
-<div class="card">
-    <img class="card__img" src="https://cdn.glitch.global/bbb619d3-610c-4355-a0a1-1dffb2a7b752/sahand-babali-eiNdbqWZww4-unsplash.jpg?v=1714727664740" alt="Image 4">
-    <div class="card__content">
-        <h2 class="card__title">Watermelon</h2>
-        <p class="card__description">Watermelon is grown in favorable climates from tropical to temperate regions worldwide for its large edible fruit, which is a berry with a hard rind and no internal divisions, and is botanically called a pepo. The sweet, juicy flesh is usually deep red to pink, with many black seeds, although seedless varieties exist.</p>
-    </div>
-</div>
-<!-- Card 11 -->
-<div class="card">
-    <img class="card__img" src="https://cdn.glitch.global/bbb619d3-610c-4355-a0a1-1dffb2a7b752/maja-petric-vGQ49l9I4EE-unsplash.jpg?v=1714727723944" alt="Image 4">
-    <div class="card__content">
-        <h2 class="card__title">Grape</h2>
-        <p class="card__description">Grapes (Vitis sp.), belonging to the family Vitaceae, are a popular and commercially significant fruit crop grown worldwide. They are valued for their versatility and are used in a variety of products, including fresh fruit, raisins, wine, and grape juice.</p>
-    </div>
-</div>
-<!-- Card 12 -->
-<div class="card">
-    <img class="card__img" src="https://cdn.glitch.global/bbb619d3-610c-4355-a0a1-1dffb2a7b752/hotchicksing-Dyc95dKuGp4-unsplash.jpg?v=1714727788951" alt="Image 4">
-    <div class="card__content">
-        <h2 class="card__title">Mango</h2>
-        <p class="card__description">Mangoes (Mangifera indica), belonging to the family Anacardiaceae, are a significant fruit crop in Ghana. Known for their sweet flavor and nutritional benefits, mangoes are widely consumed and cultivated across the country. Mangoes thrive in tropical and subtropical climates, making Ghana's climate ideal for their cultivation.</p>
-    </div>
-</div>
-<!-- Card 13 -->
-<div class="card">
-    <img class="card__img" src="https://cdn.glitch.global/bbb619d3-610c-4355-a0a1-1dffb2a7b752/mike-dorner-sf_1ZDA1YFw-unsplash.jpg?v=1714727851150" alt="Image 4">
-    <div class="card__content">
-        <h2 class="card__title">Banana</h2>
-        <p class="card__description">Banana is a rich source of carbohydrate and is rich in vitamins particularly vitamin B. It is also a good source of potassium, phosphorus, calcium and magnesium. The fruit is easy to digest, free from fat and cholesterol. Banana powder is used as the first baby food.</p>
-    </div>
-</div>
-<!-- Card 14 -->
-<div class="card">
-    <img class="card__img" src="https://cdn.glitch.global/bbb619d3-610c-4355-a0a1-1dffb2a7b752/tamanna-rumee-FMhKAulD9A4-unsplash.jpg?v=1714727905609" alt="Image 4">
-    <div class="card__content">
-        <h2 class="card__title">Pomegranate</h2>
-        <p class="card__description">Pomegranate (Punica granatum L.) is one of the oldest known edible fruits, which includes 22% seeds. High-quality oil, which is rich in conjugated fatty acids, is produced from pomegranate seeds; these are a waste product of the pomegranate industry, which also produces juice, concentrate, and jam.</p>
-    </div>
-</div>
-<!-- Card 15 -->
-<div class="card">
-    <img class="card__img" src="https://cdn.glitch.global/bbb619d3-610c-4355-a0a1-1dffb2a7b752/mockupo-dzQ-0nouwxM-unsplash.jpg?v=1714728181442" alt="Image 4">
-    <div class="card__content">
-        <h2 class="card__title">Lentil</h2>
-        <p class="card__description">Lentil is a small legume seed belonging to the Lens culinaris species and the Leguminosae (Fabaceae or Papilionaceae) family. It is one of the most ancient food crops that has been grown in the world, and originated from southwestern Asia as early as 7000 BC (Dhuppar, Biyan, Chintapalli, & Rao, 2012).</p>
-    </div>
-</div>
-<!-- Card 16 -->
-<div class="card">
-    <img class="card__img" src="https://media.istockphoto.com/id/997605586/photo/black-mung-bean.jpg?s=1024x1024&w=is&k=20&c=rRn49hs7nTpC-JrjKFoTL7Q3tdeFLQ07cfyRwI6860A=" alt="Image 4">
-    <div class="card__content">
-        <h2 class="card__title">Blackgram</h2>
-        <p class="card__description">Black gram (Vigna Mungo L.), is one of the important pulses crop, grown throughout the country. The crop is resistant to adverse climatic conditions and improve the soil fertility by fixing atmospheric nitrogen in the soil. It has been reported that the crop produces equivalent to 22.10 kg of N/ha., which has been estimated to be supplement of 59 thousand tonnes of urea annually.</p>
-    </div>
-</div>
-<!-- Card 17 -->
-<div class="card">
-    <img class="card__img" src="https://cdn.glitch.global/bbb619d3-610c-4355-a0a1-1dffb2a7b752/david-gabrielyan-ecpymDlXwHE-unsplash.jpg?v=1714728571872" alt="Image 4">
-    <div class="card__content">
-        <h2 class="card__title">Mungbean</h2>
-        <p class="card__description">Mung bean (Vigna radiata) is a legume plant of the pea family (Fabaceae), known for its edible seeds and young sprouts. Originally native to the Indian subcontinent, the mung bean is widely cultivated in Asia and is increasingly recognized in Ghana for its versatility and nutritional value. They require a warm growing season with well-distributed rainfall or supplementary irrigation.</p>
-    </div>
-</div>
-<!-- Card 18 -->
-<div class="card">
-    <img class="card__img" src="https://www.greendna.in/cdn/shop/products/moth2_1024x1024@2x.jpg?v=1591178564" alt="Image 4">
-    <div class="card__content">
-        <h2 class="card__title">Mothbeans</h2>
-        <p class="card__description">The moth bean crop consists of pods, sprouts and protein rich seeds. It acts as a pasture legume. It is rich in iron, calcium, manganese, zinc, potassium, magnesium and vitamin B9. The seeds of this crop contain 22-24% of protein.</p>
-    </div>
-</div>
-<!-- Card 19 -->
-<div class="card">
-    <img class="card_img" src="https://th.bing.com/th/id/OIP.7b-m7ihD5VtUCQ5LXfIR5wHaEK?rs=1&pid=ImgDetMain" alt="Image 4">
-    <div class="card__content">
-        <h2 class="card__title">Pigeonpeas</h2>
-        <p class="card__description">Pigeonpea (Cajanus cajan), commonly known as red gram, tur, or arhar, is an important pulse crop in Ghana. Although not as widely cultivated as some other crops, pigeonpea plays a significant role in Ghanaian agriculture. Pigeonpea is a traditional pulse crop with a long history of cultivation. It is valued for its adaptability and versatility in various cropping systems.</p>
-    </div>
-</div>
-<!-- Card 20 -->
-<div class="card">
-    <img class="card__img" src="https://cdn.glitch.global/bbb619d3-610c-4355-a0a1-1dffb2a7b752/volodymyr-hryshchenko-LzHdxEBw1Xk-unsplash.jpg?v=1714728960664" alt="Image 4">
-    <div class="card__content">
-        <h2 class="card__title">Kidneybeans</h2>
-        <p class="card__description">Kidney bean belongs to the legume family. It contains a wide range of macro-and micronutrients, including starch, protein, dietary fiber, minerals, vitamins, etc. Kidney beans are mostly made up of starchy carbohydrates, which make up about 72% of the overall calorie content and 25%–45% of the dry matter.</p>
-    </div>
-</div>
-<!-- Card 21 -->
-<div class="card">
-    <img class="card__img" src="https://cdn.glitch.global/bbb619d3-610c-4355-a0a1-1dffb2a7b752/engin-akyurt-XySiMsjrdxE-unsplash.jpg?v=1714729045811" alt="Image 4">
-    <div class="card__content">
-        <h2 class="card__title">Chickpea</h2>
-        <p class="card__description">Chickpeas, also known as "gram" or "Bengal gram" (Cicer arietinum), are gaining importance as a pulse crop in Ghana. Although not traditionally as dominant as other staples, chickpeas are valued for their nutritional benefits and versatility.Chickpeas prefer well-drained, loamy soils with good organic content.</p>
-    </div>
-</div>
-    </div>
-</body>
+        </header>
+        <main>
+            <section class="crop-section" id="crop-div">
+                
+            </section>
+            <section class="about-us" id="about">
+                <div style="width: 40%;margin-left: 50px; ">
+                  <div style="display: flex; place-items: center; gap: 15px; font-size: 1.3rem; font-weight: bold; margin-bottom: 20px;">
+                    <img style="width: 50px; height: 50px;" src="../static/images/plant-svgrepo-com.svg" alt="logo">
+                    Crop Advisor
+                  </div>
+                  your reliable partner in modern farming. Our web-based application is designed to help farmers make informed decisions on the best crops to cultivate based on their soil conditions. 
+                </div>
+                <ul>
+                  <b style="font-size: 1.3rem;">Links</b>
+                  <li><a href="/dashboard#crop-recommendation">Try it</a></li>
+                    <li><a href="{{ url_for('main.crops') }}">Crop</a></li>
+                    <li><a href="/dashboard#weather">Weather</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="/logout">Logout</a></li>
+                </ul>
+                <div class="contact">
+                  <div>
+                    <div class="image-profile">
+                      <img src="../static/images/abigail.jpg" alt="profile-image">
+                    </div>
+                    <div style="display: grid; gap: 10px;">
+                      <span>Abigail Tettey</span>
+                      <span>+233 20 193 305</span>
+                      <span style="font-size: 0.8rem;">developer</span>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="image-profile">
+                      <img src="../static/images/abigail.jpg" alt="profile-image">
+                    </div>
+                    <div style="display: grid; gap: 10px;">
+                      <span>Aaron Otu</span>
+                      <span>+233 55 071 6088</span>
+                      <span style="font-size: 0.8rem;">developer</span>
+                    </div>
+                  </div>
+                </div>
+              </section>
+        </main>
+    </body>
+    <script>
+        const cropContainer = document.querySelector('#crop-div')
+        const crops = [
+            {
+                crop:'Rice',
+                imageURL:'../static/crops/rice-grain.jpg',
+                passage:'Rice is a cereal crop that requires high water availability, fertile clay or loamy soil and warm temperature of 20-30°C. Some common pests/diseases that affect rice are the Brown Planthopper and Rice Blast. These can be controlled by using resistant varieties, insecticides and pesticides, proper field sanitation and monitoring and lastly Integrated Pest Management.'
+            },
+            {
+                crop:'Sorghum',
+                imageURL:'../static/crops/sorghum.jpeg',
+                passage:'Sorghum is a crop that is drought-resistant, requires light to heavy soils and warm temperatures between 20-30°C. It requires low rainfall and well-drained soils. Some pests/diseases that affect sorghum are Sorghum Midge and Anthracnose. Some ways to combat these are using resistant varieties, insecticide sprays, fungicides and practicing crop rotation.'
+            },
+            {
+                crop:'Maize',
+                imageURL:'../static/crops/maize.jpg',
+                passage:'Maize is a cereal crop that requires fertile, well-drained loamy soil and warm temperatures between 20-30°C. Conditions required for growth include moderate to high rainfall and full sun. Some pests or diseases that may attack maize include Fall Armyworm and Maize Streak Virus. These can be controlled by insecticides, biopesticides and using resistant varieties.'
+            },
+            {
+                crop:'Yam',
+                imageURL:'../static/crops/yam.jpeg',
+                passage:'Yam is a crop that requires loamy or sandy soil, organic matter and moderate to high rainfall. Yam best grows in well-drained soils and within temperatures of 25-30°C. Some pests/diseases that affect yam are Yam Beetles and Anthracnose. These can be controlled by applying pesticides, practicing crop rotation and using resistant varieties'
+            },
+            {
+                crop:'Cocoyam',
+                imageURL:'../static/crops/cocoayam.jpg',
+                passage:'Cocoyam thrives in moist, fertile, well-drained soils with high organic content. It is well-suited to tropical climates with temperatures ranging from 25 to 30°C and high rainfall. Taro beetles and root rot are common issues, which can be addressed through improved drainage, crop rotation, and the use of insecticides and disease-free planting material.'
+            },
+            {
+                crop:'Sweet Potato',
+                imageURL:'../static/crops/potato.jpeg',
+                passage:'Sweet potato prefers loose, well-drained sandy loam soils and warm climates with temperatures between 20 and 26°C. It is susceptible to pests such as the sweet potato weevil and diseases like stem rot. Crop rotation, the use of resistant varieties, and the application of appropriate insecticides and fungicides are essential for maintaining healthy crops.'
+            },
+            {
+                crop:'Cassava',
+                imageURL:'../static/crops/cassava.jpg',
+                passage:'Cassava is a drought-resistant crop, grows best in well-drained sandy loam soils under warm temperatures between 25 and 29°C. It is vulnerable to the cassava mosaic disease and cassava mealybug infestations. These can be controlled by using disease-free cuttings, resistant varieties, and biological control methods such as the introduction of natural predators.'
+            },
+            {
+                crop:'Pineapple',
+                imageURL:'../static/crops/pineapple.jpg',
+                passage:'Pineapple requires well-drained, sandy loam soils and a warm climate with temperatures between 24 and 30°C. The crop is often affected by mealybugs and heart rot, which can be managed through the use of insecticides, natural predators, and good field sanitation practices.'
+            },
+            {
+                crop:'Tomatoes',
+                imageURL:'../static/crops/tomato.jpg',
+                passage:'Tomatoes thrive in well-drained sandy loam soils rich in organic matter, with temperatures between 20 and 30°C. The tomato fruitworm and blight are common challenges that can be controlled with the use of insecticides, resistant varieties, and fungicides, as well as through crop rotation and regular monitoring.'
+            },
+            {
+                crop:'Onion',
+                imageURL:'../static/crops/onion.jpeg',
+                passage:'Onion cultivation requires well-drained sandy loam soils with rich organic content. Onions prefer temperatures between 12 and 24°C and moderate rainfall. Onion thrips and downy mildew are prevalent threats, which can be managed through the application of insecticides, reflective mulches, and the use of resistant varieties.'
+            },
+            {
+                crop:'Beans',
+                imageURL:'../static/crops/beans.jpg',
+                passage:'Beans need well-drained loamy soils and moderate temperatures between 15 and 27°C. The crop is susceptible to pests like the bean weevil and diseases such as anthracnose. Effective control methods include using resistant varieties, proper storage practices, and crop rotation.'
+            },
+            {
+                crop:'Okro',
+                imageURL:'../static/crops/okro.jpeg',
+                passage:'Okro grows best in well-drained loamy or sandy soils under warm temperatures between 25 and 35°C. Pests such as aphids and diseases like powdery mildew can be managed through regular monitoring, the use of insecticides, and fungicides, as well as by avoiding overhead irrigation.'
+            },
+            {
+                crop:'Cashew',
+                imageURL:'../static/crops/cashew.jpeg',
+                passage:'Cashew requires well-drained sandy loam soils and thrives in tropical climates with temperatures between 24 and 28°C. The tea mosquito bug and powdery mildew are common problems that can be mitigated with insecticides, resistant varieties, and proper pruning practices.'
+            },
+            {
+                crop:'Banana',
+                imageURL:'../static/crops/banana.jpeg',
+                passage:'Banana prefers well-drained loamy soils rich in organic matter and grows well in tropical climates with temperatures between 26 and 30°C. Banana weevils and Panama disease are significant threats that can be controlled through regular monitoring, the use of resistant varieties, and proper field sanitation.'
+            },
+            {
+                crop:'Pawpaw',
+                imageURL:'../static/crops/pawpaw.jpg',
+                passage:'Pawpaw thrives in well-drained sandy loam soils rich in organic matter, with temperatures between 25 and 30°C. The papaya mealybug and papaya ringspot virus are common issues that can be managed through the use of resistant varieties, insecticides, and proper field sanitation.'
+            },
+            {
+                crop:'Coconut',
+                imageURL:'../static/crops/coconut.jpg',
+                passage:'Coconut requires well-drained sandy loam soils and is best suited for tropical climates with temperatures between 27 and 32°C. The coconut rhinoceros beetle and bud rot are common threats that can be controlled using pheromone traps, insecticides, and improving drainage.'
+            },
+            {
+                crop:'Coffee',
+                imageURL:'../static/crops/coffee.jpeg',
+                passage:'Coffee grows well in well-drained loamy soils at high altitudes with temperatures between 15 and 24°C. The coffee berry borer and coffee leaf rust are significant pests and diseases that can be managed through regular monitoring, the use of traps, and the application of fungicides and resistant varieties.'
+            },
+            {
+                crop:'Groundnut',
+                imageURL:'../static/crops/Groundnut_big_1.jpg',
+                passage:'Groundnut (Peanut) thrives in well-drained sandy loam soils under warm temperatures between 20 and 30°C. It is susceptible to pests like aphids and aflatoxin contamination. Effective management includes the use of insecticides, proper drying techniques, and resistant varieties.'
+            },
+            {
+                crop:'Cocoa',
+                imageURL:'../static/crops/cocoa.jpg',
+                passage:'Cocoa grows best in well-drained loamy soils rich in organic matter, with temperatures between 21 and 32°C in tropical climates. Cocoa mirids and black pod disease are common challenges that can be controlled through regular monitoring, the use of insecticides, fungicides, and proper pruning practices.'
+            },
+            {
+                crop:'Pepper',
+                imageURL:'../static/crops/chilli-pepper.jpg',
+                passage:'Pepper requires well-drained loamy soils rich in organic matter, with temperatures between 20 and 30°C. Regular monitoring, the use of resistant varieties, and proper field sanitation practices are essential for managing pests and diseases in pepper cultivation.'
+            },
+        ]
+        addCrops(crops)
+        function addCrops(crops){
+            cropContainer.innerHTML = ''
+            crops.forEach((crop)=>{
+                const cropEl = document.createElement('div');
+                cropEl.className = 'crop';
+                cropEl.innerHTML = `<div class="image-container">
+                            <img src="${crop.imageURL}" alt="you">
+                        </div>
+                        <div class="crop-text-content">
+                            <div>
+                                <label>${crop.crop}</label>
+                                <p>
+                                    ${crop.passage.length>200?crop.passage.slice(0,200)+'...':crop.passage}
+                                </p>
+                            </div>
+                            <button onclick="readMore(event)" id=${crop.crop}>Read More</button>
+                        </div>`
+                cropContainer.appendChild(cropEl)
+            })
+        }
+        function onSearch(e){
+            console.log(e.target.value)
+            const input = e.target.value
+            if(input.length>0){
+                filteredCrops = crops.filter((crop)=>{
+                    return crop.crop.toLowerCase().includes(input.toLowerCase())
+                })
+                addCrops(filteredCrops)
+            }else{
+                addCrops(crops)
+            }
+        }
+        function readMore(e){
+            sessionStorage.setItem('selectedCrop',e.target.id)
+            window.location.href = '/crop-detail'
+        }
+        
+    </script>
 </html>

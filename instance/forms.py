@@ -20,12 +20,22 @@ class RegistrationForm(FlaskForm):
             raise ValidationError("That username is already taken. Please choose a different one.")
         
     def validate_first_name(self, first_name):
-        if not re.match("^[a-zA-Z]+$", first_name.data):
-            raise ValidationError("First name can only contain letters. Please choose a different one.")
-        
+        if re.match("^[0-9]*$", first_name.data):
+            raise ValidationError('First name should not contain numbers.')
+
     def validate_last_name(self, last_name):
-        if not re.match("^[a-zA-Z]+$", last_name.data):
-            raise ValidationError("last name can only contain letters. Please choose a different one.")        
+        if re.match("^[0-9]*$", last_name.data):
+            raise ValidationError('Last name should not contain numbers.')
+
+    def validate_password(self, password):
+        if not re.search(r"[A-Z]", password.data):
+            raise ValidationError('Password must contain at least one uppercase letter.')
+        if not re.search(r"[a-z]", password.data):
+            raise ValidationError('Password must contain at least one lowercase letter.')
+        if not re.search(r"[0-9]", password.data):
+            raise ValidationError('Password must contain at least one digit.')
+        if not re.search(r"[!@#$%^&*(),.?\":{}|<>]", password.data):
+            raise ValidationError('Password must contain at least one special character.')     
     
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()],render_kw={"class": "form-input"})

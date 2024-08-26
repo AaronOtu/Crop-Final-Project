@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+        <style>
+            body{
+                margin: 0;
+                font-family: "Poppins", sans-serif;
+                color: white;
+            }
+            header{
+                height: 60vh;
+                position: relative;
+                contain: paint;
+                border-bottom: 1px solid #313030;
+            }
+            button{
+                font-family: "Nunito",sans-serif;
+            }
+            .preview{
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                width: 100%;
+                object-fit: cover;
+                object-position: center center;
+                z-index: -100;
+            }
+            .text-content{
+                width: 100%;
+                height:100%;
+                background: linear-gradient(180deg,rgba(0,0,0,0.2) 50%,rgba(0,0,0,0.95) 100%);
+                display: flex;
+                place-items: end;
+                color: white;
+            }
+            .text-content div{
+                margin-bottom: 40px;
+                margin-left: 50px;
+            }
+            .text-content>div>h1{
+                font-size: 3rem;
+            }
+            article{
+                padding: 0 50px;
+                position: relative;
+                display: flex;
+                margin-top: 7vh;
+                flex-direction: column;
+                color: black;
+            }
+            article p{
+                font-size: 1.1rem;
+                font-family: "Poppins", sans-serif;
+            }
+            article label{
+                font-weight: bold;
+                font-size: 1.5rem;
+            }
+            ul{
+                list-style: decimal;
+            }
+            @media screen and (max-width:900px) {
+                .preview{
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    width: 100%;
+                    height: 70vh;
+                    z-index: -100;
+                    transform: translate(-50%, 50%);
+                }
+                .text-content div {
+                    margin-bottom: 30px;
+                    margin-left: 32px;
+                }
+                .text-content>div>h1 {
+                    font-size: 1.5rem;
+                }
+                .text-content>div>span {
+                    font-size: 0.8rem;
+                }
+                article {
+                    padding: 0 32px;
+                    
+                }
+                article p{
+                    font-size: 0.9rem;
+                }
+                .action{
+                    font-size: 0.8rem;
+                }
+                .action{
+                    gap: 40px;
+                    text-wrap: nowrap;
+                }
+                .action button{
+                   
+                    padding: 5px 15px;
+                    font-size: 0.9rem;
+                
+                }
+            }
+            @keyframes slide-down {
+                from{
+                    top: 0;
+                    opacity: 0;
+                }
+                to{
+                    top: 2vh;
+                }
+            }
+            @keyframes zoom-in-appear {
+                from{
+                    scale: 0.8;
+                    opacity: 0.8;
+                }
+            }
+        </style>
+    </head>
+    <body onload="loadPage()">
+        
+    </body>
+    <script>
+        const cropDetails=[
+            {
+                name:'Rice',
+                imageURL:'../static/crops/rice-grain.jpg',
+                introduction: 'Rice has been cultivated in many parts of the world especially in South and South-East Asia as a stable crop. Important producing areas are China, India, Spain, Brazil, Italy and Southern U.S. It is now becoming important in West Africa especially Nigeria, Cameroon, Ghana as well as Sierra Leone. Rice plant is believed to have originated and evolved from South-East Asia where it spread to China, India, Africa and America. Thousands of cultivars are now available and more and more are being evolved by selection and breeding for better adaption to the many environments in which the crop can be grown. Nearly all varieties fall into 2 main classifications',
+                growthReq:[
+                    {
+                        name:'climate',
+                        passage:'The rice which is found between latitude 45ºN and 40ºS and from sea level to as high as 3000m is a versatile crop which does well under a wide range of climatic conditions provided that there is an adequate water through rainfall or irrigation. Thus upland rice grows very well under conditions of high rainfall which is evenly distributed throughout the growth period whilst swamp rice thrive on flat lowlands, river basins where flooding occurs during the growth period. Temperatures must range from 20-38ºC preferably between 30-35ºC during the day with a minimum of 20ºC at night. The temperature should be high enough to ensure good seedling development and vegetative growth. There must be abundant sunshine i.e. high solar radiation income especially during the period of reproduction or grain filling. Grain yields have been found to be positively correlated with solar radiation income. The crop is a short day plant, hence there is the need to select and grow cultivars which are insensitive to the changing photoperiod in order to prevent heading / flowering at the time when crops have not yet fully developed its photosynthetic system or vegetative growth.',                        
+                    },
+                    {
+                        name:'soil',
+                        passage:'Rice grows on most soil types ranging from sandy to loam to heavy clays and from shallow to deep soils provided that adequate moisture levels are maintained in the soil by rain or irrigation. The optimum pH range for rice is from 5.5-7.0 (acidic to neutral) even though the crop can be successfully grown on soils with values rising as high as 6-9 or falling as low as 5-4. The crop shows a degree of tolerance to salinity.',                        
+                    }
+                ],
+                culturalPractices:[
+                    'Choice of site- this depends on type of rice grown and the management practices envisaged. Upland or swamp rice requires different sites and whether the crop will be irrigated or not.',
+                    'Land preparation- it must be very thorough with a maximum of two ploughing, preferably to a depth of 30cm. In situations where the land is being cleared for the first time, plant remains or organic matter may be incorporated into the soil. Planting can be direct in the field by broadcasting or dibbling or drilling. The first two are manual and the last mechanical. Transplanting of seedlings can also be practiced. In this case, seedlings must be raised in nursery beds. With transplants, more clean seeds (35-45kg/ha) must be used and transplanting done at 21 days after seeding at a spacing of 20x20cm at 2 plants per hill. Do no transplant seedlings which are more than 35days due to early panicle exertion which severely reduces yield. Seed rate depends upon the method of planting, the spacing required and the tillering habit of cultivars. The rate varies from 84-112kg/ha for broadcasting, 56-67kg/ha for nurseries which also gives opportunity for selection at 28-35kg/ha for dibbling and drilling. Of course these figures are only guidelines and may be varied according to ones circumstances. It is also presupposed that there is high percentage germination. The seeds are tested for fullness and adequate weight by soaking in brine/salt solution of specific gravity of 1.1-1.13. The light seeds or empty glumes float and are removed and discarded. The good ones are dried, treated against pests and diseases and can then be sown by broadcasting, dibbling, drilling in the nursery. ',
+                    'Weed control- many of the common arable weeds are controlled by flooding and standing water. Weeds are worst in broadcasting than when the plants are transplanted as the latter gives the better condition for control. Better weed control is achieved when the rice is drilled or transplanted in lines. Failure to control weeds can result in losses of 30% or more. Serious weeds are wild red rice and other grass weeds e.g Cyperus. Weed may be controlled by hand weeding or mechanically or chemically controlled. Hand hoeing or hand operated rotary hoes have been used in many parts of the world. Herbicides 2, 4-D, Lasso attrazine, roundup or gramoxone may be used as preplanting, pre-emergence or post-emergence treatment.',
+                    'Diseases – Blast (Pyricularia oryzae) is most serious. It can attack the plant at all stages causing seedling blight, leaf blight in the active growing phase and neck rot when the heads are developing. The best control is to plant resistant cultivars or the use of copper fungicides. Mercurial dressing will also help. Other diseases are brown spot, leaf spot (caused by Cercospora oryzae) and stem rot (caused by Sclerotium rolfsii) ',
+                    'Pest – Insects cause extensive damage to the rice crop in the field and to the grain during storage. The worst pests are stem borers, plant bugs, armyworms and grasshoppers. Others include rats or rodents and birds.',
+                    'Fertilization – Apply 1.5 bags/ha of muriate of potash and 2.5bags/ha of triple supper phosphate as basal dressing. Apply urea in split doses, 2 bags/ha at transplanting and another 2 bags/ha top dress at panicle initiation stage or add 2.5 t/ha 14 decomposed poultry manure or 5t/ha cow dung.',
+                    'Harvesting – Early harvesting cultivars are usually harvested one month after full flowering and late ones at 6 weeks. Thus between 4-6 weeks after full flowering, harvesting should be done. The moisture content of the grain at harvest is usually between 18-25%. Harvesting is done by hand using knife or sickle or mechanized by combined harvesters. Threshing This is done to separate the grains with its enclosing husk from the stalk. It may be done manually by beating the sheath against a hard surface.',
+                    'Winnowing - It is usually done by shaking and tossing the paddy backwards and forward with a basket tray with a narrow rim. After winnowing, the paddy is dried in the sun and is now ready for milling or transport to the mill. Using combine harvester, the paddy is harvested, threshed and bagged in one operation after which it is dried to safe moisture content of 11-14%.',
+                    'Storage / milling - The paddy is stored in the husk as it is less susceptible to deterioration. It is essential that the paddy should be well dried before storage as this prevents heating and sweating, and reduces attack by storage pest and fungi. The optimum moisture content should be between 12.5-14% which also gives minimum loss and breakage at milling. The paddy 15 may be parboiled before milling. Parboiling of paddy before milling gives less breakage of grains, more retention of nutrients (protein, vitamins and minerals) and better storage qualities. 100kg of paddy gives approximately 66kg of polished rice of which 50kg is whole grain and 16kg is broken grains. Yields vary and are between 4-5t/ha of milled rice in advanced countries and well managed fields. The average is between 2-2.5t/ha. For paddy, it is between 7-9t/ha.',
+
+                ],
+                yieldAnalysis:[
+                    'Number of tillers per unit area.',
+                    'Number of tillers head or panicle ',
+                    'Number of grains (spikelet) per head or panicle ',
+                    'Mean weight of individual grains or (100/ 1000 grain weight) ',
+
+                ],
+                plantVarietalCharacteristics:[
+                    'The vigor with respect to seedling emergence and growth',
+                    'The tillering capacity ',
+                    'Sensitivity to photoperiodism',
+                    'Resistance to lodging ',
+                    'Resistance to pest and diseases ',
+                    'Resistance to grain shattering '
+                ]
+            },
+            {
+                name:'MAIZE (Zea mays) ',
+                imageURL:'../static/crops/maize.jpg',
+                introduction: 'As a cereal, maize is a member of the family Gramineae. Evidence of its origin points to Central America. The plant varies in height from about 60cm – 4m. It is solid throughout with short internodes at the base which becomes longer and thicker and then starts tapering up to the terminal male inflorescence. The female inflorescence called the cob or ear consist of modified lateral branches arising from axillary lateral branch on the main stem and has compressed internodes whose leaf sheath overlap to cover the inflorescence as the husk. Each spikelet in the female inflorescence consist of two flowers a non functional lower flower and an upper flower containing knobbed-shaped ovary surrounded by short membranous lemma and palea. The ovary is surrounded by a long style known as the silk which emerges from the husk and is receptive along most of the length. The spikelet at the base matures first. The maize caryopsis is covered by a thin wall of layers of cells representing the fused pericarp and testa. Next to this layer is the nucellus and next to this is the endosperm. The outermost layer of which is the aleurone layer is high in protein and vitamins but the bulk of the endosperm is made up of the starch grain.There are two types of endosperm in the caryopsis. There is a hard flinty proteinaceous layer and a soft whitish starchy type. One type being predominant depending on the variety. The colour varies from white through yellow to purple. The embryo is rich in oil, protein and minerals and is more or less enclosed by scutellum and consists of the plumule which is protected by its sheath (coleoptiles) and gives rise to the shoot and the radicle which is protected by its sheath (coleorhizae) and gives rise to the root. The crown of the grain may be rounded or dented.The genus Zea contains one known species i.e. the Zea mays but so many varieties have 19 been bred which fall into certain agricultural classifications depending on the structure and peculiarity',
+                growthReq:[
+                    {
+                        name:'climate',
+                        passage:'As a cereal, maize is a member of the family Gramineae. Evidence of its origin points to Central America. The plant varies in height from about 60cm – 4m. It is solid throughout with short internodes at the base which becomes longer and thicker and then starts tapering up to the terminal male inflorescence. The female inflorescence called the cob or ear consist of modified lateral branches arising from axillary lateral branch on the main stem and has compressed internodes whose leaf sheath overlap to cover the inflorescence as the husk. Each spikelet in the female inflorescence consist of two flowers a non functional lower flower and an upper flower containing knobbed-shaped ovary surrounded by short membranous lemma and palea. The ovary is surrounded by a long style known as the silk which emerges from the husk and is receptive along most of the length. The spikelet at the base matures first. The maize caryopsis is covered by a thin wall of layers of cells representing the fused pericarp and testa. Next to this layer is the nucellus and next to this is the endosperm. The outermost layer of which is the aleurone layer is high in protein and vitamins but the bulk of the endosperm is made up of the starch grain.There are two types of endosperm in the caryopsis. There is a hard flinty proteinaceous layer and a soft whitish starchy type. One type being predominant depending on the variety. The colour varies from white through yellow to purple. The embryo is rich in oil, protein and minerals and is more or less enclosed by scutellum and consists of the plumule which is protected by its sheath (coleoptiles) and gives rise to the shoot and the radicle which is protected by its sheath (coleorhizae) and gives rise to the root. The crown of the grain may be rounded or dented.The genus Zea contains one known species i.e. the Zea mays but so many varieties have 19 been bred which fall into certain agricultural classifications depending on the structure and peculiarity',                        
+                    },
+                    {
+                        name:'soil',
+                        passage:'Maize will grow on most soils but will grow best on well drained deep loamy or silty loam with plenty of organic matter and well supplied available nutrients. The optimum pH ranges from 6.0-7.0 i.e. slightly acidic to neutral. Cultural PracticesLand Preparation: This includes ploughing, harrowing and ridging. The crop responds to organic matter and crop residues so that in course of land preparation these must be included. Newly 22 planted maize requires weed-free soil that is warm, moist, well supplied with air and fine enough to give good contact between the seed and the soil. Too much cultivation often destroys the crumb structure of the soil that surface crust may be formed which increases runoff and prevents water entering the soil. The amount of cultivation would depend upon the environment more particularly on the type of soil and the amount of available water or moisture.',                 
+                    }
+                ],
+                culturalPractices:[
+                    'Weeding - The purpose of weeding is to remove weeds and stir up the soil surface where crust occurs. The operation should be done at shallow depth as possible enough to kill weeds and open up the soil but not to damage roots of crops. The frequency should be determined by the growth of weeds. Chemical weed control is being increasingly used and various herbicides are recommended. Gramoxone is applied at 4l/ha or 300ml/ 15litres of water into the knapsack for spray. The use of round up is more effective on perennial weeds and application rate is 4l/ha or 300ml/15litres of water. Pre-emergence herbicides e.g Lasso atrazine may be applied after planting at a rate of 2.5kg/ha or 4l/ha for primagram',
+                    'Irrigation - Maize can be irrigated where the rainfall is not sufficient to sustain good yields or where the distribution is erratic to suppress growth at the most sensitive stages which are from the periods just before tasseling to the middle of grain filling. Also moisture stress during the early growth suppresses leaf area development and can delay flowering. To obtain high yield from irrigation, there should be an adequate supply of nutrients of which nitrogen is the most important. Irrigation may be provided by furrows or sprinklers',
+                    'Diseases – Blast (Pyricularia oryzae) is most serious. It can attack the plant at all stages causing seedling blight, leaf blight in the active growing phase and neck rot when the heads are developing. The best control is to plant resistant cultivars or the use of copper fungicides. Mercurial dressing will also help. Other diseases are brown spot, leaf spot (caused by Cercospora oryzae) and stem rot (caused by Sclerotium rolfsii) ',
+                    'Pest – Insects cause extensive damage to the rice crop in the field and to the grain during storage. The worst pests are stem borers, plant bugs, armyworms and grasshoppers. Others include rats or rodents and birds.',
+                    'Fertilization – Apply 1.5 bags/ha of muriate of potash and 2.5bags/ha of triple supper phosphate as basal dressing. Apply urea in split doses, 2 bags/ha at transplanting and another 2 bags/ha top dress at panicle initiation stage or add 2.5 t/ha 14 decomposed poultry manure or 5t/ha cow dung.',
+                    'Harvesting – Early harvesting cultivars are usually harvested one month after full flowering and late ones at 6 weeks. Thus between 4-6 weeks after full flowering, harvesting should be done. The moisture content of the grain at harvest is usually between 18-25%. Harvesting is done by hand using knife or sickle or mechanized by combined harvesters. Threshing This is done to separate the grains with its enclosing husk from the stalk. It may be done manually by beating the sheath against a hard surface.',
+                    'Winnowing - It is usually done by shaking and tossing the paddy backwards and forward with a basket tray with a narrow rim. After winnowing, the paddy is dried in the sun and is now ready for milling or transport to the mill. Using combine harvester, the paddy is harvested, threshed and bagged in one operation after which it is dried to safe moisture content of 11-14%.',
+                    'Storage / milling - The paddy is stored in the husk as it is less susceptible to deterioration. It is essential that the paddy should be well dried before storage as this prevents heating and sweating, and reduces attack by storage pest and fungi. The optimum moisture content should be between 12.5-14% which also gives minimum loss and breakage at milling. The paddy 15 may be parboiled before milling. Parboiling of paddy before milling gives less breakage of grains, more retention of nutrients (protein, vitamins and minerals) and better storage qualities. 100kg of paddy gives approximately 66kg of polished rice of which 50kg is whole grain and 16kg is broken grains. Yields vary and are between 4-5t/ha of milled rice in advanced countries and well managed fields. The average is between 2-2.5t/ha. For paddy, it is between 7-9t/ha.',
+                    '',
+
+                ],
+                yieldAnalysis:[
+                    'Number of tillers per unit area.',
+                    'Number of tillers head or panicle ',
+                    'Number of grains (spikelet) per head or panicle ',
+                    'Mean weight of individual grains or (100/ 1000 grain weight) ',
+
+                ],
+                plantVarietalCharacteristics:[
+                    'The vigor with respect to seedling emergence and growth',
+                    'The tillering capacity ',
+                    'Sensitivity to photoperiodism',
+                    'Resistance to lodging ',
+                    'Resistance to pest and diseases ',
+                    'Resistance to grain shattering '
+                ]
+            },
+            {
+                name: "SORGHUM (Sorghum vulgare or S. bicolor)",
+                imageURL: "../static/crops/sorghum.jpeg",
+                introduction: "The greatest varieties of sorghums are found in North-East Africa. The crop was probably domesticated in Ethiopia. The original domesticated sorghums, used for food and for beer making, spread rapidly across East and West Africa and were taken to India at an early date and to China. The crop reached the Americas in the middle of the 19th century. Sorghum remains an important food crop in dry areas and on poor soils in many African countries, in India, and in China; 50 million hectares are grown worldwide, producing over 58 million tonnes. Very little sorghum enters world trade except that exported by the United States for industrial use.",
+                growthReq: [
+                    {
+                        name: "climate",
+                        passage: "Sorghum has a wide range of adaptation but prefers hot, warm conditions. It is killed by frost and grows well from sea level to 2000 meters altitude and between 40ºN and 40ºS of the equator. The crop grows best in fertile soils but is well-suited for poor conditions and uncertain rainfall. Sorghum is better able than maize to withstand drought periods due to its deep and extensive root system, silica in its roots, reduced leaf area, and higher water use efficiency. It can suspend growth during drought and resume growth when conditions improve."
+                    },
+                    {
+                        name: "soil",
+                        passage: "Sorghum can be cultivated on many soil types but requires well-drained soils with adequate organic matter. It can withstand both waterlogging and drought but is killed by frost. Sorghum grows well on heavy soils and can mature entirely on stored residual moisture in deep clays. It also grows well in lighter soils, though very light, low-nutrient soils are better suited for bulrush millet or other millets. The evapotranspiration requirement is about half that of maize, and the plant requires 20% less water to produce the same amount of dry matter as maize."
+                    }
+                ],
+                culturalPractices: [
+                    "Weeding - Weeding should be done to remove weeds and stir up the soil surface where crust occurs. The operation should be done at a shallow depth to kill weeds and open up the soil without damaging crop roots. Frequency should be determined by weed growth. Chemical weed control is increasingly used, with recommended herbicides including Gramoxone (4 l/ha) and Roundup (4 l/ha). Pre-emergence herbicides such as Lasso atrazine may be applied at planting.",
+                    "Irrigation - Sorghum can be irrigated if rainfall is insufficient or erratic. Irrigation can be provided by furrows or sprinklers. Adequate nutrient supply, especially nitrogen, is important for high yields.",
+                    "Diseases - Common diseases include blast (Pyricularia oryzae), which causes seedling blight, leaf blight, and neck rot. Control methods include planting resistant cultivars and using copper fungicides or mercurial dressing. Other diseases include brown spot, leaf spot (caused by Cercospora oryzae), and stem rot (caused by Sclerotium rolfsii).",
+                    "Pests - Insects such as stem borers, plant bugs, armyworms, and grasshoppers cause damage. Other pests include rats, rodents, and birds.",
+                    "Fertilization - Apply 1.5 bags/ha of muriate of potash and 2.5 bags/ha of triple super phosphate as basal dressing. Apply urea in split doses, with 2 bags/ha at planting and another 2 bags/ha at panicle initiation stage, or use 2.5 t/ha of decomposed poultry manure or 5 t/ha of cow dung.",
+                    "Harvesting - Early maturing cultivars are harvested one month after full flowering, while late ones are harvested 4-6 weeks after full flowering. The moisture content of the grain at harvest is typically between 18-25%. Harvesting is done by hand or mechanically using combine harvesters.",
+                    "Winnowing - Winnowing is done by shaking and tossing the paddy in a basket tray. After winnowing, the paddy is dried in the sun before milling or transport. With combine harvesters, paddy is harvested, threshed, and bagged in one operation before drying to a safe moisture content of 11-14%.",
+                    "Storage / Milling - Store paddy in the husk to prevent deterioration. The optimum moisture content for storage is between 12.5-14%. Paddy may be parboiled before milling to reduce breakage, retain nutrients, and improve storage qualities. Milling yields about 66 kg of polished rice per 100 kg of paddy, with 50 kg as whole grain and 16 kg as broken grains. Yields vary from 4-5 t/ha of milled rice in advanced countries to 2-2.5 t/ha on average, and 7-9 t/ha for paddy."
+                ],
+                yieldAnalysis: [
+                    "Number of tillers per unit area.",
+                    "Number of tillers per head or panicle.",
+                    "Number of grains (spikelets) per head or panicle.",
+                    "Mean weight of individual grains or (100/1000 grain weight)."
+                ],
+                plantVarietalCharacteristics: [
+                    "Vigor with respect to seedling emergence and growth.",
+                    "Tillering capacity.",
+                    "Sensitivity to photoperiodism.",
+                    "Resistance to lodging.",
+                    "Resistance to pests and diseases.",
+                    "Resistance to grain shattering."
+                ]
+            },
+            {
+                name: "GROUNDNUTS (Arachis hypogaea)",
+                imageURL: "../static/crops/Groundnut_big_1.jpg",
+                introduction: "Groundnuts, originating from South America, have become widely distributed throughout tropical and subtropical regions. The cultivars are categorized into two main types: Virginia and Valencia. Common varieties include Chinese, Adepa, Azivivi, Jenkaar, Nkosuor, and Manipinta.",
+                growthReq: [
+                    {
+                        name: "climate",
+                        passage: "Groundnut is grown between latitudes 40ºN and 40ºS of the equator. It is a warm-season crop that is killed by frost. The crop thrives in regions with at least 1000mm of rainfall annually, with 500mm required during the 3-4 month growing season. Dry weather is essential for ripening and harvesting."
+                    },
+                    {
+                        name: "soil",
+                        passage: "Groundnuts grow best in well-drained, loose, friable sandy-loam soils with adequate calcium and moderate organic matter. The crop is sensitive to waterlogging and requires well-aerated soil. Heavy soils can pose difficulties during harvesting as they tend to stick to the nuts, causing staining. Soils with crust are unsuitable due to challenges in peg (carpophores) penetration."
+                    }
+                ],
+                culturalPractices: [
+                    "Weeding - Regular weeding is necessary to prevent weed competition and to ensure that the soil is loose for peg penetration. It may be necessary to earth up the plants during growth.",
+                    "Irrigation - Though groundnuts are generally drought-tolerant, irrigation can be beneficial in areas with insufficient rainfall, particularly during flowering and pod development stages.",
+                    "Diseases - Major diseases include Cercospora leaf spot, Sclerotium rolfsii wilt, Aspergillus flavus (which produces aflatoxins), and rosette virus spread by aphids. Disease management involves using resistant varieties and appropriate fungicides.",
+                    "Pests - Common pests include caterpillars, beetles, thrips, aphids, and rodents such as squirrels.",
+                    "Fertilization - Groundnuts generally have low fertilizer requirements. However, the application of 50kg/ha P2O5 is recommended, and calcium, potassium, and magnesium can improve yields, particularly in sandy soils.",
+                    "Harvesting - Groundnuts are typically harvested 3.5 to 4 months after planting. Harvesting is done when 50% of the plants show signs of senescence, and the seeds rattle inside the pods when shaken.",
+                    "Winnowing - After harvesting, groundnuts are dried and stripped of their shells. Winnowing can be done manually or using mechanical methods to separate the nuts from the chaff.",
+                    "Storage / Milling - Groundnuts are best stored in their shells to maintain quality. After shelling, the nuts should be processed quickly to avoid deterioration. Industrial processing involves cleaning, heating, and extracting oil, with the residual cake used for animal feed."
+                ],
+                yieldAnalysis: [
+                    "Yield ranges from 480 to 2242kg/ha, with a shelling percentage of about 80%. It is advisable to store nuts in their shells to maintain quality and viability."
+                ],
+                plantVarietalCharacteristics: [
+                    "The Virginia types are preferred for consumption due to their lower oil content, while the Spanish types are better for oil extraction.",
+                    "Groundnuts have a well-developed tap root with many lateral roots.",
+                    "Flowers are borne on compressed spikes in the axils of leaves, with the fruit developing underground."
+                ],
+            },
+        {   
+                name: "YAM (Dioscorea spp)",
+                imageURL: "../static/crops/yam.jpeg",
+                introduction: "Yam is a staple tuber crop, particularly important in the tropics. It belongs to the family Dioscoraceae and is a major source of food. The genus Dioscorea includes many herbaceous plants with underground tubers and climbing vines. Yams are primarily propagated vegetatively by cuttings or whole tubers. The tubers, which store photosynthates mainly in the form of starch, are harvested for food or industrial processing.",
+                growthReq: [
+                    {
+                        name: "climate",
+                        passage: "Yams are tropical crops requiring high temperatures of 25-35ºC and high rainfall, with a minimum of 1000mm and an optimum of 1250-1500mm annually. They exhibit a degree of drought tolerance but thrive best in regions with adequate rainfall."
+                    },
+                    {
+                        name: "soil",
+                        passage: "Yams require light, well-drained soils to allow for tuber development without much resistance. The presence of organic matter to increase soil porosity is highly desirable. The soil should be prepared with methods like ploughing, harrowing, and ridging, followed by mound making."
+                    }
+                ],
+            culturalPractices: [
+                "Weeding - Regular weeding is essential to ensure the growth of yams without competition from weeds.",
+                "Mound Making and Planting - Mounds of about 60cm in height are made, spaced 0.5m to 2m apart. Tubers or setts are planted on top of these mounds and capped with soil or plant residues to act as mulch.",
+                "Staking - Staking is crucial for higher yields, allowing greater leaf area per vine for sunlight interception. Stakes are typically 2-4m in height.",
+                "Pruning - Smaller tubers can be pruned to focus photosynthate storage in fewer, larger tubers.",
+                "Fertilization - Application of 12-50 t/ha of farmyard manure or organic matter before planting is recommended. Additionally, 112-135kg/ha of NPK fertilizer can be applied.",
+                "Harvesting - Depending on the variety, yams can be harvested between 6 to 12 months. Early small tubers can be harvested around 6 months, while fully developed tubers are harvested later.",
+                "Storage - Yams should be stored in barns, lath houses, or soil trenches lined with straw to prevent soil contact. Storage requires protection from the sun, moisture, and ensuring free aeration."
+            ],
+            yieldAnalysis: [
+                "Yields vary widely depending on the environment, species or cultivar sown, and the standard of cultivation."
+            ],
+            plantVarietalCharacteristics: [
+                "Dioscorea alata (water yam): Squarish spineless stems with large, ovate leaves. Tubers are large but of inferior quality, maturing in 8-10 months.",
+                "Dioscorea rotundata (white guinea yam): Common in yam trade with the best quality tubers, maturing in about 8 months.",
+                "Dioscorea cayenensis (yellow guinea yam): Yellowish fleshed tubers that mature in 12 months. Known as 'nkani' in Akan.",
+                "Dioscorea dumetorum (bitter yam): Identified by its compound leaves with 3 leaflets and bitter tubers. Vines twine in a clockwise direction.",
+                "Dioscorea bulbifera (bulbil bearing yam): Characterized by edible swellings (bulbils) on the leaves, which store starch."
+            ]
+        },
+        {
+            name: "COCOYAM (Xanthosoma species)",
+            imageURL: "../static/crops/cocoayam.jpg",
+            introduction: "Cocoyam, belonging to the monocotyledonous family Araceae, is an important tropical crop. It includes species like Xanthosoma sagitifolium, X. atrovirens, X. violaceum, and X. caracu. Domesticated in tropical America and the West Indies, cocoyam was introduced to Ghana in the 1840s. It is commonly used for human consumption, with white, pink, or yellow flesh varieties. Cocoyam is valued for its starchy tubers, which are preferred over Colocasia in West Africa for making 'fufu.' The young leaves are also consumed as spinach, and some species are grown for ornamental foliage.",
+            growthReq: [
+                {
+                    name: "climate",
+                    passage: "Cocoyam thrives in tropical rain forest regimes requiring high rainfall above 1000mm. It is a warm-weather crop that cannot tolerate frost and grows best in lowland areas with average daily temperatures above 21ºC. It can be grown at altitudes up to 2000m, but yields tend to be poor at higher altitudes due to cooler temperatures."
+                },
+                {
+                    name: "soil",
+                    passage: "Cocoyam requires well-drained soils with adequate moisture. It can be grown in both lowland flooded conditions and upland areas. For upland cultivation, land preparation involves clearing, ploughing, and harrowing. Cocoyam is often planted on low mounds or in holes dug in unploughed land, similar to the cultivation methods used for yam or cassava."
+                }
+            ],
+            culturalPractices: [
+                "Weeding - Cocoyam plots require regular weeding, especially during the first three to four months of growth when the canopy is sparse. Mechanical weeding should be done shallowly to avoid damaging the roots or cormels.",
+                "Planting Materials - Cocoyam is propagated vegetatively using corms or cormels. Disease-free corms are selected for planting, with a preferred sett size of 50-100g. Planting should be done in the major season when the soil is moist, with setts placed 5-7cm deep.",
+                "Spacing - A spacing of 60cm x 60cm is recommended. Close spacing increases corm yield per hectare but decreases yield per plant and the contribution of sucker corms to the yield.",
+                "Water Management - Cocoyam requires ample moisture throughout the growing season. In flooded culture, water levels are adjusted to keep the base of the plant submerged as it grows. Irrigation is necessary in upland cultivation where rainfall is irregular.",
+                "Fertilizer Application - Cocoyam responds well to organic manures and mulching. In traditional cultivation, little or no fertilizers are used, especially on lands recently cleared from bush-fallow. Application of 120kg/ha of NPK fertilizer is common in areas with poor soil conditions.",
+                "Harvesting - Cocoyam tubers are harvested from 9 months onwards when the leaves begin to yellow and die down. The soil around the base is removed, mature tubers are excised, and the soil is replaced, allowing the parent plant to continue growing. Tubers can be stored under dry, well-ventilated conditions."
+            ],
+            yieldAnalysis: [
+                "Yields vary between 20-30t/ha of tubers in 9-10 months. First ratoon yields may be lower, around 10-15t/ha."
+            ],
+            plantVarietalCharacteristics: [
+                "Varieties include Gye medi, Obo ntem, and Maye yie.",
+                "Cocoyam is a robust herb growing up to 2m in height with large, stalked leaves. The corm bears up to 10 or more lateral tubers or cormels.",
+                "Cocoyam cultivars vary in yield, suckering, sprouting of stored tubers, and palatability. Some cultivars seldom flower and rarely produce seeds."
+            ]
+        },{
+            name: "CASSAVA (Manihot species)",
+            imageURL: "../static/crops/cassava.jpg",
+            introduction: "Cassava, originating from tropical South America, is the most important and common root crop grown in the tropics. It is a heavy-yielding, relatively cheap crop that is cultivated on a large scale for industrial purposes such as the production of starch and 'tapioca,' and on a smaller scale in West Africa for food. It is also referred to by various names including tapioca, Brazilian arrowroot, manioc, yuca, and mandioca.",
+            growthReq: [
+                {
+                    name: "climate",
+                    passage: "Cassava thrives in tropical climates, typically found between latitudes 30ºN and 30ºS. It requires temperatures above 20ºC, with optimum growth in sunny weather. It grows best in regions with annual rainfall between 500-2000mm, with 1000mm or more being ideal. The plant can also grow at altitudes up to 1600m, although yields may decrease and the growing period may be prolonged above 800m."
+                },
+                {
+                    name: "soil",
+                    passage: "Cassava can grow in most soil types as long as they are well-drained, as waterlogging can cause root rot. The soil should be friable, fairly deep, and well-structured, as cassava is a heavy feeder and requires more nutrients than many other crops."
+                }
+            ],
+            culturalPractices: [
+                "Weeding - Regular weeding is essential to prevent competition with the cassava plants.",
+                "Planting - Cassava is propagated vegetatively using stem cuttings from plants that are 1-1.5 years old. Cuttings should be 15-25cm in length with 5-7 buds and can be planted vertically, at an angle, or horizontally, depending on soil and environmental conditions. The basal woody portions of the stem are preferred for planting.",
+                "Fertilization - Cassava is a heavy feeder and responds well to fertile soils. While cassava is often grown in soils of varying fertility, the application of organic matter or crop residues during land preparation can enhance growth. In some cases, farmers apply 120kg/ha of NPK fertilizer.",
+                "Diseases - Major diseases include African cassava mosaic virus, cassava bacterial blight, and anthracnose. The use of resistant varieties and proper crop management are recommended.",
+                "Pests - Cassava green mites, rodents, and mealy bugs are common pests, particularly in sweet varieties.",
+                "Harvesting - Depending on the variety and time of planting, cassava can be harvested from 6 months onwards. Tubers are harvested by loosening the soil around the plant and uprooting it. Late harvesting may result in lignified or fibrous tubers, reducing quality.",
+                "Storage - Cassava stems can be stored in dry, well-ventilated, shaded areas. Tubers are best stored in their skins to prevent deterioration. Under local conditions, tubers begin to sprout after 6 weeks but can be stored for up to 9 weeks or more at 7ºC with a relative humidity of 80%."
+            ],
+            yieldAnalysis: [
+                "Yields vary widely, from 10-40t/ha depending on the time of harvest, variety, soil, and cultural practices adopted."
+            ],
+            plantVarietalCharacteristics: [
+                "Varieties include Tech Bankye, Bankye Broni, Afisiafi, Ampong, Otuhia, Bankye Hemaa, and Inkabom.",
+                "Cassava is a shrub that matures at 2-4m in height. It has large, alternate, palmately lobed leaves and produces fibrous adventitious roots that develop into storage tubers. The tubers contain about 30% starch and vary in color depending on the variety."
+            ]
+        },
+        {
+            name: "SWEET POTATO (Ipomoea batatas)",
+            imageURL: "../static/crops/potato.jpeg",
+            introduction: "Sweet potato (Twi: ntommo; Ga: blofoatomo; Ewe: anago; Hausa: dankali) likely originated from South America, Mexico, or Central America. It is widely grown in the seasonal dry areas of most West African countries and serves as a supplemental food crop in Ghana. It is particularly important in the Northern regions as a food reserve during times of shortage.",
+            growthReq: [
+                {
+                    name: "climate",
+                    passage: "Sweet potato requires at least 500mm of rain during the growing season, with an annual rainfall of 750-1200mm being optimal. The crop can tolerate drought, but yields are reduced if drought occurs during the critical root initiation period (50-60 days after planting). Sweet potatoes thrive in moderate rainfall areas, with low humidity beneficial as the crop approaches maturity."
+                },
+                {
+                    name: "soil",
+                    passage: "Sweet potatoes grow best in sandy loams rich in organic matter with a permeable sub-soil. Heavy soils can lead to poor root development and lower yields. The ideal soil pH is between 5.5 and 6.5. The crop is sensitive to waterlogging and should be planted on mounds or ridges in wet areas."
+                }
+            ],
+            culturalPractices: [
+                "Weeding - Regular weeding is essential during the initial stages of growth until the vines form a complete cover. Hoeing may be necessary to remove weeds and repair damaged ridges or mounds.",
+                "Planting Materials - Sweet potatoes are propagated by vine cuttings or rooted slips obtained from healthy parent plants. In Ghana, vine cuttings with 6-7 nodes are commonly used for planting. Cuttings should be planted firmly in the soil, with the top portion of the vine performing better than the middle or lower portions.",
+                "Method of Planting - The cuttings or rooted slips are planted half to two-thirds of their length into the soil. The ideal planting time is at the beginning of the rainy season, with a spacing of 30cm x 60cm.",
+                "Fertilization - Sweet potatoes are heavy feeders and respond well to manuring. On poor soils, apply 30-45kg/ha of nitrogen, 45-60kg/ha of phosphate, and 30-45kg/ha of potash. Heavy fertilization should be avoided to prevent oversized, cracked roots.",
+                "Rotation - Sweet potatoes should be rotated with crops like groundnuts, cowpeas, and maize to replenish soil nutrients and reduce nematode infestation.",
+                "Cultivation - The main objective of cultivation is to control weeds and maintain soil structure. Earthing up may be necessary to bury the tubers deeper and seal soil cracks."
+            ],
+            yieldAnalysis: [
+                "Yields vary depending on cultivar, climatic conditions, soil type, and cultural practices. In West Africa, yields range from 6.25 to 12.5 tonnes per hectare under typical conditions, but improved cultivars can yield between 20-30 tonnes per hectare under favorable conditions."
+            ],
+            plantVarietalCharacteristics: [
+                "Red-skinned cultivars: Generally of poorer quality with creamy-white flesh that is coarse and fibrous. Example: Local Pink.",
+                "White-skinned cultivars: Sweet, deeply lobed leaves with flesh ranging from white to deeply yellow. These are late-maturing types with good keeping qualities.",
+                "Soft tuber cultivars: White or orange watery flesh that is sweet when cooked. These are mostly early-maturing varieties but have poor keeping qualities."
+            ]
+        },
+        {
+            name: "PINEAPPLE (Ananas comosus)",
+            imageURL: "../static/crops/pineapple.jpg",
+            introduction: "Pineapple is a tropical fruit that is widely cultivated for its sweet and tangy edible fruit. Originally from South America, it is now grown in many tropical and subtropical regions around the world. Pineapple is consumed fresh, as juice, and in various processed forms.",
+            growthReq: [
+                {
+                    name: "climate",
+                    passage: "Pineapple thrives in warm climates with temperatures between 20-30ºC. It requires a well-distributed rainfall of 1000-1500mm annually. The crop is sensitive to frost and extreme temperatures."
+                },
+                {
+                    name: "soil",
+                    passage: "Pineapple grows best in well-drained, sandy loam soils with a pH of 4.5-6.5. The soil should have good organic matter content and moderate fertility. Waterlogged soils can lead to root rot and poor growth."
+                }
+            ],
+            culturalPractices: [
+                "Land Preparation - The land should be cleared, tilled, and ridged to ensure good drainage. Organic matter should be incorporated to improve soil fertility.",
+                "Planting - Pineapples are propagated using crowns, slips, or suckers. These planting materials are set in the soil at a spacing of 30-60cm.",
+                "Fertilization - Pineapple requires regular fertilization with balanced NPK fertilizers. Apply organic manures to enhance soil fertility.",
+                "Weed Control - Regular weeding is essential to prevent competition for nutrients. Mulching can be used to suppress weeds.",
+                "Pests - Common pests include mealybugs and scale insects. Control measures include the use of pesticides and biological control agents.",
+                "Diseases - Pineapple is susceptible to heart rot and root rot caused by Phytophthora. Fungicides and proper drainage are effective control methods."
+            ],
+            yieldAnalysis: [
+                "Pineapple yields can range from 40-80 tonnes per hectare, depending on the variety and management practices."
+            ],
+            plantVarietalCharacteristics: [
+                "Common varieties include 'Smooth Cayenne,' 'Queen,' and 'Red Spanish.' Pineapple plants have a rosette of stiff, spiny leaves, and the fruit is formed from a cluster of individual berries that fuse together."
+            ]
+        },
+        {
+            name: "TOMATOES (Solanum lycopersicum)",
+            imageURL: "../static/crops/tomato.jpg",
+            introduction: "Tomatoes are a popular vegetable crop grown for their edible fruits, which are used in a variety of culinary applications. Originating from South America, tomatoes are now cultivated worldwide.",
+            growthReq: [
+                {
+                    name: "climate",
+                    passage: "Tomatoes require a warm climate with temperatures between 20-30ºC for optimal growth. They need well-distributed rainfall, though they can tolerate dry conditions with adequate irrigation."
+                },
+                {
+                    name: "soil",
+                    passage: "Tomatoes thrive in well-drained, loamy soils rich in organic matter with a pH of 6.0-7.0. The soil should be fertile and have good water-holding capacity."
+                }
+            ],
+            culturalPractices: [
+                "Land Preparation - The land should be plowed and harrowed to create a fine tilth. Raised beds can be prepared to improve drainage.",
+                "Planting - Tomatoes are propagated from seeds. Seedlings are transplanted to the field at a spacing of 50-70cm between plants and 70-100cm between rows.",
+                "Fertilization - Apply a balanced NPK fertilizer during planting and side-dress with nitrogen during the growing season. Organic manure can also be used.",
+                "Weed Control - Weeding is crucial during the early stages of growth. Mulching can help suppress weeds and retain soil moisture.",
+                "Pests - Common pests include aphids, whiteflies, and tomato hornworms. Integrated pest management (IPM) practices can be used for control.",
+                "Diseases - Tomatoes are prone to blight, wilt, and viral diseases. Disease-resistant varieties and crop rotation are effective management strategies."
+            ],
+            yieldAnalysis: [
+                "Tomato yields vary widely depending on the variety and cultivation practices, ranging from 20-60 tonnes per hectare."
+            ],
+            plantVarietalCharacteristics: [
+                "Varieties include 'Roma,' 'Cherry,' and 'Beefsteak.' Tomato plants are herbaceous and typically grow to about 1-3 meters in height. The fruits vary in size, shape, and color, ranging from small cherry tomatoes to large beefsteak varieties."
+            ]
+        },
+        {
+            name: "ONION (Allium cepa)",
+            imageURL: "../static/crops/onion.jpeg",
+            introduction: "Onion is a widely cultivated vegetable crop known for its pungent bulb, which is used in cooking around the world. Originating from Central Asia, onions are now grown in many regions globally.",
+            growthReq: [
+                {
+                    name: "climate",
+                    passage: "Onions require a cool growing season with temperatures between 12-24ºC. They thrive in regions with well-distributed rainfall but can tolerate dry conditions if irrigated."
+                },
+                {
+                    name: "soil",
+                    passage: "Onions grow best in well-drained, sandy loam soils with a pH of 6.0-7.0. The soil should be rich in organic matter and have good moisture retention capacity."
+                }
+            ],
+            culturalPractices: [
+                "Land Preparation - The soil should be plowed and harrowed to create a fine tilth. Raised beds or ridges are recommended for proper drainage.",
+                "Planting - Onions are propagated from seeds, sets, or transplants. They are typically planted at a spacing of 10-15cm between plants and 30-40cm between rows.",
+                "Fertilization - Onions require balanced fertilization, particularly with nitrogen, phosphorus, and potassium. Organic manures can also be applied to improve soil fertility.",
+                "Weed Control - Regular weeding is essential to reduce competition. Mulching can help suppress weeds and conserve soil moisture.",
+                "Pests - Onion thrips and maggots are common pests. Integrated pest management practices, including the use of insecticides and crop rotation, can help control them.",
+                "Diseases - Onions are susceptible to downy mildew, botrytis, and purple blotch. Disease-resistant varieties and proper field sanitation are recommended."
+            ],
+            yieldAnalysis: [
+                "Onion yields can range from 15-30 tonnes per hectare, depending on the variety and cultivation practices."
+            ],
+            plantVarietalCharacteristics: [
+                "Common varieties include 'Red Creole,' 'White Grano,' and 'Yellow Globe.' Onion plants are biennials grown as annuals, with bulbs that can vary in size, shape, and color."
+            ]
+        },
+        {
+            name: "BEANS (Phaseolus vulgaris)",
+            imageURL: "../static/crops/beans.jpg",
+            introduction: "Beans are a leguminous crop widely cultivated for their edible seeds, which are a rich source of protein. Originating from the Americas, beans are now grown in many parts of the world.",
+            growthReq: [
+                {
+                    name: "climate",
+                    passage: "Beans grow best in warm climates with temperatures between 15-30ºC. They require moderate rainfall during the growing season and can tolerate dry periods if irrigated."
+                },
+                {
+                    name: "soil",
+                    passage: "Beans thrive in well-drained, loamy soils rich in organic matter with a pH of 6.0-7.5. The soil should be fertile and have good water-holding capacity."
+                }
+            ],
+            culturalPractices: [
+                "Land Preparation - The land should be plowed and harrowed to create a fine tilth. Raised beds can improve drainage and root development.",
+                "Planting - Beans are typically sown directly into the field at a spacing of 10-20cm between plants and 30-50cm between rows.",
+                "Fertilization - Beans generally do not require much nitrogen fertilization due to their ability to fix atmospheric nitrogen. However, phosphorus and potassium are important for growth.",
+                "Weed Control - Weeding is essential during the early stages of growth to reduce competition. Mulching can help suppress weeds and retain soil moisture.",
+                "Pests - Common pests include aphids, bean weevils, and leafhoppers. Integrated pest management practices can help control these pests.",
+                "Diseases - Beans are susceptible to fungal diseases like rust and anthracnose. Crop rotation and the use of resistant varieties are effective control measures."
+            ],
+            yieldAnalysis: [
+                "Bean yields vary widely depending on the variety and cultivation practices, ranging from 1.5 to 3 tonnes per hectare."
+            ],
+            plantVarietalCharacteristics: [
+                "Common varieties include 'Black Bean,' 'Kidney Bean,' and 'Navy Bean.' Bean plants are typically bushy or vining, with pods that contain the seeds."
+            ]
+        },
+        {
+            name: "OKRO (Abelmoschus esculentus)",
+            imageURL: "../static/crops/okro.jpeg",
+            introduction: "Okra, also known as ladies' fingers, is a popular vegetable grown in tropical and subtropical regions. It is widely consumed for its tender green pods, which are used in various culinary dishes. Okra is known for its slimy texture when cooked and is often used in soups and stews.",
+            growthReq: [
+                {
+                    name: "climate",
+                    passage: "Okra thrives in warm climates with temperatures ranging between 25-35ºC. It requires a long growing season with plenty of sunlight and moderate rainfall. The crop is sensitive to frost and cannot withstand cold temperatures."
+                },
+                {
+                    name: "soil",
+                    passage: "Okra grows best in well-drained, loamy soils rich in organic matter. The soil should have a pH range of 6.0-6.8. It is important to ensure the soil is loose and friable to allow for easy root development."
+                }
+            ],
+            culturalPractices: [
+                "Land Preparation - The soil should be tilled to a fine tilth to prepare for planting. Organic matter may be added to improve soil fertility.",
+                "Planting - Okra seeds are typically sown directly into the soil at a spacing of 30cm x 60cm. The seeds should be planted at a depth of 1-2cm and covered with soil.",
+                "Fertilization - Okra responds well to organic manures and balanced fertilizers. A typical application of 20-40kg/ha of nitrogen, 60-80kg/ha of phosphorus, and 40-60kg/ha of potassium is recommended.",
+                "Weed Control - Regular weeding is essential to prevent competition for nutrients. Mulching can also be used to suppress weeds and retain soil moisture.",
+                "Pests - Common pests include aphids, whiteflies, and caterpillars. Integrated pest management practices such as crop rotation and the use of organic insecticides are recommended.",
+                "Diseases - Okra is susceptible to diseases like powdery mildew and root rot. Proper crop management and the use of disease-resistant varieties can help mitigate these issues."
+            ],
+            yieldAnalysis: [
+                "Okra yields can vary depending on the variety, soil, and growing conditions. Average yields range from 10-15 tonnes per hectare."
+            ],
+            plantVarietalCharacteristics: [
+                "Okra plants are herbaceous, growing up to 2 meters in height. The pods are long, slender, and typically green, though some varieties may have red or purple pods. The seeds are round and dark, encased within the pods."
+            ]
+        },
+        {
+            name: "CASHEW (Anacardium occidentale)",
+            imageURL: "../static/crops/cashew.jpeg",
+            introduction: "Cashew is a tropical evergreen tree known for producing the cashew nut and the cashew apple. It is widely cultivated in tropical regions for its economic value, with the nuts being a popular snack and the apple used in beverages.",
+            growthReq: [
+                {
+                    name: "climate",
+                    passage: "Cashew thrives in tropical climates with temperatures between 24-30ºC. It requires a well-distributed annual rainfall of 1000-2000mm but can tolerate dry spells. The tree is resistant to drought but cannot withstand waterlogging."
+                },
+                {
+                    name: "soil",
+                    passage: "Cashew prefers well-drained sandy loam or loamy soils with a pH of 5.5-6.5. It can grow in poor soils but performs best in soils rich in organic matter. Good drainage is essential to prevent root rot."
+                }
+            ],
+            culturalPractices: [
+                "Land Preparation - Clear the land of weeds and debris before planting. Soil should be tilled to a fine tilth.",
+                "Planting - Cashew is typically propagated by seeds or grafted seedlings. Planting distances range from 7-10 meters apart in a square or triangular pattern.",
+                "Fertilization - Apply organic manures and balanced fertilizers. Typically, 20-40kg of nitrogen, 20-30kg of phosphorus, and 40-60kg of potassium per hectare are recommended.",
+                "Weed Control - Regular weeding is necessary, especially during the early stages of growth.",
+                "Pests - Common pests include the tea mosquito bug and the cashew stem borer. Integrated pest management practices are recommended.",
+                "Diseases - Cashew trees are susceptible to powdery mildew and anthracnose. Use of fungicides and disease-resistant varieties is recommended."
+            ],
+            yieldAnalysis: [
+                "Cashew trees typically start bearing nuts within 3-4 years of planting, with yields ranging from 1-2 tonnes of nuts per hectare under good management practices."
+            ],
+            plantVarietalCharacteristics: [
+                "Cashew trees are medium-sized, growing up to 12 meters in height. The nuts develop at the end of a fleshy pedicel, known as the cashew apple. The apple is edible and can be processed into juice or alcohol."
+            ]
+        },
+        {
+            name: "BANANAS (Musa spp)",
+            imageURL: "../static/crops/banana.jpeg",
+            introduction: "Bananas are one of the most widely consumed fruits globally, known for their sweet taste and high nutritional value. They are cultivated primarily in tropical regions and are a staple food in many parts of the world.",
+            growthReq: [
+                {
+                    name: "climate",
+                    passage: "Bananas thrive in tropical climates with temperatures ranging from 20-35ºC. They require a well-distributed annual rainfall of 1200-2500mm and high humidity. Bananas are sensitive to strong winds, which can damage the plants."
+                },
+                {
+                    name: "soil",
+                    passage: "Bananas grow best in well-drained, fertile loamy soils with a pH of 6.0-7.5. The soil should be rich in organic matter and nutrients, particularly potassium, which is crucial for banana growth."
+                }
+            ],
+            culturalPractices: [
+                "Land Preparation - Clear the land and prepare it by tilling to a fine tilth. Organic matter can be added to improve soil fertility.",
+                "Planting - Bananas are propagated by suckers or tissue-cultured plantlets. Planting distances range from 2-3 meters apart.",
+                "Fertilization - Bananas require a high level of fertility. Apply 100-200g of nitrogen, 40-60g of phosphorus, and 300-400g of potassium per plant per year.",
+                "Weed Control - Regular weeding is essential to prevent competition for nutrients and water.",
+                "Pests - Common pests include banana weevils and nematodes. Integrated pest management practices are recommended.",
+                "Diseases - Bananas are susceptible to Panama disease, Black Sigatoka, and Banana Bunchy Top Virus. Use of resistant varieties and proper crop management practices are essential."
+            ],
+            yieldAnalysis: [
+                "Banana yields vary depending on variety and management practices, typically ranging from 20-50 tonnes per hectare."
+            ],
+            plantVarietalCharacteristics: [
+                "Bananas are herbaceous plants with a pseudostem composed of tightly packed leaf bases. The fruit develops in clusters known as hands, each containing multiple fingers (bananas)."
+            ]
+        },{
+            name: "PAWPAW (Carica papaya)",
+            imageURL: "../static/crops/pawpaw.jpg",
+            introduction: "Pawpaw, also known as papaya, is a tropical fruit known for its sweet, orange flesh and numerous health benefits. It is widely cultivated in tropical and subtropical regions for its fruit, which is eaten fresh or used in juices and desserts.",
+            growthReq: [
+                {
+                    name: "climate",
+                    passage: "Pawpaw thrives in warm climates with temperatures ranging from 25-30ºC. It requires a well-distributed annual rainfall of 1000-2000mm. The plant is sensitive to frost and prolonged periods of drought."
+                },
+                {
+                    name: "soil",
+                    passage: "Pawpaw grows best in well-drained, fertile loamy soils with a pH of 6.0-6.5. The soil should be rich in organic matter, and good drainage is essential to prevent root rot."
+                }
+            ],
+            culturalPractices: [
+                "Land Preparation - Prepare the land by clearing it of weeds and debris. The soil should be tilled to a fine tilth.",
+                "Planting - Pawpaw is propagated by seeds or seedlings. Planting distances range from 2-3 meters apart. Ensure that the plants receive adequate sunlight.",
+                "Fertilization - Apply 50-100g of nitrogen, 40-60g of phosphorus, and 100-150g of potassium per plant per year. Organic manures can also be used to improve soil fertility.",
+                "Weed Control - Regular weeding is necessary to prevent competition for nutrients and water.",
+                "Pests - Common pests include aphids, fruit flies, and spider mites. Integrated pest management practices are recommended.",
+                "Diseases - Pawpaw is susceptible to papaya ringspot virus, powdery mildew, and anthracnose. Proper crop management and the use of disease-resistant varieties are essential."
+            ],
+            yieldAnalysis: [
+                "Pawpaw trees start bearing fruit within 6-12 months of planting, with yields ranging from 20-40 tonnes per hectare under good management practices."
+            ],
+            plantVarietalCharacteristics: [
+                "Pawpaw plants are small, single-stemmed trees with large, lobed leaves. The fruit is typically oval-shaped with orange flesh and numerous black seeds."
+            ]
+        },
+        {
+            name: "COCONUT (Cocos nucifera)",
+            imageURL: "../static/crops/coconut.jpg",
+            introduction: "Coconut is a tropical palm known for its versatile fruit, which is used for food, oil, fiber, and other products. It is widely cultivated in coastal regions for its economic and nutritional value.",
+            growthReq: [
+                {
+                    name: "climate",
+                    passage: "Coconut palms thrive in tropical coastal regions with temperatures ranging from 27-32ºC. They require an annual rainfall of 1500-2500mm and are tolerant of salty conditions. The palms prefer areas with high humidity and plenty of sunshine."
+                },
+                {
+                    name: "soil",
+                    passage: "Coconuts grow best in well-drained sandy or loamy soils with a pH of 5.5-7.0. The soil should be rich in organic matter and have good drainage to prevent waterlogging, which can cause root rot."
+                }
+            ],
+            culturalPractices: [
+                "Land Preparation - Clear the land of weeds and debris before planting. The soil should be tilled to a fine tilth.",
+                "Planting - Coconuts are typically propagated by seeds. The nuts are planted in a nursery before being transplanted to the field. Planting distances range from 7-10 meters apart.",
+                "Fertilization - Apply organic manures and balanced fertilizers. A typical application includes 50-100g of nitrogen, 40-60g of phosphorus, and 100-150g of potassium per palm per year.",
+                "Weed Control - Regular weeding is essential, especially during the early stages of growth.",
+                "Pests - Common pests include coconut beetles and rhinoceros beetles. Integrated pest management practices are recommended.",
+                "Diseases - Coconuts are susceptible to lethal yellowing and bud rot. The use of disease-resistant varieties and proper crop management practices are essential."
+            ],
+            yieldAnalysis: [
+                "Coconut palms typically start bearing nuts within 5-7 years of planting, with yields ranging from 50-200 nuts per palm per year under good management practices."
+            ],
+            plantVarietalCharacteristics: [
+                "Coconut palms are tall, single-stemmed trees with large, pinnate leaves. The fruit, known as a coconut, has a hard outer shell, a fibrous husk, and a central cavity filled with coconut water."
+            ]
+        },
+        {
+            name: "COFFEE (Coffea spp)",
+            imageURL: "../static/crops/coffee.jpeg",
+            introduction: "Coffee is one of the most popular beverages globally, produced from the seeds of the Coffea plant. It is primarily grown in tropical regions and is a significant export crop for many countries.",
+            growthReq: [
+                {
+                    name: "climate",
+                    passage: "Coffee plants thrive in tropical climates with temperatures ranging from 18-24ºC. They require a well-distributed annual rainfall of 1500-2500mm and are sensitive to frost and drought conditions."
+                },
+                {
+                    name: "soil",
+                    passage: "Coffee grows best in well-drained, fertile loamy soils with a pH of 6.0-6.5. The soil should be rich in organic matter and nutrients, particularly nitrogen, which is essential for coffee production."
+                }
+            ],
+            culturalPractices: [
+                "Land Preparation - Prepare the land by clearing it of weeds and debris. The soil should be tilled to a fine tilth.",
+                "Planting - Coffee is typically propagated by seeds or seedlings. Planting distances range from 2-3 meters apart, with shade trees often planted alongside to protect the coffee plants.",
+                "Fertilization - Apply organic manures and balanced fertilizers. A typical application includes 20-40g of nitrogen, 20-30g of phosphorus, and 40-60g of potassium per plant per year.",
+                "Weed Control - Regular weeding is necessary to prevent competition for nutrients and water.",
+                "Pests - Common pests include coffee berry borer and coffee leaf rust. Integrated pest management practices are recommended.",
+                "Diseases - Coffee is susceptible to coffee leaf rust and coffee berry disease. Use of disease-resistant varieties and proper crop management practices are essential."
+            ],
+            yieldAnalysis: [
+                "Coffee plants typically start bearing fruit within 3-5 years of planting, with yields ranging from 0.5-2.5 tonnes per hectare under good management practices."
+            ],
+            plantVarietalCharacteristics: [
+                "Coffee plants are small, evergreen shrubs or trees with dark green leaves. The fruit, known as a coffee cherry, contains two seeds, which are processed to produce coffee beans."
+            ]
+        },
+        {
+            name: "COCOA (Theobroma cacao)",
+            imageURL: "../static/crops/cocoa.jpg",
+            introduction: "Cocoa is the primary ingredient in chocolate production, derived from the seeds of the Theobroma cacao tree. It is mainly cultivated in tropical regions and is an important export crop for countries like Ghana and Ivory Coast.",
+            growthReq: [
+                {
+                    name: "climate",
+                    passage: "Cocoa thrives in humid tropical climates with temperatures ranging from 20-30ºC. It requires an annual rainfall of 1500-2500mm, with well-distributed rain throughout the year. Cocoa trees are sensitive to prolonged dry periods and strong winds."
+                },
+                {
+                    name: "soil",
+                    passage: "Cocoa grows best in well-drained, fertile loamy soils with a pH of 5.5-7.0. The soil should be rich in organic matter, and good drainage is essential to prevent root diseases."
+                }
+            ],
+            culturalPractices: [
+                "Land Preparation - Clear the land of weeds and debris before planting. The soil should be tilled to a fine tilth.",
+                "Planting - Cocoa is typically propagated by seeds or seedlings. Planting distances range from 3-4 meters apart, often with shade trees to protect young cocoa plants.",
+                "Fertilization - Apply organic manures and balanced fertilizers. A typical application includes 50-100g of nitrogen, 20-40g of phosphorus, and 100-150g of potassium per plant per year.",
+                "Weed Control - Regular weeding is necessary, especially during the early stages of growth.",
+                "Pests - Common pests include cocoa pod borer and cocoa mirids. Integrated pest management practices are recommended.",
+                "Diseases - Cocoa is susceptible to black pod disease, witches' broom, and swollen shoot virus. The use of disease-resistant varieties and proper crop management practices are essential."
+            ],
+            yieldAnalysis: [
+                "Cocoa trees typically start bearing pods within 3-5 years of planting, with yields ranging from 0.5-2.0 tonnes per hectare under good management practices."
+            ],
+            plantVarietalCharacteristics: [
+                "Cocoa trees are small, evergreen trees with broad leaves. The pods develop directly on the trunk and branches, containing multiple seeds, which are fermented, dried, and processed into cocoa beans."
+            ]
+        },
+        {
+            name: "PEPPER (Capsicum spp)",
+            imageURL: "../static/crops/chilli-pepper.jpg",
+            introduction: "Pepper, a member of the Capsicum genus, is a widely cultivated crop used for its pungent fruits in various culinary dishes. It is grown both as a vegetable and a spice, with varieties ranging from sweet bell peppers to hot chili peppers.",
+            growthReq: [
+                {
+                    name: "climate",
+                    passage: "Pepper plants thrive in warm climates with temperatures between 18-30ºC. They require a well-distributed annual rainfall of 600-1200mm. The plants are sensitive to frost and cold temperatures."
+                },
+                {
+                    name: "soil",
+                    passage: "Pepper grows best in well-drained, fertile loamy soils with a pH of 6.0-7.0. The soil should be rich in organic matter and nutrients, particularly nitrogen and phosphorus."
+                }
+            ],
+            culturalPractices: [
+                "Land Preparation - Clear the land of weeds and debris before planting. The soil should be tilled to a fine tilth.",
+                "Planting - Pepper is typically propagated by seeds, which are sown in nurseries and later transplanted to the field. Planting distances range from 30-50cm apart.",
+                "Fertilization - Apply organic manures and balanced fertilizers. A typical application includes 20-40g of nitrogen, 20-30g of phosphorus, and 20-30g of potassium per plant per year.",
+                "Weed Control - Regular weeding is essential to prevent competition for nutrients and water.",
+                "Pests - Common pests include aphids, thrips, and fruit borers. Integrated pest management practices are recommended.",
+                "Diseases - Pepper is susceptible to diseases like bacterial leaf spot, powdery mildew, and anthracnose. Use of disease-resistant varieties and proper crop management practices are essential."
+            ],
+            yieldAnalysis: [
+                "Pepper yields vary depending on variety, soil, and growing conditions, typically ranging from 10-30 tonnes per hectare."
+            ],
+            plantVarietalCharacteristics: [
+                "Pepper plants are herbaceous and can grow up to 1 meter in height. The fruits vary in size, shape, and color, ranging from green to red, yellow, or orange when ripe."
+            ]
+        }
+            
+        ]
+        function loadPage(){
+            const selectedCrop = sessionStorage.getItem('selectedCrop')
+            const crop = cropDetails.find((value)=>{
+                return value.name.toLowerCase().includes(selectedCrop.toLowerCase())
+            })
+            const body = document.body
+            body.innerHTML = `<header>
+            <img class="preview" src=${crop.imageURL} id="image-container" >
+            <div class="text-content">
+                <div style="position: relative;">
+                    <h1 id="title" onclick="editTitle(event)" onblur="contentChange(event,'title')">${crop.name}</h1>
+                </div>
+            </div>
+            </header>
+            <main>
+                <article>
+                <p>
+                    ${crop.introduction}
+                </p>
+                <label>Growth Requirements</label>
+                <ul>
+                    <li>
+                        <span>Climate</span>
+                        <p>
+                            ${crop.growthReq[0].passage}
+                        </p>
+                    </li>
+                    <li>
+                        <span>Soil</span>
+                        <p>
+                            ${crop.growthReq[1].passage}
+                        </p>
+                    </li>
+                </ul>
+                <label>Cultural Practices</label>
+                <ul>
+                        ${crop.culturalPractices.map((value=>`<li>${value}</li>`)).join('')}
+                </ul>
+                <label>Yield Analysis</label>
+                <ul>
+                        ${crop.yieldAnalysis.map((value=>`<li>${value}</li>`)).join('')}
+                </ul>
+                <label>Plant or Varietal Characteristics</label>
+                <ul>
+                        ${crop.plantVarietalCharacteristics.map((value=>`<li>${value}</li>`)).join('')}
+                </ul>
+                </article>
+        
+            </main>`
+        }
+    </script>
+</html>

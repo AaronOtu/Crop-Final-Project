@@ -47,6 +47,21 @@
   justify-content: space-between;
   padding: 10px;
 }
+.temp{
+  font-size: 1.1rem;
+}
+.middle{
+  gap: 15px;
+  justify-content: center;
+}
+.middle img{
+  width: 100px;
+
+}
+.top{
+  gap: 20px;
+  font-size: 0.8rem;
+}
 .bottom{
   display:flex;
   align-items: center;
@@ -54,14 +69,18 @@
   border-radius: 2em;
   padding-left: 10px;
   padding-right: 10px;
+  background-color: black;
   backdrop-filter: blur(25px);
-  
+  font-size: 0.8rem;
 }
 .bottom p{
   margin: 10px;
 
 }
 .temp{
-  font-size: 50px;
+  font-size: 2.4rem;
   margin-top: 20px;
+}
+.weather-state{
+  font-size: 0.8rem;
 }
